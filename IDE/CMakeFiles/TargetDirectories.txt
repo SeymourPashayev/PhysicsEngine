@@ -1,0 +1,3 @@
+/Users/seymour/projects/engine/IDE/CMakeFiles/engine.dir
+/Users/seymour/projects/engine/IDE/CMakeFiles/ALL_BUILD.dir
+/Users/seymour/projects/engine/IDE/CMakeFiles/ZERO_CHECK.dir
