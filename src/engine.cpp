@@ -7,14 +7,21 @@ bool running = false;
 
 bool init(const char* title, int xpos, int ypos, int height, int width, int flags) {
     // Initialize SDL
-    if (SDL_Init(SDL_INIT_EVERYTHING) >= 0) {
+    if (SDL_Init(SDL_INIT_VIDEO) >= 0) {
         // If succsessfull, create window
         // Temprorary Hardcoded Solution
-        window = SDL_CreateWindow("Title", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, 0);
+        window = SDL_CreateWindow("Title", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_OPENGL);
+
+        if (window == NULL) {
+            // In the case that the window could not be made...
+            std::cout << "Window is NULL" << std::endl;
+            return 1;
+        }
 
         // if window creation successful, create a renderer
         if (window != 0) {
-            renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+            std::cout << "GOT TO RENDERER" << std::endl;
+            renderer = SDL_CreateRenderer(window, -1, 0);
         }
     } else {
         // Couldn't initialize SDL
