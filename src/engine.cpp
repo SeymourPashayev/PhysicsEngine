@@ -1,61 +1,47 @@
 #include <SDL2/SDL.h>
-#include <iostream>
+#include <stdio.h>
 
-SDL_Window* window = 0;
-SDL_Renderer* renderer = 0;
-bool running = false;
+int main(int argc, char *argv[])
+{
+    SDL_Window *win = NULL;
+    SDL_Renderer *renderer = NULL;
+    SDL_Texture *bitmapTex = NULL;
+    SDL_Surface *bitmapSurface = NULL;
+    int posX = 100, posY = 100, width = 320, height = 240;
+    SDL_bool loopShouldStop = SDL_FALSE;
 
-bool init(const char* title, int xpos, int ypos, int height, int width, int flags) {
-    // Initialize SDL
-    if (SDL_Init(SDL_INIT_VIDEO) >= 0) {
-        // If succsessfull, create window
-        // Temprorary Hardcoded Solution
-        window = SDL_CreateWindow("Title", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_OPENGL);
+    SDL_Init(SDL_INIT_VIDEO);
 
-        if (window == NULL) {
-            // In the case that the window could not be made...
-            std::cout << "Window is NULL" << std::endl;
-            return 1;
+    win = SDL_CreateWindow("Hello World", posX, posY, width, height, 0);
+
+    renderer = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED);
+
+    bitmapSurface = SDL_LoadBMP("../img/test.bmp");
+    bitmapTex = SDL_CreateTextureFromSurface(renderer, bitmapSurface);
+    SDL_FreeSurface(bitmapSurface);
+
+    while (!loopShouldStop)
+    {
+        SDL_Event event;
+        while (SDL_PollEvent(&event))
+        {
+            switch (event.type)
+            {
+                case SDL_QUIT:
+                    loopShouldStop = SDL_TRUE;
+                    break;
+            }
         }
 
-        // if window creation successful, create a renderer
-        if (window != 0) {
-            std::cout << "GOT TO RENDERER" << std::endl;
-            renderer = SDL_CreateRenderer(window, -1, 0);
-        }
-    } else {
-        // Couldn't initialize SDL
-        return false;
+        SDL_RenderClear(renderer);
+        SDL_RenderCopy(renderer, bitmapTex, NULL, NULL);
+        SDL_RenderPresent(renderer);
     }
 
-    return true;
-}
+    SDL_DestroyTexture(bitmapTex);
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(win);
 
-void render(){
-    // set to black
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-
-    // clear the window to black
-    SDL_RenderClear(renderer);
-
-    // show the window
-    SDL_RenderPresent(renderer);
-}
-
-int main (int argc, char* argv[]){
-    if (init("TEST", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, 0)) {
-        running = true;
-        std::cout << "Error: " << SDL_GetError() << std::endl;
-    } else {
-        // error
-        return 1;
-    }
-
-    while (running) {
-        render();
-    }
-
-    // Cleanup
     SDL_Quit();
 
     return 0;
