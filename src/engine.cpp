@@ -12,13 +12,10 @@ int main(int argc, char *argv[])
 
     SDL_Init(SDL_INIT_VIDEO);
 
-    win = SDL_CreateWindow("Hello World", posX, posY, width, height, 0);
+    win = SDL_CreateWindow("TRAVKA ENGINE", posX, posY, width, height, 0);
 
     renderer = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED);
 
-    bitmapSurface = SDL_LoadBMP("../img/test.bmp");
-    bitmapTex = SDL_CreateTextureFromSurface(renderer, bitmapSurface);
-    SDL_FreeSurface(bitmapSurface);
 
     while (!loopShouldStop)
     {
@@ -27,6 +24,13 @@ int main(int argc, char *argv[])
         {
             switch (event.type)
             {
+                // if pressed spacebar, color yellow. On release, black
+                case SDL_KEYDOWN:
+                    if (event.key.keysym.sym == SDLK_SPACE)
+                    {
+                        // TODO: DOSOMETHING
+                    }
+                    break;
                 case SDL_QUIT:
                     loopShouldStop = SDL_TRUE;
                     break;
