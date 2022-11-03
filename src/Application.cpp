@@ -43,7 +43,7 @@ void Application::Update() {
 ///////////////////////////////////////////////////////////////////////////////
 void Application::Render() {
     Graphics::ClearScreen(0xFF056263);
-    Graphics::DrawFillCircle(200, 200, 40, 0xFFFFFFFF);
+    Graphics::DrawFillCircle(200, 200, 400, 0xFFFFFFFF);
     Graphics::RenderFrame();
 }
 
