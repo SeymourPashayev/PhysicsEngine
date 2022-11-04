@@ -12,7 +12,12 @@
 
 Particle2D::Particle2D(float x, float y, float mass, float radius) {
     this->position = Vec2(x, y);
+    
     this->mass = mass;
+    if (mass != 0.0) {
+        invMass = 1.0 / mass;
+    }
+    
     this->radius = radius;
 
     std::cout << "2D Particle constructor caled." << std::endl;
@@ -24,7 +29,7 @@ Particle2D::~Particle2D() {
 
 void Particle2D::EulerIntegrate(float dt) {
     // Find the acceleration of the forces being applied
-    acceleration = sumForces / mass;
+    acceleration = sumForces * invMass;
     
     // Find the velocity of the particle
     velocity += acceleration * dt;
@@ -39,7 +44,7 @@ void Particle2D::EulerIntegrate(float dt) {
 // Solve for the position of the particle at the next time step in place
 void Particle2D::VerletIntegrate(float dt) {
     Vec2 newPosition = this->position + this->velocity * dt + this->acceleration * dt * dt;
-    Vec2 newAcceleration = this->sumForces / this->mass;
+    Vec2 newAcceleration = this->sumForces * invMass;
     Vec2 newVelocity = velocity + (newAcceleration + acceleration) * dt * 0.5f;
 
     this->position = newPosition;

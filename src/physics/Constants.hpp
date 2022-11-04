@@ -4,6 +4,6 @@
 const int FPS = 60;
 const int MILLISECONDS_PER_FRAME = 1000 / FPS;
 
-const int PIXELS_PER_METER = 5000;
+const int PIXELS_PER_METER = 4000;
 
 #endif

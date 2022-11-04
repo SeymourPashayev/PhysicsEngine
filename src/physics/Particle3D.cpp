@@ -12,7 +12,12 @@
 
 Particle3D::Particle3D(float x, float y, float z, float mass, float radius) {
     this->position = Vec3(x, y, z);
+    
     this->mass = mass;
+    if (mass != 0.0) {
+        invMass = 1.0 / mass;
+    }
+    
     this->radius = radius;
 
     std::cout << "3D Particle constructor caled." << std::endl;
@@ -24,7 +29,7 @@ Particle3D::~Particle3D() {
 
 void Particle3D::EulerIntegrate(float dt) {
     // Find the acceleration of the forces being applied
-    acceleration = sumForces / mass;
+    acceleration = sumForces * invMass;
     
     // Find the velocity of the particle
     velocity += acceleration * dt;
@@ -39,7 +44,7 @@ void Particle3D::EulerIntegrate(float dt) {
 // Solve for the position of the particle at the next time step in place
 void Particle3D::VerletIntegrate(float dt) {
     Vec3 newPosition = this->position + this->velocity * dt + this->acceleration * dt * dt;
-    Vec3 newAcceleration = this->sumForces / this->mass;
+    Vec3 newAcceleration = this->sumForces * invMass;
     Vec3 newVelocity = velocity + (newAcceleration + acceleration) * dt * 0.5f;
 
     this->position = newPosition;

@@ -1,4 +1,4 @@
-#include "Mouse.h"
+#include "Mouse.hpp"
 
 void Mouse::IncreaseCursorSize(float increment) {
 

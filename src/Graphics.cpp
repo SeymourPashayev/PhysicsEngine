@@ -102,3 +102,19 @@ void Graphics::CloseWindow(void) {
     SDL_DestroyWindow(window);
     SDL_Quit();
 }
+
+void Graphics::DrawCircleFade(int x, int y, int radius, float angle, Uint32 color, float fade) {
+    // Draw a circle that fades out as it gets further from the center
+    int r = (color >> 16) & 0xFF;
+    int g = (color >> 8) & 0xFF;
+    int b = color & 0xFF;
+    int a = (color >> 24) & 0xFF;
+    int r2 = r * fade;
+    int g2 = g * fade;
+    int b2 = b * fade;
+    int a2 = a * fade;
+    Uint32 color2 = (a2 << 24) | (r2 << 16) | (g2 << 8) | b2;
+    circleColor(renderer, x, y, radius, color2);
+    lineColor(renderer, x, y, x + cos(angle) * radius, y + sin(angle) * radius, color2);
+
+}

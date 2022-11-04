@@ -14,6 +14,8 @@ struct Particle3D {
     Vec3 sumForces;
 
     float mass;
+    float invMass;
+    
     float radius;
     //float damping;
     

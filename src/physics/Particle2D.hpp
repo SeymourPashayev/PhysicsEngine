@@ -14,6 +14,8 @@ struct Particle2D {
     Vec2 sumForces;
 
     float mass;
+    float invMass;
+    
     float radius;
     //float damping;
     

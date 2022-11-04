@@ -1,5 +1,5 @@
-#ifndef MOUSE_H
-#define MOUSE_H
+#ifndef MOUSE_HPP
+#define MOUSE_HPP
 
 #include "./Physics/Vec2.hpp"
 

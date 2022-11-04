@@ -3,12 +3,18 @@
 
 #include "./Graphics.h"
 #include "./Physics/Particle2D.hpp"
+#include <vector>
+
 
 class Application {
     private:
         bool running = false;
-        Particle2D* particle;
-
+        
+        std::vector<Particle2D*> particles;
+        Vec2 pushForce = Vec2(0.0f, 0.0f);
+        
+        SDL_Rect liquid;
+        
     public:
         Application() = default;
         ~Application() = default;
