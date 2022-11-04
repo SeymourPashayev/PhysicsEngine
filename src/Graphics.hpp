@@ -27,8 +27,6 @@ struct Graphics {
     static void DrawFillPolygon(int x, int y, const std::vector<Vec2>& vertices, Uint32 color);
     static void DrawTexture(int x, int y, int width, int height, float rotation, SDL_Texture* texture);
 
-    // Creative Shaders
-    static void DrawCircleFade(int x, int y, int radius, float angle, Uint32 color, float fade);
 };
 
 #endif

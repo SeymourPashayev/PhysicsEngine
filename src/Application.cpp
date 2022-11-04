@@ -1,4 +1,4 @@
-#include "Application.h"
+#include "Application.hpp"
 #include "./Physics/Constants.hpp"
 
 bool Application::IsRunning() {
@@ -165,7 +165,7 @@ void Application::Render() {
     Graphics::ClearScreen(0xFF056263);
     
     for(auto particle: particles){
-        Graphics::DrawCircleFade(particle->position.x, particle->position.y, particle->radius, 1.0, 0xFFFFFFFF, 1.0);
+        Graphics::DrawFillCircle(particle->position.x, particle->position.y, particle->radius, 0xFFFFFFFF);
     }
     
     Graphics::RenderFrame();

@@ -1,7 +1,7 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
-#include "./Graphics.h"
+#include "./Graphics.hpp"
 #include "./Physics/Particle2D.hpp"
 #include <vector>
 
