@@ -11,7 +11,7 @@ bool Application::IsRunning() {
 void Application::Setup() {
     running = Graphics::OpenWindow();
     
-    particle = new Particle(200, 200, 1.0f, 50.0f);
+    particle = new Particle2D(200, 200, 1.0f, 50.0f);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

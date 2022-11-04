@@ -4,25 +4,25 @@
 // Seymour Pashayev
 // gitHub:@SeymourPashayev
 // ------------------------
-// Particle.cpp - A particle struct for the engine
+// Particle2D.cpp - A 2D particle struct for the engine
 
 #include <iostream>
-#include "Particle.hpp"
+#include "Particle2D.hpp"
 #include "Constants.hpp"
 
-Particle::Particle(float x, float y, float mass, float radius) {
+Particle2D::Particle2D(float x, float y, float mass, float radius) {
     this->position = Vec2(x, y);
     this->mass = mass;
     this->radius = radius;
 
-    std::cout << "Particle constructor caled." << std::endl;
+    std::cout << "2D Particle constructor caled." << std::endl;
 }
 
-Particle::~Particle() {
-    std::cout << "Particle destructor called." << std::endl;
+Particle2D::~Particle2D() {
+    std::cout << "2D Particle destructor called." << std::endl;
 }
 
-void Particle::EulerIntegrate(float dt) {
+void Particle2D::EulerIntegrate(float dt) {
     // Find the acceleration of the forces being applied
     acceleration = sumForces / mass;
     
@@ -37,7 +37,7 @@ void Particle::EulerIntegrate(float dt) {
 }
 
 // Solve for the position of the particle at the next time step in place
-void Particle::VerletIntegrate(float dt) {
+void Particle2D::VerletIntegrate(float dt) {
     Vec2 newPosition = this->position + this->velocity * dt + this->acceleration * dt * dt;
     Vec2 newAcceleration = this->sumForces / this->mass;
     Vec2 newVelocity = velocity + (newAcceleration + acceleration) * dt * 0.5f;
@@ -51,10 +51,10 @@ void Particle::VerletIntegrate(float dt) {
 
 }
 
-void Particle::AddForce(const Vec2& force) {
+void Particle2D::AddForce(const Vec2& force) {
     this->sumForces += force;
 }
 
-void Particle::ClearForces() {
+void Particle2D::ClearForces() {
     this->sumForces = Vec2(0.0f, 0.0f);
 }

@@ -3,7 +3,7 @@
 
 #include "Vec2.hpp"
 
-struct Particle {
+struct Particle2D {
     
     Vec2 position;
     Vec2 prevPosition;
@@ -17,8 +17,8 @@ struct Particle {
     float radius;
     //float damping;
     
-    Particle(float x, float y, float mass=10.0f, float radius=4.0f);
-    ~Particle();
+    Particle2D(float x, float y, float mass=10.0f, float radius=4.0f);
+    ~Particle2D();
 
     // Integration Methods
     void EulerIntegrate(float dt);

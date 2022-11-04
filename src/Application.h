@@ -2,12 +2,12 @@
 #define APPLICATION_H
 
 #include "./Graphics.h"
-#include "./Physics/Particle.hpp"
+#include "./Physics/Particle2D.hpp"
 
 class Application {
     private:
         bool running = false;
-        Particle* particle;
+        Particle2D* particle;
 
     public:
         Application() = default;
