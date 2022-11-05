@@ -7,7 +7,7 @@
 struct Force {
 
     static Vec2 GenerateDragForce(const Particle2D& particle, float dragCoefficient, float area = 1.0);
-        
+
 };
 
 #endif

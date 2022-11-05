@@ -1,4 +1,8 @@
 #include "Application.hpp"
+
+// Temporary Include of Force
+#include "./Physics/Force.hpp"
+
 #include "./Physics/Constants.hpp"
 
 bool Application::IsRunning() {
@@ -25,6 +29,12 @@ void Application::Setup() {
 
     Particle2D* bigBall2 = new Particle2D(50, 300, 75, 25);
     particles.push_back(bigBall2);
+
+    // Create a 100 random sized balls
+   // for (int i = 0; i < 10; i++) {
+   //     Particle2D* ball = new Particle2D(50, 400, rand() % 250, rand() % 250);
+   //     particles.push_back(ball);
+   // }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -136,6 +146,7 @@ void Application::Update() {
         //particle->EulerIntegrate(deltaTime);
         particle->VerletIntegrate(deltaTime);
     }
+
         
     for (auto particle: particles){
         // Check if the particle has hit the screen boundaries, and if so, reverse the velocity
