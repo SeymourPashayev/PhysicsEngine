@@ -24,10 +24,10 @@ void Application::Setup() {
     Particle2D* smallBall = new Particle2D(50, 100, 5, 5);
     particles.push_back(smallBall);
     
-    Particle2D* bigBall = new Particle2D(50, 200, 75, 25);
+    Particle2D* bigBall = new Particle2D(50, 200, 20, 25);
     particles.push_back(bigBall);
 
-    Particle2D* bigBall2 = new Particle2D(50, 300, 75, 25);
+    Particle2D* bigBall2 = new Particle2D(50, 300, 20, 25);
     particles.push_back(bigBall2);
 
     // Create a 100 random sized balls
@@ -51,13 +51,13 @@ void Application::Input() {
                 if (event.key.keysym.sym == SDLK_ESCAPE)
                     running = false;
                 if (event.key.keysym.sym == SDLK_UP)
-                    pushForce.y = -50 * PIXELS_PER_METER;
+                    pushForce.y = -150 * PIXELS_PER_METER;
                 if (event.key.keysym.sym == SDLK_DOWN)
-                    pushForce.y = 50 * PIXELS_PER_METER;
+                    pushForce.y = 150 * PIXELS_PER_METER;
                 if (event.key.keysym.sym == SDLK_RIGHT)
-                    pushForce.x = 50 * PIXELS_PER_METER;
+                    pushForce.x = 150 * PIXELS_PER_METER;
                 if (event.key.keysym.sym == SDLK_LEFT)
-                    pushForce.x = -50 * PIXELS_PER_METER;
+                    pushForce.x = -150 * PIXELS_PER_METER;
                 break;
             case SDL_KEYUP:
                 if (event.key.keysym.sym == SDLK_UP)
@@ -134,11 +134,14 @@ void Application::Update() {
     for (auto particle: particles){
         Vec2 weight = Vec2(0.0f, particle->mass * 9.81f * PIXELS_PER_METER);
         particle->AddForce(weight);
-    }
-    
-    // Add push force
-    for (auto particle: particles){
+   
         particle->AddForce(pushForce);
+    
+        // Add drag force inside the liquid
+        if (particle->position.y > liquid.y) {
+            Vec2 drag = Force::GenerateDragForce(*particle, 0.08f);
+            particle->AddForce(drag);
+        }
     }
     
     // Integrate the acceleration and velocity to get the position
@@ -174,7 +177,10 @@ void Application::Update() {
 ///////////////////////////////////////////////////////////////////////////////
 void Application::Render() {
     Graphics::ClearScreen(0xFF056263);
-    
+   
+    // Draw the liquid
+    Graphics::DrawFillRect(liquid.x + liquid.w/2, liquid.y + liquid.h/2, liquid.w, liquid.h, 0xFF6E3713); 
+
     for(auto particle: particles){
         Graphics::DrawFillCircle(particle->position.x, particle->position.y, particle->radius, 0xFFFFFFFF);
     }
