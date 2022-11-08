@@ -3,14 +3,19 @@
 
 #include "./Graphics.hpp"
 #include "./Physics/Particle2D.hpp"
+#include "./Physics/ParticleSystem2D.hpp"
+#include "./Inputs/Mouse.hpp"
 #include <vector>
 
 
 class Application {
     private:
-        bool running = false;
         
-        std::vector<Particle2D*> particles;
+        bool running = false;
+
+        Mouse* mouse;
+        ParticleSystem2D* particleSystem;
+        
         Vec2 pushForce = Vec2(0.0f, 0.0f);
         
         SDL_Rect liquid;

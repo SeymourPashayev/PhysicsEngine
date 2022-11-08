@@ -26,6 +26,7 @@ struct Particle2D {
     void EulerIntegrate(float dt);
     void VerletIntegrate(float dt);
 
+    // Force Calculations
     void AddForce(const Vec2& force);
     void ClearForces();
 

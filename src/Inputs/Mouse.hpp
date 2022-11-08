@@ -1,11 +1,9 @@
 #ifndef MOUSE_HPP
 #define MOUSE_HPP
 
-#include "./Physics/Vec2.hpp"
+#include "../Physics/Vec2.hpp"
 
-class Mouse {
-    private:
-        
+struct Mouse {
         Vec2 position;
         Vec2 prevPosition;
 
@@ -16,13 +14,13 @@ class Mouse {
         bool leftClick = false;
         bool rightClick = false;
 
-    public:
-
-        Mouse() = default;
-        ~Mouse() = default;
+        // ----
+        
+        Mouse();
+        ~Mouse();
 
         void UpdatePosition(Vec2 pos);
-        const Vec2& GetPosition() cons {cehuct pos; }
+        const Vec2& GetPosition() const { return position; }
         const Vec2& GetPrevPosition() const { return prevPosition; }
 
         bool GetLeftClick() const { return leftClick; }
@@ -33,6 +31,8 @@ class Mouse {
 
         void IncreaseCursorSize(float amount);
         float GetCursorSize() const { return cursorSize; }
+
+        void printCurrentLocation();
 };
 
 #endif

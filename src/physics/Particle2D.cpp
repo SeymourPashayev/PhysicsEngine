@@ -28,6 +28,10 @@ Particle2D::~Particle2D() {
 }
 
 void Particle2D::EulerIntegrate(float dt) {
+
+    // Save the previous position
+    this->prevPosition = this->position;
+
     // Find the acceleration of the forces being applied
     acceleration = sumForces * invMass;
     
@@ -43,6 +47,10 @@ void Particle2D::EulerIntegrate(float dt) {
 
 // Solve for the position of the particle at the next time step in place
 void Particle2D::VerletIntegrate(float dt) {
+    
+    // Save the current position for the previous position
+    //this->prevPosition = this->position;
+
     Vec2 newPosition = this->position + this->velocity * dt + this->acceleration * dt * dt;
     Vec2 newAcceleration = this->sumForces * invMass;
     Vec2 newVelocity = velocity + (newAcceleration + acceleration) * dt * 0.5f;

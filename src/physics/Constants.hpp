@@ -6,4 +6,7 @@ const int MILLISECONDS_PER_FRAME = 1000 / FPS;
 
 const int PIXELS_PER_METER = 4000;
 
+// Simulation Constants
+const float GRAVITY = 9.81f;
+
 #endif

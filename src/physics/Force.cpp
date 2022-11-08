@@ -30,4 +30,8 @@ Vec2 Force::GenerateDragForce(const Particle2D& particle, float dragCoefficient,
 
 }
 
+Vec2 Force::GenerateWeightForce(const Particle2D& particle) {
+    return Vec2(0.0f, particle.mass * GRAVITY * PIXELS_PER_METER);
+}
+
 
