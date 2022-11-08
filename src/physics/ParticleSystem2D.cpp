@@ -2,6 +2,8 @@
 #include "Particle2D.hpp"
 #include "Force.hpp"
 
+#include <iostream>
+
 ParticleSystem2D::ParticleSystem2D() {
     
     std::cout << "Particle System Initiated" << std::endl;
@@ -10,7 +12,6 @@ ParticleSystem2D::ParticleSystem2D() {
     std::vector<Particle2D> particles;
 
     // Create one particle
-    particles.push_back(Particle2D(300, 300));
 
 }
 
