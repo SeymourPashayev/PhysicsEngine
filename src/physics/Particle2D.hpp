@@ -19,7 +19,7 @@ struct Particle2D {
     float radius;
     //float damping;
     
-    Particle2D(float x, float y, float mass=10.0f, float radius=4.0f);
+    Particle2D(float x, float y, float mass=10.0f, float radius=40.0f);
     ~Particle2D();
 
     // Integration Methods

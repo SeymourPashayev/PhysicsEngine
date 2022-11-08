@@ -18,7 +18,7 @@ void Application::Setup() {
     
     // Setup Mouse and Particle System
     mouse = new Mouse();
-    particleSystem = new ParticleSystem2D();
+    particleSystem = new ParticleSystem2D(mouse);
     
     // TODO: Move Away Liquid Definition to a separate class
     // Liquid Setup
@@ -66,6 +66,8 @@ void Application::Input() {
             case SDL_MOUSEBUTTONDOWN:
                 if (event.button.button == SDL_BUTTON_LEFT) {
                     mouse->SetLeftClick(true);
+                    // create a partcile
+                    particleSystem->CreateRandomParticleAtMouse();
                 }
                 if (event.button.button == SDL_BUTTON_RIGHT) {
                     mouse->SetRightClick(true);
@@ -136,7 +138,11 @@ void Application::Render() {
     // Draw the liquid
     // Graphics::DrawFillRect(liquid.x + liquid.w/2, liquid.y + liquid.h/2, liquid.w, liquid.h, 0xFF6E3713); 
 
-    particleSystem->Draw();
+    // particleSystem->Draw();
+    // Draw the Objects in the Scene
+    for (auto particle: particleSystem->particles){
+        Graphics::DrawFillCircle(particle->position.x, particle->position.y, particle->radius, 0xFFE0E0E0);
+    }
 
     Graphics::RenderFrame();
 }

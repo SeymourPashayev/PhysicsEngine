@@ -13,11 +13,12 @@
 
 struct ParticleSystem2D {
 
-    std::vector<Particle2D> particles;
+    std::vector<Particle2D*> particles;
+    Mouse* mouse;
 
     // ------------------------------
     
-    ParticleSystem2D();
+    ParticleSystem2D(Mouse* mouse);
     ~ParticleSystem2D();
     
     void Update(float dt, Vec2 pushForce);
@@ -27,7 +28,7 @@ struct ParticleSystem2D {
     void CheckForScreenCollisions();
 
     // Interactions
-    void CreateRandomParticleAtMouse(Mouse* mouse);
+    void CreateRandomParticleAtMouse();
 
 };
 

@@ -4,14 +4,13 @@
 
 #include <iostream>
 
-ParticleSystem2D::ParticleSystem2D() {
+ParticleSystem2D::ParticleSystem2D(Mouse* mouse) {
+    this->mouse = mouse;
     
     std::cout << "Particle System Initiated" << std::endl;
     
     // Vector of particles
     std::vector<Particle2D> particles;
-
-    // Create one particle
 
 }
 
@@ -21,14 +20,17 @@ ParticleSystem2D::~ParticleSystem2D() {
 
     // Delete all particle references
     for (auto &particle : particles) {
-        delete &particle;
+        if (particle != nullptr) {
+            delete particle;
+            particle = nullptr;
+        }
     }
 
 }
 
 void ParticleSystem2D::Draw() {
-    for (auto particle : particles) {
-        Graphics::DrawFillCircle(particle.position.x, particle.position.y, particle.radius, 0XFFFFFF);
+    for (Particle2D* particle : particles) {
+        Graphics::DrawFillCircle(particle->position.x, particle->position.y, particle->radius, 0XFFFFFF);
     }
 }
 
@@ -36,8 +38,8 @@ void ParticleSystem2D::Update(float dt, Vec2 pushForce) {
     
     // Generate and Add Forces to all the particles
     for (auto particle: particles) {
-        particle.AddForce(pushForce);
-        particle.AddForce(Force::GenerateWeightForce(particle));
+        particle->AddForce(pushForce);
+        particle->AddForce(Force::GenerateWeightForce(*particle));
         // TODO: Move Liquid Definition and Generate Drag Force
         //particle->ApplyForce(Force::GenerateDragForce(*particle, 0.08f));
 
@@ -45,7 +47,7 @@ void ParticleSystem2D::Update(float dt, Vec2 pushForce) {
 
     // Integrate all the particles
     for (auto particle : particles) {
-        particle.VerletIntegrate(dt);
+        particle->VerletIntegrate(dt);
     }
 
     // Check for collisions
@@ -55,25 +57,33 @@ void ParticleSystem2D::Update(float dt, Vec2 pushForce) {
 
 void ParticleSystem2D::CheckForScreenCollisions(){
     for (auto particle: particles) {
-        if (particle.position.y > Graphics::Height() - particle.radius) {
-            particle.position.y = Graphics::Height() - particle.radius;
-            particle.velocity.y *= -0.9f;
+        if (particle->position.y > Graphics::Height() - particle->radius) {
+            particle->position.y = Graphics::Height() - particle->radius;
+            particle->velocity.y *= -0.9f;
         }
 
-        if (particle.position.x > Graphics::Width() - particle.radius) {
-            particle.position.x = Graphics::Width() - particle.radius;
-            particle.velocity.x *= -0.9f;
+        if (particle->position.x > Graphics::Width() - particle->radius) {
+            particle->position.x = Graphics::Width() - particle->radius;
+            particle->velocity.x *= -0.9f;
         }
 
-        if (particle.position.x < particle.radius) {
-            particle.position.x = particle.radius;
-            particle.velocity.x *= -0.9f;
+        if (particle->position.x < particle->radius) {
+            particle->position.x = particle->radius;
+            particle->velocity.x *= -0.9f;
         }
 
-        if (particle.position.y < particle.radius) {
-            particle.position.y = particle.radius;
-            particle.velocity.y *= -0.9f;
+        if (particle->position.y < particle->radius) {
+            particle->position.y = particle->radius;
+            particle->velocity.y *= -0.9f;
         }
+    }
+}
+
+// Create a particle with mouse click at mouse position
+void ParticleSystem2D::CreateRandomParticleAtMouse() {
+    if (mouse->GetLeftClick() == true) {
+        Vec2 mousePos = mouse->GetPosition();
+        particles.push_back(new Particle2D(mousePos.x, mousePos.y));
     }
 }
 
