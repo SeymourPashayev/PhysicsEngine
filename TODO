@@ -1,5 +1,1 @@
-There's something wrong with updating and rendering particles through the ParticleSystem2D.cpp class. Something is going on with the refferences. Try to fix that. 
-Whenever I do the same Update() and Render() in Application class, it is successful, but as soon as I move it into another class, the functionality doesn't work.
-
-- Rename the Draw in the ParticleSystem2D into Render() function.
-- FIX THE ERROR WITH PARTICLES BEING STUCK
+- Research the name of a complex system? The system in which small change in input variables results in drastically different results down the line. Research that in c++ and in relation to shaders. Research the necessary information to integrate that through the frequency input

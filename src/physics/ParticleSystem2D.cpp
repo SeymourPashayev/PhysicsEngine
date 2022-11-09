@@ -39,7 +39,8 @@ void ParticleSystem2D::Draw() {
 }
 
 void ParticleSystem2D::Update(float dt, Vec2 pushForce) {
-    
+   
+    // TODO: I think adding forces should be a separate function
     // Generate and Add Forces to all the particles
     for (auto particle: particles) {
         particle->AddForce(pushForce);
@@ -52,6 +53,8 @@ void ParticleSystem2D::Update(float dt, Vec2 pushForce) {
     // Integrate all the particles
     for (auto particle : particles) {
         particle->VerletIntegrate(dt);
+        // Alternative Integration: Euler Integration, use one at a time
+        // particle->EulerIntegrate(dt);
     }
 
     // Check for collisions
@@ -90,10 +93,4 @@ void ParticleSystem2D::CreateRandomParticleAtMouse() {
         particles.push_back(new Particle2D(mousePos.x, mousePos.y));
     }
 }
-
-// TODO: Make mouse create a particle
-//void ParticleSystem2D::CreateRandomParticleAtMouse(Mouse* mouse) {
-//    Particle2D particle = Particle2D(Vec2(mouse->x, mouse->y), Vec2(0.0f, 0.0f));
-//    particles.push_back(particle);
-//}
 
