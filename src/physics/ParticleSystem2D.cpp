@@ -29,9 +29,13 @@ ParticleSystem2D::~ParticleSystem2D() {
 }
 
 void ParticleSystem2D::Draw() {
-    for (Particle2D* particle : particles) {
-        Graphics::DrawFillCircle(particle->position.x, particle->position.y, particle->radius, 0XFFFFFF);
+
+    for (auto particle: particles){
+        if (particle != nullptr) {
+            Graphics::DrawFillCircle(particle->position.x, particle->position.y, particle->radius, 0xFFE0E0E0);
+        }
     }
+
 }
 
 void ParticleSystem2D::Update(float dt, Vec2 pushForce) {

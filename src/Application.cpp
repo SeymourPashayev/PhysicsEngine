@@ -125,7 +125,7 @@ void Application::Update() {
     timePreviousFrame = SDL_GetTicks();
     
     // Update the Objects in the Scene
-    //particleSystem->Update(deltaTime, pushForce);
+    particleSystem->Update(deltaTime, pushForce);
 
 }
 
@@ -138,11 +138,7 @@ void Application::Render() {
     // Draw the liquid
     // Graphics::DrawFillRect(liquid.x + liquid.w/2, liquid.y + liquid.h/2, liquid.w, liquid.h, 0xFF6E3713); 
 
-    // particleSystem->Draw();
-    // Draw the Objects in the Scene
-    for (auto particle: particleSystem->particles){
-        Graphics::DrawFillCircle(particle->position.x, particle->position.y, particle->radius, 0xFFE0E0E0);
-    }
+    particleSystem->Draw();
 
     Graphics::RenderFrame();
 }
