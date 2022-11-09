@@ -20,13 +20,6 @@ void Application::Setup() {
     mouse = new Mouse();
     particleSystem = new ParticleSystem2D(mouse);
     
-    // TODO: Move Away Liquid Definition to a separate class
-    // Liquid Setup
-    liquid.x = 0;
-    liquid.y = Graphics::Height() / 2;
-    liquid.w = Graphics::Width();
-    liquid.h = Graphics::Height() / 2;
-
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -45,13 +38,13 @@ void Application::Input() {
                 if (event.key.keysym.sym == SDLK_ESCAPE)
                     running = false;
                 if (event.key.keysym.sym == SDLK_UP)
-                    pushForce.y = -150 * PIXELS_PER_METER;
+                    pushForce.y = - 100 * PIXELS_PER_METER;
                 if (event.key.keysym.sym == SDLK_DOWN)
-                    pushForce.y = 150 * PIXELS_PER_METER;
+                    pushForce.y = 100 * PIXELS_PER_METER;
                 if (event.key.keysym.sym == SDLK_RIGHT)
-                    pushForce.x = 150 * PIXELS_PER_METER;
+                    pushForce.x = 100 * PIXELS_PER_METER;
                 if (event.key.keysym.sym == SDLK_LEFT)
-                    pushForce.x = -150 * PIXELS_PER_METER;
+                    pushForce.x = -100 * PIXELS_PER_METER;
                 break;
             case SDL_KEYUP:
                 if (event.key.keysym.sym == SDLK_UP)
@@ -133,14 +126,13 @@ void Application::Update() {
 // Render function (called several times per second to draw objects)
 ///////////////////////////////////////////////////////////////////////////////
 void Application::Render() {
+
     Graphics::ClearScreen(0xFF056263);
    
-    // Draw the liquid
-    // Graphics::DrawFillRect(liquid.x + liquid.w/2, liquid.y + liquid.h/2, liquid.w, liquid.h, 0xFF6E3713); 
-
     particleSystem->Draw();
 
     Graphics::RenderFrame();
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////

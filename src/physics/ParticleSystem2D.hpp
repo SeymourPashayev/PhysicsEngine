@@ -12,7 +12,8 @@
 #include <iostream>
 
 struct ParticleSystem2D {
-
+    
+    SDL_Rect liquid;
     std::vector<Particle2D*> particles;
     Mouse* mouse;
 
@@ -28,7 +29,9 @@ struct ParticleSystem2D {
     void CheckForScreenCollisions();
 
     // Interactions
-    void CreateRandomParticleAtMouse();
+    void CreateParticleAtMouse();
+    
+    // Future Idea, TODO: Implement something that uses jerk (3rd derivative). Research applications of jerk calculation in simulations
 
 };
 

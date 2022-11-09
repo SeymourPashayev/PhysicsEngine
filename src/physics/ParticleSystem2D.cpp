@@ -5,12 +5,20 @@
 #include <iostream>
 
 ParticleSystem2D::ParticleSystem2D(Mouse* mouse) {
+
     this->mouse = mouse;
     
     std::cout << "Particle System Initiated" << std::endl;
     
     // Vector of particles
     std::vector<Particle2D> particles;
+    
+    // Liquid Definition and Location is Temporary. Will be moved to a separate class
+    // Liquid Setup
+    liquid.x = 0;
+    liquid.y = Graphics::Height() / 2;
+    liquid.w = Graphics::Width();
+    liquid.h = Graphics::Height() / 2;
 
 }
 
@@ -29,6 +37,9 @@ ParticleSystem2D::~ParticleSystem2D() {
 }
 
 void ParticleSystem2D::Draw() {
+    
+    // Draw the liquid
+    Graphics::DrawFillRect(liquid.x + liquid.w/2, liquid.y + liquid.h/2, liquid.w, liquid.h, 0xFF6E3713); 
 
     for (auto particle: particles){
         if (particle != nullptr) {
@@ -40,13 +51,22 @@ void ParticleSystem2D::Draw() {
 
 void ParticleSystem2D::Update(float dt, Vec2 pushForce) {
    
-    // TODO: I think adding forces should be a separate function
     // Generate and Add Forces to all the particles
     for (auto particle: particles) {
+
+        // Arrow Key Push Force
         particle->AddForce(pushForce);
+
+        // Gravity
         particle->AddForce(Force::GenerateWeightForce(*particle));
-        // TODO: Move Liquid Definition and Generate Drag Force
-        //particle->ApplyForce(Force::GenerateDragForce(*particle, 0.08f));
+
+        // Friction Force
+        // particle->AddForce(Force::GenerateFrictionForce(*particle, 0.6f));
+
+        // Drag Force, if the particle is in the liquid
+        if (particle->position.y > liquid.y) {
+            particle->AddForce(Force::GenerateDragForce(*particle, 0.09f));
+        }
 
     }
 
@@ -90,7 +110,9 @@ void ParticleSystem2D::CheckForScreenCollisions(){
 void ParticleSystem2D::CreateRandomParticleAtMouse() {
     if (mouse->GetLeftClick() == true) {
         Vec2 mousePos = mouse->GetPosition();
-        particles.push_back(new Particle2D(mousePos.x, mousePos.y));
+        particles.push_back(new Particle2D(mousePos.x, mousePos.y, 3.0f, 25.0f));
     }
 }
+
+void 
 
