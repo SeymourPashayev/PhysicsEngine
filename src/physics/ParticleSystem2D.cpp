@@ -31,6 +31,8 @@ ParticleSystem2D::~ParticleSystem2D() {
         if (particle != nullptr) {
             delete particle;
             particle = nullptr;
+
+            particleCount--;
         }
     }
 
@@ -43,7 +45,7 @@ void ParticleSystem2D::Draw() {
 
     for (auto particle: particles){
         if (particle != nullptr) {
-            Graphics::DrawFillCircle(particle->position.x, particle->position.y, particle->radius, 0xFFE0E0E0);
+            Graphics::DrawFillCircle(particle->position.x, particle->position.y, particle->radius, particle->color);
         }
     }
 
@@ -80,6 +82,12 @@ void ParticleSystem2D::Update(float dt, Vec2 pushForce) {
     // Check for collisions
     CheckForScreenCollisions();
 
+    // Check for Particle Collisions
+    // TODO: Conservation of Linear Momentum
+    // TODO: Conservation of Angular Momentum
+    // TODO: Collision Resolution
+    CheckForParticleCollisions();
+
 }
 
 void ParticleSystem2D::CheckForScreenCollisions(){
@@ -107,12 +115,24 @@ void ParticleSystem2D::CheckForScreenCollisions(){
 }
 
 // Create a particle with mouse click at mouse position
-void ParticleSystem2D::CreateRandomParticleAtMouse() {
+void ParticleSystem2D::CreateParticleAtMouse() {
     if (mouse->GetLeftClick() == true) {
+
         Vec2 mousePos = mouse->GetPosition();
         particles.push_back(new Particle2D(mousePos.x, mousePos.y, 3.0f, 25.0f));
+        
+        // Add to the count of particles
+        particleCount++;
     }
 }
 
-void 
+void ParticleSystem2D::CheckForParticleCollisions() {
+    for (int i = 0; i < this->particleCount; i++) {
+        for (int j = i + 1; j < this->particleCount; j++) {
+            if (particles[i]->CheckCollision(*particles[j])) {
+                particles[i]->ResolveCollision(*particles[j]);
+            }
+        }
+    }
+}
 

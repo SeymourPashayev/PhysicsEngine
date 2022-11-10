@@ -60,7 +60,7 @@ void Application::Input() {
                 if (event.button.button == SDL_BUTTON_LEFT) {
                     mouse->SetLeftClick(true);
                     // create a partcile
-                    particleSystem->CreateRandomParticleAtMouse();
+                    particleSystem->CreateParticleAtMouse();
                 }
                 if (event.button.button == SDL_BUTTON_RIGHT) {
                     mouse->SetRightClick(true);

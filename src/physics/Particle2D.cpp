@@ -6,6 +6,7 @@
 // ------------------------
 // Particle2D.cpp - A 2D particle struct for the engine
 
+#include <SDL2/SDL_timer.h>
 #include <iostream>
 #include "Particle2D.hpp"
 #include "Constants.hpp"
@@ -70,4 +71,58 @@ void Particle2D::AddForce(const Vec2& force) {
 
 void Particle2D::ClearForces() {
     this->sumForces = Vec2(0.0f, 0.0f);
+}
+
+// ---- Collision Detection ----
+bool Particle2D::CheckCollision(Particle2D& other) {
+    float distance = (this->position - other.position).Magnitude();
+    float minDistance = this->radius + other.radius;
+    
+    return distance < minDistance;
+}
+
+void Particle2D::ResolveCollision(Particle2D& other){
+
+    // Change the particle color if they collide
+    // this->CollisionColorImpulse();
+    // other.CollisionColorImpulse();
+
+    // Find the normal vector
+    Vec2 normal = (other.position - this->position).Normalize();
+
+    // Find the tangent vector
+    Vec2 tangent = Vec2(-normal.y, normal.x);
+
+    // Find the dot product of the velocity and the normal
+    float dpTan1 = this->velocity.Dot(tangent);
+    float dpTan2 = other.velocity.Dot(tangent);
+
+    // Find the dot product of the velocity and the normal
+    float dpNorm1 = this->velocity.Dot(normal);
+    float dpNorm2 = other.velocity.Dot(normal);
+
+    // Conservation of momentum in 1D
+    float m1 = (dpNorm1 * (this->mass - other.mass) + 2.0f * other.mass * dpNorm2) / (this->mass + other.mass);
+    float m2 = (dpNorm2 * (other.mass - this->mass) + 2.0f * this->mass * dpNorm1) / (this->mass + other.mass);
+
+    // Update the velocity
+    this->velocity = tangent * dpTan1 + normal * m1;
+    other.velocity = tangent * dpTan2 + normal * m2;
+}
+
+
+void Particle2D::CollisionColorImpulse() {
+    // Save the time of collision
+    float now = SDL_GetTicks();
+    float endOfColorChange = now + 100.0f;
+
+    // Change the color of the particle to red
+    while (now < endOfColorChange) {
+        this->color = 0xFF0000FF;
+        now = SDL_GetTicks();
+    }
+
+    // Change the color of the particle back to white
+    this->color = 0xFFFFFFFF;
+
 }
