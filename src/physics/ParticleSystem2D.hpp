@@ -13,7 +13,10 @@
 
 struct ParticleSystem2D {
     
+    // Temporary Variables
     SDL_Rect liquid;
+    float mass = 1000;
+    float radius = 200;
 
     std::vector<Particle2D*> particles;
     int particleCount = 0;
@@ -26,7 +29,9 @@ struct ParticleSystem2D {
     ~ParticleSystem2D();
     
     void Update(float dt, Vec2 pushForce);
+
     void Draw();
+    void DrawForceVector(Particle2D *particle);
 
     // Helper Functions
     void CheckForScreenCollisions();

@@ -12,7 +12,7 @@ ParticleSystem2D::ParticleSystem2D(Mouse* mouse) {
     
     // Vector of particles
     std::vector<Particle2D> particles;
-    
+
     // Liquid Definition and Location is Temporary. Will be moved to a separate class
     // Liquid Setup
     liquid.x = 0;
@@ -41,11 +41,17 @@ ParticleSystem2D::~ParticleSystem2D() {
 void ParticleSystem2D::Draw() {
     
     // Draw the liquid
-    Graphics::DrawFillRect(liquid.x + liquid.w/2, liquid.y + liquid.h/2, liquid.w, liquid.h, 0xFF6E3713); 
+    // Graphics::DrawFillRect(liquid.x + liquid.w/2, liquid.y + liquid.h/2, liquid.w, liquid.h, 0xFF6E3713); 
 
     for (auto particle: particles){
         if (particle != nullptr) {
             Graphics::DrawFillCircle(particle->position.x, particle->position.y, particle->radius, particle->color);
+            
+            // Draw the velocity vector
+            // Create a unit vector representation
+            Vec2 unitDirection = particle->velocity.UnitVector()*particle->radius*2;
+
+            Graphics::DrawLine(particle->position.x, particle->position.y, particle->position.x + unitDirection.x, particle->position.y + unitDirection.y, 0xFF000000);
         }
     }
 
@@ -60,15 +66,24 @@ void ParticleSystem2D::Update(float dt, Vec2 pushForce) {
         particle->AddForce(pushForce);
 
         // Gravity
-        particle->AddForce(Force::GenerateWeightForce(*particle));
+        // particle->AddForce(Force::GenerateWeightForce(*particle));
 
         // Friction Force
-        // particle->AddForce(Force::GenerateFrictionForce(*particle, 0.6f));
+        //particle->AddForce(Force::GenerateFrictionForce(*particle, 0.6f));
+
+        // Attrattion Force for all particles
+        for (auto otherParticle: particles) {
+            if (otherParticle != particle && otherParticle != nullptr) {
+                Vec2 attraction = Force::GenerateGravitationalForce(*particle, *otherParticle, 50.0f);
+                particle->AddForce(attraction);
+                otherParticle->AddForce(-attraction);
+            }
+        }
 
         // Drag Force, if the particle is in the liquid
-        if (particle->position.y > liquid.y) {
-            particle->AddForce(Force::GenerateDragForce(*particle, 0.09f));
-        }
+        //if (particle->position.y > liquid.y) {
+        //    particle->AddForce(Force::GenerateDragForce(*particle, 0.09f));
+        //}
 
     }
 
@@ -116,13 +131,17 @@ void ParticleSystem2D::CheckForScreenCollisions(){
 
 // Create a particle with mouse click at mouse position
 void ParticleSystem2D::CreateParticleAtMouse() {
+    
     if (mouse->GetLeftClick() == true) {
 
         Vec2 mousePos = mouse->GetPosition();
-        particles.push_back(new Particle2D(mousePos.x, mousePos.y, 3.0f, 25.0f));
+        particles.push_back(new Particle2D(mousePos.x, mousePos.y, mass, radius));
         
         // Add to the count of particles
         particleCount++;
+
+        mass = 3.0f;
+        radius = 25.0f;
     }
 }
 

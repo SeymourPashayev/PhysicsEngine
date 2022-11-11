@@ -9,4 +9,6 @@ const int PIXELS_PER_METER = 4000;
 // Simulation Constants
 const float GRAVITY = 9.81f;
 
+const float GRAVITATIONAL_CONSTANT = 6.675;
+
 #endif

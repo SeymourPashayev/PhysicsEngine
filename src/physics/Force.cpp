@@ -54,3 +54,16 @@ Vec2 Force::GenerateFrictionForce(const Particle2D& particle, float frictionCoef
     return frictionForce;
 }
 
+Vec2 Force::GenerateGravitationalForce(const Particle2D& particle1, const Particle2D& particle2, float gravitationalConstant) {
+
+    // Calculate the direction of the force
+    Vec2 direction = particle2.position - particle1.position;
+
+    // Calculate the magnitude of the force
+    float magnitude = gravitationalConstant * (particle1.mass * particle2.mass) / (direction.MagnitudeSquared()) * PIXELS_PER_METER;
+
+    // Calculate the force vector
+    Vec2 force = direction.UnitVector() * magnitude;
+
+    return force;
+}

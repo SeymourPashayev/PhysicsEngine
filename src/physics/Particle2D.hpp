@@ -43,8 +43,6 @@ struct Particle2D {
     bool CheckCollision(Particle2D& other);
     void ResolveCollision(Particle2D& other);
 
-    void CollisionColorImpulse();
-
 }; //ENDOF: Particle
 
 

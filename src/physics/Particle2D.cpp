@@ -21,7 +21,7 @@ Particle2D::Particle2D(float x, float y, float mass, float radius) {
     
     this->radius = radius;
 
-    std::cout << "2D Particle constructor caled." << std::endl;
+    std::cout << "2D Particle created with mass: " << mass << std::endl;
 }
 
 Particle2D::~Particle2D() {
@@ -111,18 +111,3 @@ void Particle2D::ResolveCollision(Particle2D& other){
 }
 
 
-void Particle2D::CollisionColorImpulse() {
-    // Save the time of collision
-    float now = SDL_GetTicks();
-    float endOfColorChange = now + 100.0f;
-
-    // Change the color of the particle to red
-    while (now < endOfColorChange) {
-        this->color = 0xFF0000FF;
-        now = SDL_GetTicks();
-    }
-
-    // Change the color of the particle back to white
-    this->color = 0xFFFFFFFF;
-
-}
