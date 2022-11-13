@@ -1,6 +1,7 @@
 #include "ParticleSystem2D.hpp"
 #include "Particle2D.hpp"
 #include "Force.hpp"
+#include "Constants.hpp"
 
 #include <iostream>
 
@@ -69,12 +70,12 @@ void ParticleSystem2D::Update(float dt, Vec2 pushForce) {
         // particle->AddForce(Force::GenerateWeightForce(*particle));
 
         // Friction Force
-        //particle->AddForce(Force::GenerateFrictionForce(*particle, 0.6f));
+        particle->AddForce(Force::GenerateFrictionForce(*particle, 0.05f));
 
         // Attrattion Force for all particles
         for (auto otherParticle: particles) {
             if (otherParticle != particle && otherParticle != nullptr) {
-                Vec2 attraction = Force::GenerateGravitationalForce(*particle, *otherParticle, 50.0f);
+                Vec2 attraction = Force::GenerateGravitationalForce(*particle, *otherParticle, GRAVITY, particle->radius + otherParticle->radius, 1000.0f);
                 particle->AddForce(attraction);
                 otherParticle->AddForce(-attraction);
             }

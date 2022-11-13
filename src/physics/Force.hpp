@@ -3,7 +3,6 @@
 
 #include "./Vec2.hpp"
 #include "./Particle2D.hpp"
-#include "./Constants.hpp"
 
 struct Force {
 
@@ -12,7 +11,7 @@ struct Force {
     
     static Vec2 GenerateFrictionForce(const Particle2D& particle, float frictionCoefficient);
 
-    static Vec2 GenerateGravitationalForce(const Particle2D& particle1, const Particle2D& particle2, float gravitationalConstant = GRAVITATIONAL_CONSTANT);
+    static Vec2 GenerateGravitationalForce(const Particle2D& particle1, const Particle2D& particle2, float gravitationalConstant, float minDistance, float maxDistance);
 };
 
 #endif

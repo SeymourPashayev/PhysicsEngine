@@ -7,7 +7,12 @@
 // Helper file to generate forces on particles
 //
 
+// System Includes
+#include <algorithm>
+
+// ProjectIncludes
 #include "Force.hpp"
+#include "Constants.hpp"
 
 Vec2 Force::GenerateDragForce(const Particle2D& particle, float dragCoefficient, float area) {
     
@@ -44,7 +49,7 @@ Vec2 Force::GenerateFrictionForce(const Particle2D& particle, float frictionCoef
         Vec2 frictionDirection = particle.velocity.UnitVector() * -1.0;
 
         // Calculate the magnitude of the friction force (mu * N)
-        float frictionMagnitude = frictionCoefficient * particle.mass * GRAVITY * PIXELS_PER_METER;
+        float frictionMagnitude = frictionCoefficient * particle.mass * GRAVITY;
 
         // Generate the final friction force with direction and magnitude
         frictionForce = frictionDirection * frictionMagnitude;
@@ -54,13 +59,17 @@ Vec2 Force::GenerateFrictionForce(const Particle2D& particle, float frictionCoef
     return frictionForce;
 }
 
-Vec2 Force::GenerateGravitationalForce(const Particle2D& particle1, const Particle2D& particle2, float gravitationalConstant) {
+//TODO: Add a clamp function to limit the minimum and maximum distance when gravitational force is applied
+Vec2 Force::GenerateGravitationalForce(const Particle2D& particle1, const Particle2D& particle2, float gravitationalConstant, float minDistance, float maxDistance) {
 
     // Calculate the direction of the force
     Vec2 direction = particle2.position - particle1.position;
 
+    // Distance Squared clamped to min and max values (Ignore complier error, ycm must have a lower cpp standard enabled)
+    float distanceSquared = std::clamp(direction.MagnitudeSquared(), minDistance, maxDistance);
+
     // Calculate the magnitude of the force
-    float magnitude = gravitationalConstant * (particle1.mass * particle2.mass) / (direction.MagnitudeSquared()) * PIXELS_PER_METER;
+    float magnitude = gravitationalConstant * (particle1.mass * particle2.mass) / (distanceSquared) * PIXELS_PER_METER;
 
     // Calculate the force vector
     Vec2 force = direction.UnitVector() * magnitude;

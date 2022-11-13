@@ -15,8 +15,8 @@ struct ParticleSystem2D {
     
     // Temporary Variables
     SDL_Rect liquid;
-    float mass = 1000;
-    float radius = 200;
+    float mass = 100;
+    float radius = 50;
 
     std::vector<Particle2D*> particles;
     int particleCount = 0;
