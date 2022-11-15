@@ -1,8 +1,18 @@
-#include "ParticleSystem2D.hpp"
-#include "Particle2D.hpp"
-#include "Force.hpp"
-#include "Constants.hpp"
+// ParticleSystem2D.cpp
+// Created: Tue 15 Nov 2022
+// ------------------------
+// Seymour Pashayev
+// gitHub:@SeymourPashayev
+// ------------------------
+// This is a simple 2D particle system scene.
 
+// Project Includes
+#include "ParticleSystem2D.hpp"
+#include "../Physics/Particle2D.hpp"
+#include "../Physics/Force.hpp"
+#include "../Physics/Constants.hpp"
+
+// System Includes
 #include <iostream>
 
 ParticleSystem2D::ParticleSystem2D(Mouse* mouse) {

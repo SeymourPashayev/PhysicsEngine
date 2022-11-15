@@ -2,8 +2,8 @@
 #define PARTICLESYSTEM2D_HPP
 
 // Own Classes
-#include "Vec2.hpp"
-#include "Particle2D.hpp"
+#include "../Physics/Vec2.hpp"
+#include "../Physics/Particle2D.hpp"
 #include "../Graphics.hpp"
 #include "../Inputs/Mouse.hpp"
 

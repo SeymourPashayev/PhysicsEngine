@@ -1,10 +1,13 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
+// Project Includes
 #include "./Graphics.hpp"
 #include "./Physics/Particle2D.hpp"
-#include "./Physics/ParticleSystem2D.hpp"
+#include "./Scenes/ParticleSystem2D.hpp"
 #include "./Inputs/Mouse.hpp"
+
+// System Includes
 #include <vector>
 
 
