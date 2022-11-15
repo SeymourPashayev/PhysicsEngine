@@ -1,31 +1,27 @@
-#ifndef PARTICLESYSTEM2D_HPP
-#define PARTICLESYSTEM2D_HPP
+#ifndef SPRINGFORCELATTICE_HPP
+#define SPRINGFORCELATTICE_HPP
 
-// Own Classes
+// Project Includes
 #include "../Physics/Vec2.hpp"
 #include "../Physics/Particle2D.hpp"
 #include "../Graphics.hpp"
 #include "../Inputs/Mouse.hpp"
 
-// System Imports
+// System Includes
 #include <vector>
 #include <iostream>
 
-struct ParticleSystem2D {
+struct SpringForceLattice {
     
     std::vector<Particle2D*> particles;
     int particleCount = 0;
 
     Mouse* mouse;
 
-    // Temporary Variables for the first particle creation
-    float mass = 50.0f;
-    float radius = 20.0f;
-
     // ------------------------------
     
-    ParticleSystem2D(Mouse* mouse);
-    ~ParticleSystem2D();
+    SpringForceLattice(Mouse* mouse);
+    ~SpringForceLattice();
     
     void Update(float dt, Vec2 pushForce);
 
@@ -34,9 +30,6 @@ struct ParticleSystem2D {
     // Helper Functions
     void CheckForScreenCollisions();
     void CheckForParticleCollisions();
-
-    // Interactions
-    void CreateParticleAtMouse();
 
 };
 

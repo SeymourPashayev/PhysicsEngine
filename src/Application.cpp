@@ -32,8 +32,10 @@ void Application::Setup() {
     // Setup Mouse and Particle System
     mouse = new Mouse();
 
-    // The system/set currently in use
-    particleSystem = new ParticleSystem2D(mouse);
+    // The system/set currently in use TODO: MAKE an abstract class System to inherit from in Particle and SpringForce Systems
+    // particleSystem = new ParticleSystem2D(mouse);
+    springForceSystem = new SpringForceLattice(mouse);
+    
     
 }
 
@@ -54,13 +56,13 @@ void Application::Input() {
                 if (event.key.keysym.sym == SDLK_ESCAPE)
                     running = false;
                 if (event.key.keysym.sym == SDLK_UP)
-                    pushForce.y = - 100 * PIXELS_PER_METER;
+                    pushForce.y = - 10 * PIXELS_PER_METER;
                 if (event.key.keysym.sym == SDLK_DOWN)
-                    pushForce.y = 100 * PIXELS_PER_METER;
+                    pushForce.y = 10 * PIXELS_PER_METER;
                 if (event.key.keysym.sym == SDLK_RIGHT)
-                    pushForce.x = 100 * PIXELS_PER_METER;
+                    pushForce.x = 10 * PIXELS_PER_METER;
                 if (event.key.keysym.sym == SDLK_LEFT)
-                    pushForce.x = -100 * PIXELS_PER_METER;
+                    pushForce.x = -10 * PIXELS_PER_METER;
                 break;
             case SDL_KEYUP:
                 if (event.key.keysym.sym == SDLK_UP)
@@ -130,7 +132,8 @@ void Application::Update() {
     timePreviousFrame = SDL_GetTicks();
     
     // Update the Objects in the Scene
-    particleSystem->Update(deltaTime, pushForce);
+    //particleSystem->Update(deltaTime, pushForce);
+    springForceSystem->Update(deltaTime, pushForce);
 
 }
 
@@ -142,7 +145,8 @@ void Application::Render() {
 
     Graphics::ClearScreen(0xFF056263);
    
-    particleSystem->Draw();
+    //particleSystem->Draw();
+    springForceSystem->Draw();
 
     Graphics::RenderFrame();
 
@@ -158,7 +162,8 @@ void Application::Destroy() {
     delete mouse;
 
     // Delete the particle system
-    delete particleSystem;
+    //delete particleSystem;
+    delete springForceSystem;
 
     // Close the window
     Graphics::CloseWindow();

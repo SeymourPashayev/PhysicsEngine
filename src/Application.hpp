@@ -4,8 +4,9 @@
 // Project Includes
 #include "./Graphics.hpp"
 #include "./Physics/Particle2D.hpp"
-#include "./Scenes/ParticleSystem2D.hpp"
 #include "./Inputs/Mouse.hpp"
+#include "./Scenes/ParticleSystem2D.hpp"
+#include "./Scenes/SpringForceLattice.hpp"
 
 // System Includes
 #include <vector>
@@ -15,11 +16,13 @@ class Application {
     private:
         
         bool running = false;
-
         Mouse* mouse;
-        ParticleSystem2D* particleSystem;
-        
+
         Vec2 pushForce = Vec2(0.0f, 0.0f);
+
+        // The system/set in use.
+        //ParticleSystem2D* particleSystem;
+        SpringForceLattice* springForceSystem;
         
     public:
         Application() = default;
