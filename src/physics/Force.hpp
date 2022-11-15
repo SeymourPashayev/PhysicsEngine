@@ -12,6 +12,9 @@ struct Force {
     static Vec2 GenerateFrictionForce(const Particle2D& particle, float frictionCoefficient);
 
     static Vec2 GenerateGravitationalForce(const Particle2D& particle1, const Particle2D& particle2, float gravitationalConstant, float minDistance, float maxDistance);
+
+    static Vec2 GenerateSpringForce(const Particle2D& particle, const Vec2& anchor, float springConstant, float restLength);
+    static Vec2 GenerateSpringForce(const Particle2D& particle1, const Particle2D& particle2, float springConstant, float restLength);
 };
 
 #endif

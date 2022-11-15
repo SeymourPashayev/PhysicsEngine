@@ -99,10 +99,13 @@ void ParticleSystem2D::Update(float dt, Vec2 pushForce) {
     CheckForScreenCollisions();
 
     // Check for Particle Collisions
-    // TODO: Conservation of Linear Momentum
-    // TODO: Conservation of Angular Momentum
-    // TODO: Collision Resolution
     CheckForParticleCollisions();
+
+    // Create a new particle if the mouse is clicked
+    if (mouse->GetLeftClick() == true) {
+        CreateParticleAtMouse();
+        mouse->SetLeftClick(false);
+    }
 
 }
 
@@ -146,6 +149,7 @@ void ParticleSystem2D::CreateParticleAtMouse() {
     }
 }
 
+// Checks for collisions between every particle, resolves if there is a collision
 void ParticleSystem2D::CheckForParticleCollisions() {
     for (int i = 0; i < this->particleCount; i++) {
         for (int j = i + 1; j < this->particleCount; j++) {

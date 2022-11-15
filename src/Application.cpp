@@ -1,16 +1,29 @@
-#include "Application.hpp"
+// Application.cpp
+// Created: Tue 15 Nov 2022
+// ------------------------
+// Seymour Pashayev
+// gitHub:@SeymourPashayev
+// ------------------------
+// Application class is responsible for the main loop of the project. While there is a main with a more abstracted loop, this file serves a medium for seemless scene/set 
+// switching without any change to the main main loop.
 
+// Application Includes
+#include "Application.hpp"
 #include "./Physics/Force.hpp"
 #include "./Physics/Constants.hpp"
 #include "./Inputs/Mouse.hpp"
 
+
+
+// Function to check if the application is running
 bool Application::IsRunning() {
     return running;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// Setup function (executed once in the beginning of the simulation)
-///////////////////////////////////////////////////////////////////////////////
+
+// ------------------------------------ //
+// ---------- Setup Function ---------- //
+// ------------------------------------ //
 void Application::Setup() {
 
     // Setu Graphics
@@ -18,13 +31,16 @@ void Application::Setup() {
     
     // Setup Mouse and Particle System
     mouse = new Mouse();
+
+    // The system/set currently in use
     particleSystem = new ParticleSystem2D(mouse);
     
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// Input processing
-///////////////////////////////////////////////////////////////////////////////
+
+// ------------------------------------ //
+// --------- Input Processing --------- //
+// ------------------------------------ //
 void Application::Input() {
     SDL_Event event;
     Vec2 mousePos;
@@ -59,8 +75,6 @@ void Application::Input() {
             case SDL_MOUSEBUTTONDOWN:
                 if (event.button.button == SDL_BUTTON_LEFT) {
                     mouse->SetLeftClick(true);
-                    // create a partcile
-                    particleSystem->CreateParticleAtMouse();
                 }
                 if (event.button.button == SDL_BUTTON_RIGHT) {
                     mouse->SetRightClick(true);
@@ -91,13 +105,11 @@ void Application::Input() {
     }
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// Update function (called several times per second to update objects)
-///////////////////////////////////////////////////////////////////////////////
-void Application::Update() {
 
-    // TODO: Move delta time calculation to a separate function
-    // TODO: Move TTW calculation to a separate function
+// ------------------------------------ //
+// --------- Update Processing -------- //
+// ------------------------------------ //
+void Application::Update() {
 
     // Check if we are too fast, and if so, waste time till we reach MILLISECONDS_PER_FRAME
     static int timePreviousFrame;
@@ -122,9 +134,10 @@ void Application::Update() {
 
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// Render function (called several times per second to draw objects)
-///////////////////////////////////////////////////////////////////////////////
+
+// ----------------------------------- //
+// -------------- Render ------------- //
+// ----------------------------------- //
 void Application::Render() {
 
     Graphics::ClearScreen(0xFF056263);
@@ -135,17 +148,19 @@ void Application::Render() {
 
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// Destroy function to delete objects and close the window
-///////////////////////////////////////////////////////////////////////////////
+
+// ----------------------------------- //
+// ------------- Cleanup ------------- //
+// ----------------------------------- //
 void Application::Destroy() {
-    
+
     // Delete the mouse
     delete mouse;
 
     // Delete the particle system
     delete particleSystem;
 
+    // Close the window
     Graphics::CloseWindow();
 
 }
