@@ -33,7 +33,7 @@ void Application::Setup() {
     mouse = new Mouse();
 
     // The system/set currently in use TODO: MAKE an abstract class System to inherit from in Particle and SpringForce Systems
-    // particleSystem = new ParticleSystem2D(mouse);
+    //particleSystem = new ParticleSystem2D(mouse);
     springForceSystem = new SpringForceLattice(mouse);
     
     
