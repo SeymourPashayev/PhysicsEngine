@@ -1,8 +1,15 @@
 #ifndef PARTICLE_HPP
 #define PARTICLE_HPP
 
+// Project Includes
 #include "Vec2.hpp"
+#include "Constants.hpp"
+
+// System Includes
 #include <SDL2/SDL_stdinc.h>
+#include <SDL2/SDL_timer.h>
+#include <iostream>
+
 
 struct Particle2D {
     
@@ -28,7 +35,8 @@ struct Particle2D {
     // 2) equal to zero, then the colliding bodies are perfectly inelastic.
     // 3) is equal to one, then the colliding bodies are perfectly elastic.
     
-    Particle2D(float x, float y, float mass=10.0f, float radius=40.0f);
+    Particle2D(float x, float y, float mass = 20.0f, float radius = 20.0f);
+    Particle2D(Vec2 position, float mass = 20.0f, float radius = 20.0f);
     ~Particle2D();
 
     // Integration Methods

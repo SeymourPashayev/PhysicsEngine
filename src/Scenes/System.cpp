@@ -19,6 +19,7 @@ System::System(Mouse* mouse) {
     
 }
 
+
 System::~System() {
     
     // Delete all particle references
@@ -35,6 +36,7 @@ System::~System() {
 
 }
 
+
 void System::Draw() {
     
     for (auto particle: particles){
@@ -45,33 +47,43 @@ void System::Draw() {
 
 }
 
+
 void System::Update(float dt, Vec2 pushForce) {
    
     // Generate and Add Forces to all the particles
     for (auto particle: particles) {
-
+        
+        
         // Arrow Key Push Force
-        particle->AddForce(pushForce);
+        if (KEYBOARD_ENABLED) {
+            particle->AddForce(pushForce);
+        }
 
         // Gravity
-        // particle->AddForce(Force::GenerateWeightForce(*particle));
+        if (GRAVITY_ENABLED){
+            particle->AddForce(Force::GenerateWeightForce(*particle));
+        }
 
         // Friction Force
-        particle->AddForce(Force::GenerateFrictionForce(*particle, 0.05f));
+        if (FRICTION_ENABLED){
+            particle->AddForce(Force::GenerateFrictionForce(*particle, 0.05f));
+        }
 
-        // Attrattion Force for all particles
-        for (auto otherParticle: particles) {
-            if (otherParticle != particle && otherParticle != nullptr) {
-                Vec2 attraction = Force::GenerateGravitationalForce(*particle, *otherParticle, GRAVITY, particle->radius + otherParticle->radius, 1000.0f);
-                particle->AddForce(attraction);
-                otherParticle->AddForce(-attraction);
+        // Attraction Force
+        if (ATTRACTION_ENABLED){
+            for (auto otherParticle: particles) {
+                if (otherParticle != particle && otherParticle != nullptr) {
+                    Vec2 attraction = Force::GenerateGravitationalForce(*particle, *otherParticle, GRAVITY, particle->radius + otherParticle->radius, 1000.0f);
+                    particle->AddForce(attraction);
+                    otherParticle->AddForce(-attraction);
+                }
             }
         }
 
-        // Drag Force, if the particle is in the liquid
-        //if (particle->position.y > liquid.y) {
-        //    particle->AddForce(Force::GenerateDragForce(*particle, 0.09f));
-        //}
+        // Drag Force
+        if (DRAG_ENABLED){
+            particle->AddForce(Force::GenerateDragForce(*particle, 0.09f));
+        }
 
     }
 
@@ -83,20 +95,26 @@ void System::Update(float dt, Vec2 pushForce) {
     }
 
     // Check for collisions
-    CheckForScreenCollisions();
+    if (SCREEN_COLLISION_ENABLED){
+        CheckForScreenCollisions();
+    }
 
     // Check for Particle Collisions
-    CheckForParticleCollisions();
+    if (PARTICLE_COLLISION_ENABLED){
+        CheckForParticleCollisions();
+    }
 
     // Create a new particle if the mouse is clicked
-    if (mouse->GetLeftClick() == true) {
+    if (mouse->GetLeftClick() == true && MOUSE_ENABLED) {
         CreateParticleAtMouse();
         mouse->SetLeftClick(false);
     }
 
 }
 
+
 void System::CheckForScreenCollisions(){
+
     for (auto particle: particles) {
         if (particle->position.y > Graphics::Height() - particle->radius) {
             particle->position.y = Graphics::Height() - particle->radius;
@@ -118,7 +136,23 @@ void System::CheckForScreenCollisions(){
             particle->velocity.y *= -0.9f;
         }
     }
+
 }
+
+
+// Checks for collisions between every particle, resolves if there is a collision
+void System::CheckForParticleCollisions() {
+
+    for (int i = 0; i < this->particleCount; i++) {
+        for (int j = i + 1; j < this->particleCount; j++) {
+            if (particles[i]->CheckCollision(*particles[j])) {
+                particles[i]->ResolveCollision(*particles[j]);
+            }
+        }
+    }
+
+}
+
 
 // Create a particle with mouse click at mouse position
 void System::CreateParticleAtMouse() {
@@ -132,16 +166,5 @@ void System::CreateParticleAtMouse() {
         particleCount++;
 
     }
-}
 
-// Checks for collisions between every particle, resolves if there is a collision
-void System::CheckForParticleCollisions() {
-    for (int i = 0; i < this->particleCount; i++) {
-        for (int j = i + 1; j < this->particleCount; j++) {
-            if (particles[i]->CheckCollision(*particles[j])) {
-                particles[i]->ResolveCollision(*particles[j]);
-            }
-        }
-    }
 }
-

@@ -6,12 +6,12 @@
 // ------------------------
 // Particle2D.cpp - A 2D particle struct for the engine
 
-#include <SDL2/SDL_timer.h>
-#include <iostream>
 #include "Particle2D.hpp"
-#include "Constants.hpp"
 
+
+// Particle2D Constructor that takes x & y coordinates
 Particle2D::Particle2D(float x, float y, float mass, float radius) {
+    
     this->position = Vec2(x, y);
     
     this->mass = mass;
@@ -22,10 +22,28 @@ Particle2D::Particle2D(float x, float y, float mass, float radius) {
     this->radius = radius;
 
     std::cout << "2D Particle created with mass: " << mass << std::endl;
+
+}
+
+Particle2D::Particle2D(Vec2 position, float mass, float radius) {
+    
+    this->position = position;
+    
+    this->mass = mass;
+    if (mass != 0.0) {
+        invMass = 1.0 / mass;
+    }
+    
+    this->radius = radius;
+
+    std::cout << "2D Particle created with mass: " << mass << std::endl;
+
 }
 
 Particle2D::~Particle2D() {
+
     std::cout << "2D Particle destructor called." << std::endl;
+
 }
 
 void Particle2D::EulerIntegrate(float dt) {

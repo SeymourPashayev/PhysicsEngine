@@ -16,13 +16,32 @@
 
 struct System {
     
+    // ------------------------------
+    // System Variables
+    // ------------------------------
+    
     std::vector<Particle2D*> particles;
     int particleCount = 0;
 
     Mouse* mouse;
 
     // ------------------------------
-    
+    // System Switches
+    // ------------------------------
+
+    bool GRAVITY_ENABLED = false;
+    bool ATTRACTION_ENABLED = true;
+    bool FRICTION_ENABLED = true;
+    bool DRAG_ENABLED = false;
+    bool PARTICLE_COLLISION_ENABLED = true;
+    bool SCREEN_COLLISION_ENABLED = true;
+    bool MOUSE_ENABLED = true;
+    bool KEYBOARD_ENABLED = true;
+
+    // ------------------------------
+    // System Functions
+    // ------------------------------
+
     System(Mouse* mouse);
     ~System();
     
