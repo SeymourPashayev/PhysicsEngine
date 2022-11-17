@@ -1,3 +1,11 @@
+// Application.hpp
+// Created: Thu 3 Nov 2022
+// ------------------------
+// Seymour Pashayev
+// gitHub:@SeymourPashayev
+// ------------------------
+
+
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
@@ -7,12 +15,15 @@
 #include "./Inputs/Mouse.hpp"
 #include "./Scenes/ParticleSystem2D.hpp"
 #include "./Scenes/SpringForceLattice.hpp"
+#include "./Physics/Force.hpp"
+#include "./Physics/Constants.hpp"
 
 // System Includes
 #include <vector>
 
 
 class Application {
+
     private:
         
         bool running = false;
@@ -22,7 +33,8 @@ class Application {
 
         // The system/set in use.
         //ParticleSystem2D* particleSystem;
-        SpringForceLattice* springForceSystem;
+        //SpringForceLattice* springForceSystem;
+        System* system;
         
     public:
         Application() = default;
@@ -36,6 +48,7 @@ class Application {
         void Render();
     
         void Destroy();
+
 };
 
 #endif
