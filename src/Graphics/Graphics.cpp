@@ -1,5 +1,14 @@
+// Graphics.cpp
+// Created: Thu 3 Nov 2022
+// ------------------------
+// Seymour Pashayev
+// gitHub:@SeymourPashayev
+// ------------------------
+// A Class that represent a bunch of graphical functions with SDL2.
+
+// Project Includes
 #include "Graphics.hpp"
-#include <iostream>
+
 
 SDL_Window* Graphics::window = NULL;
 SDL_Renderer* Graphics::renderer = NULL;
@@ -15,25 +24,38 @@ int Graphics::Height() {
 }
 
 bool Graphics::OpenWindow() {
+
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
         std::cerr << "Error initializing SDL" << std::endl;
         return false;
     }
+
     SDL_DisplayMode display_mode;
     SDL_GetCurrentDisplayMode(0, &display_mode);
     windowWidth = display_mode.w;
     windowHeight = display_mode.h;
     window = SDL_CreateWindow(NULL, 0, 0, windowWidth, windowHeight, SDL_WINDOW_BORDERLESS);
+
     if (!window) {
         std::cerr << "Error creating SDL window" << std::endl;
         return false;
     }
+
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+
     if (!renderer) {
         std::cerr << "Error creating SDL renderer" << std::endl;
         return false;
     }
+
+    // Initialize the thing that is responsible for drawing text.
+    if (TTF_Init()==-1) {
+        printf("Failed to TTF: %s \n", SDL_GetError());
+        return false;
+    }
+
     return true;
+
 }
 
 void Graphics::ClearScreen(Uint32 color) {

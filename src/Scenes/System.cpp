@@ -12,8 +12,18 @@
 
 System::System(Mouse* mouse) {
 
+    // Set up the particle vector 
     std::vector<Particle2D> particles;
+
+    // Set up the mouse object
     this->mouse = mouse;
+
+    // Set up the renderer
+    //this->renderer = renderer;
+
+    // Create a new dev menu
+    // Update: The text box I am using is too resource heavy, need to re-write the Text.cpp class
+    //devMenu = new SceneDevMenu(Graphics::renderer);
     
     std::cout << "System Initiated" << std::endl;
     
@@ -32,13 +42,21 @@ System::~System() {
         }
     }
 
+    // Delete the dev menu
+    //delete devMenu;
+
     std::cout << "System Destroyed" << std::endl;
 
 }
 
 
 void System::Update(float dt, Vec2 pushForce) {
-   
+    
+    // Update Developer Menu Text
+    if (DEV_MENU_ENABLED) {
+        //devMenu->Update();
+    }
+
     // Generate and Add Forces to all the particles
     for (auto particle: particles) {
         
@@ -107,6 +125,11 @@ void System::Draw() {
     // Clear Screen
     Graphics::ClearScreen(screenColour);
 
+     // Draw Developer Menu
+    if (DEV_MENU_ENABLED) {
+        //devMenu->Draw();
+    }
+
     for (auto particle: particles){
         if (particle != nullptr) {
             Graphics::DrawFillCircle(particle->position.x, particle->position.y, particle->radius, particle->color);
@@ -173,5 +196,10 @@ void System::CreateParticleAtMouse() {
 }
 
 void System::ApplyForceToParticleOnClick(){
-    
+   // TODO: Implement this
+}
+
+// ---- SWITCH TOGGLES ----
+void System::ToggleGravity() {
+    GRAVITY_ENABLED = !GRAVITY_ENABLED;
 }

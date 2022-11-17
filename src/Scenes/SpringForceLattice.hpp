@@ -6,7 +6,6 @@
 #include "../Physics/Particle2D.hpp"
 #include "../Physics/Force.hpp"
 #include "../Physics/Constants.hpp"
-#include "../Graphics.hpp"
 #include "../Inputs/Mouse.hpp"
 #include "System.hpp"
 

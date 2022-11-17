@@ -57,6 +57,8 @@ void Application::Input() {
                     pushForce.x = 10 * PIXELS_PER_METER;
                 if (event.key.keysym.sym == SDLK_LEFT)
                     pushForce.x = -10 * PIXELS_PER_METER;
+                 if (event.key.keysym.sym == SDLK_SPACE)
+                    system->ToggleGravity();
                 break;
             case SDL_KEYUP:
                 if (event.key.keysym.sym == SDLK_UP)
