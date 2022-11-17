@@ -29,7 +29,8 @@ struct System {
     Mouse* mouse;
 
     // Screen Variabels
-    Uint32 screenColour = 0x000000FF;
+    // Set screen colour to gray by default
+    Uint32 screenColour = 0x000000;
     //SDL_Renderer *renderer;
 
     // Developer Menu 
