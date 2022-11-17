@@ -25,6 +25,8 @@ struct System {
 
     Mouse* mouse;
 
+    Uint32 screenColour = 0x000000FF;
+
     // ------------------------------
     // System Switches
     // ------------------------------
@@ -54,6 +56,7 @@ struct System {
 
     // Interactions
     void CreateParticleAtMouse();
+    void ApplyForceToParticleOnClick();
 
 };
 

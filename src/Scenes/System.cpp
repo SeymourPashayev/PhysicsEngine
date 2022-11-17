@@ -25,7 +25,7 @@ System::~System() {
     // Delete all particle references
     for (auto &particle : particles) {
         if (particle != nullptr) {
-            delete particle;
+    delete particle;
             particle = nullptr;
 
             particleCount--;
@@ -33,17 +33,6 @@ System::~System() {
     }
 
     std::cout << "System Destroyed" << std::endl;
-
-}
-
-
-void System::Draw() {
-    
-    for (auto particle: particles){
-        if (particle != nullptr) {
-            Graphics::DrawFillCircle(particle->position.x, particle->position.y, particle->radius, particle->color);
-        }
-    }
 
 }
 
@@ -113,6 +102,20 @@ void System::Update(float dt, Vec2 pushForce) {
 }
 
 
+void System::Draw() {
+    
+    // Clear Screen
+    Graphics::ClearScreen(screenColour);
+
+    for (auto particle: particles){
+        if (particle != nullptr) {
+            Graphics::DrawFillCircle(particle->position.x, particle->position.y, particle->radius, particle->color);
+        }
+    }
+
+}
+
+
 void System::CheckForScreenCollisions(){
 
     for (auto particle: particles) {
@@ -167,4 +170,8 @@ void System::CreateParticleAtMouse() {
 
     }
 
+}
+
+void System::ApplyForceToParticleOnClick(){
+    
 }

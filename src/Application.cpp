@@ -136,8 +136,6 @@ void Application::Update() {
 // -------------- Render ------------- //
 // ----------------------------------- //
 void Application::Render() {
-
-    Graphics::ClearScreen(0xFF056263);
    
     //particleSystem->Draw();
     system->Draw();
