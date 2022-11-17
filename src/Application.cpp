@@ -1,5 +1,5 @@
 // Application.cpp
-// Created: Tue 15 Nov 2022
+// Created: Thu 3 Nov 2022
 // ------------------------
 // Seymour Pashayev
 // gitHub:@SeymourPashayev
@@ -9,10 +9,6 @@
 
 // Application Includes
 #include "Application.hpp"
-#include "./Physics/Force.hpp"
-#include "./Physics/Constants.hpp"
-#include "./Inputs/Mouse.hpp"
-
 
 
 // Function to check if the application is running
@@ -32,11 +28,9 @@ void Application::Setup() {
     // Setup Mouse and Particle System
     mouse = new Mouse();
 
-    // The system/set currently in use TODO: MAKE an abstract class System to inherit from in Particle and SpringForce Systems
-    //particleSystem = new ParticleSystem2D(mouse);
-    springForceSystem = new SpringForceLattice(mouse);
-    
-    
+    //system = new ParticleSystem2D(mouse);
+    system = new SpringForceLattice(mouse);
+
 }
 
 
@@ -133,7 +127,7 @@ void Application::Update() {
     
     // Update the Objects in the Scene
     //particleSystem->Update(deltaTime, pushForce);
-    springForceSystem->Update(deltaTime, pushForce);
+    system->Update(deltaTime, pushForce);
 
 }
 
@@ -146,7 +140,7 @@ void Application::Render() {
     Graphics::ClearScreen(0xFF056263);
    
     //particleSystem->Draw();
-    springForceSystem->Draw();
+    system->Draw();
 
     Graphics::RenderFrame();
 
@@ -163,7 +157,7 @@ void Application::Destroy() {
 
     // Delete the particle system
     //delete particleSystem;
-    delete springForceSystem;
+    delete system;
 
     // Close the window
     Graphics::CloseWindow();

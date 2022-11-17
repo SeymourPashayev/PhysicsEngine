@@ -4,39 +4,24 @@
 // Own Classes
 #include "../Physics/Vec2.hpp"
 #include "../Physics/Particle2D.hpp"
+#include "System.hpp"
 #include "../Graphics.hpp"
 #include "../Inputs/Mouse.hpp"
+#include "../Physics/Force.hpp"
+#include "../Physics/Constants.hpp"
 
 // System Imports
 #include <vector>
 #include <iostream>
 
-struct ParticleSystem2D {
-    
-    std::vector<Particle2D*> particles;
-    int particleCount = 0;
 
-    Mouse* mouse;
+struct ParticleSystem2D: public System {
 
-    // Temporary Variables for the first particle creation
-    float mass = 50.0f;
-    float radius = 20.0f;
-
-    // ------------------------------
-    
+    // create a constructor that initalizes system
     ParticleSystem2D(Mouse* mouse);
-    ~ParticleSystem2D();
     
-    void Update(float dt, Vec2 pushForce);
-
-    void Draw();
-
-    // Helper Functions
-    void CheckForScreenCollisions();
-    void CheckForParticleCollisions();
-
-    // Interactions
-    void CreateParticleAtMouse();
+    // create a destructor that deletes system
+    ~ParticleSystem2D();
 
 };
 

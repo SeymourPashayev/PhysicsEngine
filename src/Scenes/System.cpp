@@ -7,24 +7,19 @@
 // This is a simple 2D particle system scene.
 
 // Project Includes
-#include "Net.hpp"
-#include "../Physics/Particle2D.hpp"
-#include "../Physics/Force.hpp"
-#include "../Physics/Constants.hpp"
+#include "System.hpp"
 
-// System Includes
-#include <iostream>
 
-Net::Net(Mouse* mouse) {
+System::System(Mouse* mouse) {
 
     std::vector<Particle2D> particles;
     this->mouse = mouse;
     
-    std::cout << "Net Created" << std::endl;
+    std::cout << "System Initiated" << std::endl;
     
 }
 
-Net::~Net() {
+System::~System() {
     
     // Delete all particle references
     for (auto &particle : particles) {
@@ -36,23 +31,21 @@ Net::~Net() {
         }
     }
 
-    std::cout << "Net Destroyed" << std::endl;
+    std::cout << "System Destroyed" << std::endl;
 
 }
 
-// TODO: FIX Draw
-void Net::Draw() {
+void System::Draw() {
     
     for (auto particle: particles){
         if (particle != nullptr) {
-            //Graphics::DrawFillCircle(particle->position.x, particle->position.y, particle->radius, particle->color);
+            Graphics::DrawFillCircle(particle->position.x, particle->position.y, particle->radius, particle->color);
         }
     }
 
 }
 
-// TODO: FIX Update
-void Net::Update(float dt, Vec2 pushForce) {
+void System::Update(float dt, Vec2 pushForce) {
    
     // Generate and Add Forces to all the particles
     for (auto particle: particles) {
@@ -103,7 +96,7 @@ void Net::Update(float dt, Vec2 pushForce) {
 
 }
 
-void ParticleSystem2D::CheckForScreenCollisions(){
+void System::CheckForScreenCollisions(){
     for (auto particle: particles) {
         if (particle->position.y > Graphics::Height() - particle->radius) {
             particle->position.y = Graphics::Height() - particle->radius;
@@ -128,23 +121,21 @@ void ParticleSystem2D::CheckForScreenCollisions(){
 }
 
 // Create a particle with mouse click at mouse position
-void ParticleSystem2D::CreateParticleAtMouse() {
+void System::CreateParticleAtMouse() {
     
     if (mouse->GetLeftClick() == true) {
 
         Vec2 mousePos = mouse->GetPosition();
-        particles.push_back(new Particle2D(mousePos.x, mousePos.y, mass, radius));
+        particles.push_back(new Particle2D(mousePos.x, mousePos.y, 20.0f, 20.0f));
         
         // Add to the count of particles
         particleCount++;
 
-        mass = 3.0f;
-        radius = 25.0f;
     }
 }
 
 // Checks for collisions between every particle, resolves if there is a collision
-void Net::CheckForParticleCollisions() {
+void System::CheckForParticleCollisions() {
     for (int i = 0; i < this->particleCount; i++) {
         for (int j = i + 1; j < this->particleCount; j++) {
             if (particles[i]->CheckCollision(*particles[j])) {
