@@ -98,7 +98,7 @@ void System::Update(float dt, Vec2 pushForce) {
     for (auto particle : particles) {
         particle->VerletIntegrate(dt);
         // Alternative Integration: Euler Integration, use one at a time
-        // particle->EulerIntegrate(dt);
+        //particle->EulerIntegrate(dt);
     }
 
     // Check for collisions

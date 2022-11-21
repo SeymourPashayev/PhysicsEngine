@@ -12,24 +12,31 @@
 SpringForceLattice::SpringForceLattice(Mouse* mouse) : System { mouse } {
     
     // Disable Particle Attraction
-    this->ATTRACTION_ENABLED = false;
+    this->ATTRACTION_ENABLED = true;
+    this->PARTICLE_COLLISION_ENABLED = false;
+    this->SCREEN_COLLISION_ENABLED = false;
+
 
     // Set the Spring Force Lattice size
-    width = 2;
-    height = 1;
+    width = 100;
+    height = 25;
+
+    // Distance between particles
+    float distanceX = 25;
+    float distanceY = 25;
 
     // Offsets for Particle Spawn Position
-    float offsetX = Graphics::windowWidth/2.0f;
-    float offsetY = Graphics::windowHeight/4.0f;
+    float offsetX = Graphics::windowWidth/2.0f - (width * distanceX/2.0f);
+    float offsetY = Graphics::windowHeight/2.0f - (height * distanceY/2.0f);
 
     // Create particles and add them to the system
     for (int i = 0; i < width; i++) {
         for (int j = 0; j < height; j++) {
             // Calculate the position of the particle
-            Vec2 pos = Vec2 { (i * 50.0f) + offsetX, (j * 50.0f) + offsetY };
+            Vec2 pos = Vec2 { (i * distanceX ) + offsetX, (j * distanceY ) + offsetY };
 
             // Create the particle
-            Particle2D* particle = new Particle2D { pos, 1.0f, 10.0f };
+            Particle2D* particle = new Particle2D { pos, 30.0f, 5.0f };
 
             // Add the particle to the system
             particles.push_back(particle);
