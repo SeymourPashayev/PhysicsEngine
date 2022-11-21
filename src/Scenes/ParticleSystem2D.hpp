@@ -4,11 +4,11 @@
 // Own Classes
 #include "../Physics/Vec2.hpp"
 #include "../Physics/Particle2D.hpp"
-#include "System.hpp"
-#include "../Graphics.hpp"
+#include "../Graphics/Graphics.hpp"
 #include "../Inputs/Mouse.hpp"
 #include "../Physics/Force.hpp"
 #include "../Physics/Constants.hpp"
+#include "System.hpp"
 
 // System Imports
 #include <vector>

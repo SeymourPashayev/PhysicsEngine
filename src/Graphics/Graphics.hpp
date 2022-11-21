@@ -1,10 +1,15 @@
 #ifndef GRAPHICS_H
 #define GRAPHICS_H
 
+// Project Includes
+#include "../Physics/Vec2.hpp"
+
+// System Includes
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL2_gfxPrimitives.h>
-#include "Physics/Vec2.hpp"
 #include <vector>
+#include <iostream>
 
 struct Graphics {
     static int windowWidth;

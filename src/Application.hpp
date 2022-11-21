@@ -10,7 +10,7 @@
 #define APPLICATION_H
 
 // Project Includes
-#include "./Graphics.hpp"
+#include "./Graphics/Graphics.hpp"
 #include "./Physics/Particle2D.hpp"
 #include "./Inputs/Mouse.hpp"
 #include "./Scenes/ParticleSystem2D.hpp"
@@ -37,6 +37,7 @@ class Application {
         System* system;
         
     public:
+        
         Application() = default;
         ~Application() = default;
     

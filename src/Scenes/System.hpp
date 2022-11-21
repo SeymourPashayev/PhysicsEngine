@@ -4,10 +4,11 @@
 // Own Classes
 #include "../Physics/Vec2.hpp"
 #include "../Physics/Particle2D.hpp"
-#include "../Graphics.hpp"
-#include "../Inputs/Mouse.hpp"
 #include "../Physics/Force.hpp"
 #include "../Physics/Constants.hpp"
+#include "../Graphics/Graphics.hpp"
+#include "../UI/SceneDevMenu.hpp"
+#include "../Inputs/Mouse.hpp"
 
 // System Imports
 #include <vector>
@@ -20,23 +21,35 @@ struct System {
     // System Variables
     // ------------------------------
     
+    // Particle Variables
     std::vector<Particle2D*> particles;
     int particleCount = 0;
 
+    // Mouse object
     Mouse* mouse;
 
-    Uint32 screenColour = 0x000000FF;
+    // Screen Variabels
+    // Set screen colour to gray by default
+    Uint32 screenColour = 0x000000;
+    //SDL_Renderer *renderer;
+
+    // Developer Menu 
+    //SceneDevMenu* devMenu;
 
     // ------------------------------
     // System Switches
     // ------------------------------
-
+    
+    // ---- Simulation Switches ----
     bool GRAVITY_ENABLED = false;
     bool ATTRACTION_ENABLED = true;
     bool FRICTION_ENABLED = true;
     bool DRAG_ENABLED = false;
     bool PARTICLE_COLLISION_ENABLED = true;
     bool SCREEN_COLLISION_ENABLED = true;
+
+    // ---- Debug Switches ----
+    bool DEV_MENU_ENABLED = false;
     bool MOUSE_ENABLED = true;
     bool KEYBOARD_ENABLED = true;
 
@@ -56,7 +69,15 @@ struct System {
 
     // Interactions
     void CreateParticleAtMouse();
-    void ApplyForceToParticleOnClick();
+    void ApplyForceToParticleOnClick(); // not implemented
+
+    // Switch Toggles
+    void ToggleGravity();
+    void ToggleAttraction(); //not implemented
+    void ToggleFriction(); //not implemented
+    void ToggleDrag(); //not implemented
+    void ToggleParticleCollision(); //not implemented
+    void ToggleScreenCollision(); //not implemented
 
 };
 
