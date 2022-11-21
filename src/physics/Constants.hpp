@@ -1,3 +1,11 @@
+// Constants.hpp
+// Created: Thu 3 Nov 2022
+// ------------------------
+// Seymour Pashayev
+// gitHub:@SeymourPashayev
+// ------------------------
+// A file to store all the constants used in the program
+
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 

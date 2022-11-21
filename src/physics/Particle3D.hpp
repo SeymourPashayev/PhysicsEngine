@@ -1,3 +1,11 @@
+// Particle3D.hpp
+// Created: Thu 03 Nov 2022
+// ------------------------
+// Seymour Pashayev
+// gitHub:@SeymourPashayev
+// ------------------------
+
+
 #ifndef PARTICLE_HPP
 #define PARTICLE_HPP
 

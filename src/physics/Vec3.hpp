@@ -1,9 +1,9 @@
-//
-//  Vec3.hpp
-//  engine
-//
-//  Created by Seymour Pashayev on 11/2/22.
-//
+// Vec3.hpp
+// Created: Wed 02 2022
+// ------------------------
+// Seymour Pashayev
+// gitHub:@SeymourPashayev
+// ------------------------
 
 #ifndef Vec3_hpp
 #define Vec3_hpp

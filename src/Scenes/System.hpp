@@ -1,3 +1,11 @@
+// System.hpp
+// Created: Tue 15 Nov 2022
+// ------------------------
+// Seymour Pashayev
+// gitHub:@SeymourPashayev
+// ------------------------
+//
+
 #ifndef SYSTEM_HPP
 #define SYSTEM_HPP
 

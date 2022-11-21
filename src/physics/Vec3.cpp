@@ -1,9 +1,10 @@
-//
-//  Vec3.cpp
-//  engine
-//
-//  Created by Seymour Pashayev on 11/2/22.
-//
+// Vec3.cpp
+// Created: Wed 02 2022
+// ------------------------
+// Seymour Pashayev
+// gitHub:@SeymourPashayev
+// ------------------------
+
 
 #include "Vec3.hpp"
 #include <math.h>

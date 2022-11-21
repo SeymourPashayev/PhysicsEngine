@@ -1,3 +1,11 @@
+// ParticleSystem2D.hpp
+// Created: Tue 15 Nov 2022
+// ------------------------
+// Seymour Pashayev
+// gitHub:@SeymourPashayev
+// ------------------------
+
+
 #ifndef PARTICLESYSTEM2D_HPP
 #define PARTICLESYSTEM2D_HPP
 

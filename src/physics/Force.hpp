@@ -1,3 +1,11 @@
+// Force.hpp
+// Created: Thu 3 Nov 2022
+// ------------------------
+// Seymour Pashayev
+// gitHub:@SeymourPashayev
+// ------------------------
+
+
 #ifndef FORCE_HPP
 #define FORCE_HPP
 

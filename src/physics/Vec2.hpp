@@ -1,9 +1,10 @@
-//
-//  Vec2.hpp
-//  engine
-//
-//  Created by Seymour Pashayev on 11/2/22.
-//
+// Vec2.hpp
+// Created: Wed 2 2022
+// ------------------------
+// Seymour Pashayev
+// gitHub:@SeymourPashayev
+// ------------------------
+
 
 #ifndef Vec2_hpp
 #define Vec2_hpp

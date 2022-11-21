@@ -1,9 +1,10 @@
-//
-//  Vec2.cpp
-//  engine
-//
-//  Created by Seymour Pashayev on 11/2/22.
-//
+// Vec2.cpp
+// Created: Wed 2 Nov 2022
+// ------------------------
+// Seymour Pashayev
+// gitHub:@SeymourPashayev
+// ------------------------
+
 
 #include "Vec2.hpp"
 #include <math.h>

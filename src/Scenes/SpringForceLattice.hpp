@@ -1,3 +1,11 @@
+// SpringForceLattice.hpp
+// Created: Tue 15 Nov 2022
+// ------------------------
+// Seymour Pashayev
+// gitHub:@SeymourPashayev
+// ------------------------
+
+
 #ifndef SPRINGFORCELATTICE_HPP
 #define SPRINGFORCELATTICE_HPP
 

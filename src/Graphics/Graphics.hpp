@@ -1,3 +1,11 @@
+// Graphics.hpp
+// Created: Thu 3 Nov 2022
+// ------------------------
+// Seymour Pashayev
+// gitHub:@SeymourPashayev
+// ------------------------
+
+
 #ifndef GRAPHICS_H
 #define GRAPHICS_H
 

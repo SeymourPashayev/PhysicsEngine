@@ -1,5 +1,13 @@
+// Mouse.cpp
+// Created: Nov 2022
+// ------------------------
+// Seymour Pashayev
+// gitHub:@SeymourPashayev
+// ------------------------
+
+
+// Project Includes
 #include "Mouse.hpp"
-#include <iostream>
 
 // Constructor
 Mouse::Mouse() {

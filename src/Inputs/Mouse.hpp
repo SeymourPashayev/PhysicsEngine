@@ -1,7 +1,19 @@
+// Mouse.hpp
+// Created: Nov 2022
+// ------------------------
+// Seymour Pashayev
+// gitHub:@SeymourPashayev
+// ------------------------
+
+
 #ifndef MOUSE_HPP
 #define MOUSE_HPP
 
+// Project Includes
 #include "../Physics/Vec2.hpp"
+
+// System Includes
+#include <iostream>
 
 struct Mouse {
         Vec2 position;
