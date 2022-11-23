@@ -12,18 +12,18 @@
 SpringForceLattice::SpringForceLattice(Mouse* mouse) : System { mouse } {
     
     // Disable Particle Attraction
-    this->ATTRACTION_ENABLED = true;
-    this->PARTICLE_COLLISION_ENABLED = false;
-    this->SCREEN_COLLISION_ENABLED = false;
+    this->ATTRACTION_ENABLED = false;
+    this->PARTICLE_COLLISION_ENABLED = true;
+    this->SCREEN_COLLISION_ENABLED = true;
 
 
     // Set the Spring Force Lattice size
-    width = 100;
-    height = 25;
+    width = 4;
+    height = 4;
 
     // Distance between particles
-    float distanceX = 25;
-    float distanceY = 25;
+    float distanceX = 50; // TODO Translate to PIXELS_PER_METER
+    float distanceY = 50;
 
     // Offsets for Particle Spawn Position
     float offsetX = Graphics::windowWidth/2.0f - (width * distanceX/2.0f);
@@ -36,12 +36,39 @@ SpringForceLattice::SpringForceLattice(Mouse* mouse) : System { mouse } {
             Vec2 pos = Vec2 { (i * distanceX ) + offsetX, (j * distanceY ) + offsetY };
 
             // Create the particle
-            Particle2D* particle = new Particle2D { pos, 30.0f, 5.0f };
+            Particle2D* particle = new Particle2D { pos, 3.0f, 10.0f };
 
             // Add the particle to the system
             particles.push_back(particle);
 
             particleCount++;
+
+            // TODO: Create an AddParticle method that handles particleCount and more for you
+        }
+    }
+
+    // Create springs for adjacent particles and add them to the system
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
+            // Get the current particle
+            Particle2D* particle = particles[i + j * width];
+
+            // Get the adjacent particles
+            Particle2D* particleRight = (i < width - 1) ? particles[(i + 1) + j * width] : nullptr;
+            Particle2D* particleDown = (j < height - 1) ? particles[i + (j + 1) * width] : nullptr;
+
+            // Create the springs
+            if (particleRight) {
+                Spring *spring = new Spring { particle, particleRight, 1.0f, distanceX }; // TODO Translate to PIXELS_PER_METER
+                Springs.push_back(spring);
+                springCount++;
+            }
+
+            if (particleDown) {
+                Spring *spring = new Spring { particle, particleDown, 1.0f, distanceY };
+                Springs.push_back(spring);
+                springCount++;
+            }
         }
     }
 
@@ -60,62 +87,8 @@ SpringForceLattice::~SpringForceLattice() {
 // Update the system
 void SpringForceLattice::Update(float dt, Vec2 pushForce) {
     
-    // Create Spring Forces between adjacent particles
-    for (int i = 0; i < width; i++) {
-        for (int j = 0; j < height; j++) {
-            // Get the current particle
-            Particle2D* particle = particles[i * width + j];
-
-            // Get the adjacent particles
-            Particle2D* particleLeft = nullptr;
-            Particle2D* particleRight = nullptr;
-            Particle2D* particleUp = nullptr;
-            Particle2D* particleDown = nullptr;
-
-            // Check if the adjacent particles exist
-            if (i > 0) {
-                particleLeft = particles[(i - 1) * width + j];
-            }
-            if (i < width - 1) {
-                particleRight = particles[(i + 1) * width + j];
-            }
-            if (j > 0) {
-                particleUp = particles[i * width + (j - 1)];
-            }
-            if (j < height - 1) {
-                particleDown = particles[i * width + (j + 1)];
-            }
-
-            // Create the spring forces
-            if (particleLeft) {
-                Vec2 springForce = Force::GenerateSpringForce(*particle, *particleLeft, 50.0f, 100.0f);
-                particle->AddForce(springForce);
-                particleLeft->AddForce(-springForce);
-            }
-
-            if (particleRight) {
-                Vec2 springForce = Force::GenerateSpringForce(*particle, *particleRight, 50.0f, 100.0f);
-                particle->AddForce(springForce);
-                particleRight->AddForce(-springForce);
-            }
-
-            if (particleUp) {
-                Vec2 springForce = Force::GenerateSpringForce(*particle, *particleUp, 50.0f, 100.0f);
-                particle->AddForce(springForce);
-                particleUp->AddForce(-springForce);
-            }
-
-            if (particleDown) {
-                Vec2 springForce = Force::GenerateSpringForce(*particle, *particleDown, 50.0f, 100.0f);
-                particle->AddForce(springForce);
-                particleDown->AddForce(-springForce);
-            }
-
-        }
-    }
-
-
     System::Update(dt, pushForce);
+    
 }
 
 

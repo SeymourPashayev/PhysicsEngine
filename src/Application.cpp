@@ -128,7 +128,6 @@ void Application::Update() {
     timePreviousFrame = SDL_GetTicks();
     
     // Update the Objects in the Scene
-    //particleSystem->Update(deltaTime, pushForce);
     system->Update(deltaTime, pushForce);
 
 }

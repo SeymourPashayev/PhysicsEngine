@@ -12,6 +12,7 @@
 // Own Classes
 #include "../Physics/Vec2.hpp"
 #include "../Physics/Particle2D.hpp"
+#include "../Physics/Spring.hpp"
 #include "../Physics/Force.hpp"
 #include "../Physics/Constants.hpp"
 #include "../Graphics/Graphics.hpp"
@@ -32,6 +33,10 @@ struct System {
     // Particle Variables
     std::vector<Particle2D*> particles;
     int particleCount = 0;
+
+    // Spring Variables
+    std::vector<Spring*> Springs;
+    int springCount = 0;
 
     // Mouse object
     Mouse* mouse;
@@ -55,6 +60,7 @@ struct System {
     bool DRAG_ENABLED = false;
     bool PARTICLE_COLLISION_ENABLED = true;
     bool SCREEN_COLLISION_ENABLED = true;
+    bool SPRINGFORCE_ENABLED = true;
 
     // ---- Debug Switches ----
     bool DEV_MENU_ENABLED = false;
@@ -79,13 +85,18 @@ struct System {
     void CreateParticleAtMouse();
     void ApplyForceToParticleOnClick(); // not implemented
 
+    // Helper Functions
+    void AttractionForceCalculatorHelper(Particle2D& particle);
+    void SpringForceCalculatorHelper();
+
     // Switch Toggles
     void ToggleGravity();
-    void ToggleAttraction(); //not implemented
-    void ToggleFriction(); //not implemented
-    void ToggleDrag(); //not implemented
-    void ToggleParticleCollision(); //not implemented
-    void ToggleScreenCollision(); //not implemented
+    void ToggleAttraction(); 
+    void ToggleFriction();
+    void ToggleDrag(); 
+    void ToggleParticleCollision(); 
+    void ToggleScreenCollision();
+    void ToggleSpringForce();
 
 };
 

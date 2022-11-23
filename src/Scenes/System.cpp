@@ -12,9 +12,6 @@
 
 System::System(Mouse* mouse) {
 
-    // Set up the particle vector 
-    std::vector<Particle2D> particles;
-
     // Set up the mouse object
     this->mouse = mouse;
 
@@ -35,10 +32,20 @@ System::~System() {
     // Delete all particle references
     for (auto &particle : particles) {
         if (particle != nullptr) {
-    delete particle;
+            delete particle;
             particle = nullptr;
 
             particleCount--;
+        }
+    }
+
+    // Delete ass spring references
+    for (auto &spring : Springs) {
+        if (spring != nullptr) {
+            delete spring;
+            spring = nullptr;
+
+            springCount--;
         }
     }
 
@@ -78,13 +85,7 @@ void System::Update(float dt, Vec2 pushForce) {
 
         // Attraction Force
         if (ATTRACTION_ENABLED){
-            for (auto otherParticle: particles) {
-                if (otherParticle != particle && otherParticle != nullptr) {
-                    Vec2 attraction = Force::GenerateGravitationalForce(*particle, *otherParticle, GRAVITY, particle->radius + otherParticle->radius, 1000.0f);
-                    particle->AddForce(attraction);
-                    otherParticle->AddForce(-attraction);
-                }
-            }
+           AttractionForceCalculatorHelper(*particle);
         }
 
         // Drag Force
@@ -92,13 +93,11 @@ void System::Update(float dt, Vec2 pushForce) {
             particle->AddForce(Force::GenerateDragForce(*particle, 0.09f));
         }
 
-    }
+        // Apply sping forces between particles
+        if (SPRINGFORCE_ENABLED){
+            SpringForceCalculatorHelper();
+        }
 
-    // Integrate all the particles
-    for (auto particle : particles) {
-        particle->VerletIntegrate(dt);
-        // Alternative Integration: Euler Integration, use one at a time
-        //particle->EulerIntegrate(dt);
     }
 
     // Check for collisions
@@ -115,6 +114,14 @@ void System::Update(float dt, Vec2 pushForce) {
     if (mouse->GetLeftClick() == true && MOUSE_ENABLED) {
         CreateParticleAtMouse();
         mouse->SetLeftClick(false);
+    }
+
+    
+    // Integrate all the particles
+    for (auto particle : particles) {
+        particle->VerletIntegrate(dt);
+        // Alternative Integration: Euler Integration, use one at a time
+        //particle->EulerIntegrate(dt);
     }
 
 }
@@ -199,7 +206,60 @@ void System::ApplyForceToParticleOnClick(){
    // TODO: Implement this
 }
 
+// ---- HELPER FUNCTIONS ----
+
+// A helper function to calculate the attraction force between particles
+void System::AttractionForceCalculatorHelper(Particle2D& particle) {
+ 
+        for (auto otherParticle: particles) {
+            if (otherParticle != &particle && otherParticle != nullptr) {
+                Vec2 attraction = Force::GenerateGravitationalForce(particle, *otherParticle, GRAVITY, particle.radius + otherParticle->radius, 1000.0f);
+                particle.AddForce(attraction);
+                otherParticle->AddForce(-attraction);
+            }
+        }
+    
+}
+
+// A helper function to calculate the spring force between particles, if it exists
+void System::SpringForceCalculatorHelper() {
+    
+    for (auto spring: Springs) {
+        if (spring != nullptr) {
+            spring->Update();
+        }
+    }
+
+}
+
+
 // ---- SWITCH TOGGLES ----
 void System::ToggleGravity() {
     GRAVITY_ENABLED = !GRAVITY_ENABLED;
 }
+
+void System::ToggleFriction() {
+    FRICTION_ENABLED = !FRICTION_ENABLED;
+}
+
+void System::ToggleAttraction() {
+    ATTRACTION_ENABLED = !ATTRACTION_ENABLED;
+}
+
+void System::ToggleDrag() {
+    DRAG_ENABLED = !DRAG_ENABLED;
+}
+
+void System::ToggleSpringForce() {
+    SPRINGFORCE_ENABLED = !SPRINGFORCE_ENABLED;
+}
+
+void System::ToggleScreenCollision() {
+    SCREEN_COLLISION_ENABLED = !SCREEN_COLLISION_ENABLED;
+}
+
+void System::ToggleParticleCollision() {
+    PARTICLE_COLLISION_ENABLED = !PARTICLE_COLLISION_ENABLED;
+}
+
+

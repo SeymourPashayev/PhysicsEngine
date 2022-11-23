@@ -13,6 +13,7 @@
 #include "../Physics/Vec2.hpp"
 #include "../Physics/Particle2D.hpp"
 #include "../Physics/Force.hpp"
+#include "../Physics/Spring.hpp"
 #include "../Physics/Constants.hpp"
 #include "../Inputs/Mouse.hpp"
 #include "System.hpp"
