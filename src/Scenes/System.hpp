@@ -43,7 +43,7 @@ struct System {
 
     // Screen Variabels
     // Set screen colour to gray by default
-    Uint32 screenColour = 0x000000;
+    Uint32 screenColour = 0x0022000;
     //SDL_Renderer *renderer;
 
     // Developer Menu 
@@ -54,6 +54,7 @@ struct System {
     // ------------------------------
     
     // ---- Simulation Switches ----
+    bool INTEGRATION_ENABLED = true;
     bool GRAVITY_ENABLED = false;
     bool ATTRACTION_ENABLED = true;
     bool FRICTION_ENABLED = true;
@@ -90,6 +91,7 @@ struct System {
     void SpringForceCalculatorHelper();
 
     // Switch Toggles
+    void ToggleIntegration();
     void ToggleGravity();
     void ToggleAttraction(); 
     void ToggleFriction();

@@ -164,4 +164,5 @@ Vec2 Force::GenerateSpringForce(const Particle2D& particle1, const Particle2D& p
     // Final Resulting Force
     Vec2 force = direction * magnitude;
     return force;
+
 }

@@ -57,8 +57,13 @@ void Application::Input() {
                     pushForce.x = 10 * PIXELS_PER_METER;
                 if (event.key.keysym.sym == SDLK_LEFT)
                     pushForce.x = -10 * PIXELS_PER_METER;
-                 if (event.key.keysym.sym == SDLK_SPACE)
+                 // If pressed spacebar, toggle integration
+                if (event.key.keysym.sym == SDLK_SPACE)
+                    system->ToggleIntegration();
+                 // if the key pressed is g, toggle gravity
+                if (event.key.keysym.sym == SDLK_g)
                     system->ToggleGravity();
+
                 break;
             case SDL_KEYUP:
                 if (event.key.keysym.sym == SDLK_UP)

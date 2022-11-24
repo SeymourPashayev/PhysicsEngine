@@ -48,6 +48,11 @@ Particle2D::~Particle2D() {
 
 void Particle2D::EulerIntegrate(float dt) {
 
+    // if anchored, do nothing
+    if (isAnchored) {
+        return;
+    }
+
     // Save the previous position
     this->prevPosition = this->position;
 
@@ -66,7 +71,12 @@ void Particle2D::EulerIntegrate(float dt) {
 
 // Solve for the position of the particle at the next time step in place
 void Particle2D::VerletIntegrate(float dt) {
-    
+   
+    // if anchored do nothing
+    if (isAnchored) {
+        return;
+    }
+
     // Save the current position for the previous position
     //this->prevPosition = this->position;
 
@@ -84,7 +94,14 @@ void Particle2D::VerletIntegrate(float dt) {
 }
 
 void Particle2D::AddForce(const Vec2& force) {
+    
     this->sumForces += force;
+
+}
+
+// Overload AddForce with + operator
+void Particle2D::operator+(const Vec2& force) {
+    AddForce(force);
 }
 
 void Particle2D::ClearForces() {
@@ -93,10 +110,12 @@ void Particle2D::ClearForces() {
 
 // ---- Collision Detection ----
 bool Particle2D::CheckCollision(Particle2D& other) {
+
     float distance = (this->position - other.position).Magnitude();
     float minDistance = this->radius + other.radius;
     
     return distance < minDistance;
+
 }
 
 void Particle2D::ResolveCollision(Particle2D& other){

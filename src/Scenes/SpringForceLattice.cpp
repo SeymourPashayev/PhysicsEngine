@@ -18,8 +18,8 @@ SpringForceLattice::SpringForceLattice(Mouse* mouse) : System { mouse } {
 
 
     // Set the Spring Force Lattice size
-    width = 4;
-    height = 4;
+    width = 5;
+    height = 5;
 
     // Distance between particles
     float distanceX = 50; // TODO Translate to PIXELS_PER_METER
@@ -36,7 +36,7 @@ SpringForceLattice::SpringForceLattice(Mouse* mouse) : System { mouse } {
             Vec2 pos = Vec2 { (i * distanceX ) + offsetX, (j * distanceY ) + offsetY };
 
             // Create the particle
-            Particle2D* particle = new Particle2D { pos, 3.0f, 10.0f };
+            Particle2D* particle = new Particle2D { pos, 1.0f, 10.0f };
 
             // Add the particle to the system
             particles.push_back(particle);
@@ -59,17 +59,22 @@ SpringForceLattice::SpringForceLattice(Mouse* mouse) : System { mouse } {
 
             // Create the springs
             if (particleRight) {
-                Spring *spring = new Spring { particle, particleRight, 1.0f, distanceX }; // TODO Translate to PIXELS_PER_METER
+                Spring *spring = new Spring { particle, particleRight, 0.01f, distanceX + particle->radius + particleRight->radius }; // TODO Translate to PIXELS_PER_METER
                 Springs.push_back(spring);
                 springCount++;
             }
 
             if (particleDown) {
-                Spring *spring = new Spring { particle, particleDown, 1.0f, distanceY };
+                Spring *spring = new Spring { particle, particleDown, 0.01f, distanceY + particle->radius + particleDown->radius }; // TODO Translate to PIXELS_PER_METER
                 Springs.push_back(spring);
                 springCount++;
             }
         }
+    }
+
+    // Anchor the particles from the top row to their location to create a lattice
+    for (int i = 0; i < width; i++) {
+        particles[i]->isAnchored = true;
     }
 
     std::cout << "Spring Force Lattice System Initiated" << std::endl;

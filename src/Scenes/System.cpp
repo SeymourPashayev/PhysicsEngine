@@ -118,10 +118,12 @@ void System::Update(float dt, Vec2 pushForce) {
 
     
     // Integrate all the particles
-    for (auto particle : particles) {
-        particle->VerletIntegrate(dt);
-        // Alternative Integration: Euler Integration, use one at a time
-        //particle->EulerIntegrate(dt);
+    if (INTEGRATION_ENABLED){
+        for (auto particle : particles) {
+            particle->VerletIntegrate(dt);
+            // Alternative Integration: Euler Integration, use one at a time
+            //particle->EulerIntegrate(dt);
+        }
     }
 
 }
@@ -135,6 +137,15 @@ void System::Draw() {
      // Draw Developer Menu
     if (DEV_MENU_ENABLED) {
         //devMenu->Draw();
+    }
+
+    // Draw the spring forces
+    if (SPRINGFORCE_ENABLED){
+        for (auto *spring : Springs) {
+            if (spring != nullptr) {
+                Graphics::DrawLine(spring->p1->position.x, spring->p1->position.y, spring->p2->position.x, spring->p2->position.y, 0x303F3F);
+            }
+        }
     }
 
     for (auto particle: particles){
@@ -234,6 +245,11 @@ void System::SpringForceCalculatorHelper() {
 
 
 // ---- SWITCH TOGGLES ----
+
+void System::ToggleIntegration() {
+    INTEGRATION_ENABLED = !INTEGRATION_ENABLED;
+}
+
 void System::ToggleGravity() {
     GRAVITY_ENABLED = !GRAVITY_ENABLED;
 }
