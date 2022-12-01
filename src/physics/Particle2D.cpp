@@ -48,11 +48,6 @@ Particle2D::~Particle2D() {
 
 void Particle2D::EulerIntegrate(float dt) {
 
-    // if anchored, do nothing
-    if (isAnchored) {
-        return;
-    }
-
     // Save the previous position
     this->prevPosition = this->position;
 
@@ -72,11 +67,6 @@ void Particle2D::EulerIntegrate(float dt) {
 // Solve for the position of the particle at the next time step in place
 void Particle2D::VerletIntegrate(float dt) {
    
-    // if anchored do nothing
-    if (isAnchored) {
-        return;
-    }
-
     // Save the current position for the previous position
     //this->prevPosition = this->position;
 
@@ -123,6 +113,24 @@ void Particle2D::ResolveCollision(Particle2D& other){
     // Change the particle color if they collide
     // this->CollisionColorImpulse();
     // other.CollisionColorImpulse();
+    
+    // The distance between the particles cannot be less than the sum of their radii
+    float distance = (this->position - other.position).Magnitude();
+    float minDistance = this->radius + other.radius;
+
+    if (distance <= minDistance) {
+        // Chance the particles' positions so they are not overlapping
+        Vec2 normal = (this->position - other.position).Normalize();
+        Vec2 correction = normal * (minDistance - distance);
+        this->position += correction * 0.5f;
+        other.position -= correction * 0.5f;
+    }
+
+    // If the particles have no mass, they can pass through each other 
+    if (this->mass == 0.0f && other.mass == 0.0f) {
+        return;
+    }
+    
 
     // Find the normal vector
     Vec2 normal = (other.position - this->position).Normalize();

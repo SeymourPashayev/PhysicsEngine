@@ -112,7 +112,7 @@ void System::Update(float dt, Vec2 pushForce) {
 
     // Create a new particle if the mouse is clicked
     if (mouse->GetLeftClick() == true && MOUSE_ENABLED) {
-        CreateParticleAtMouse();
+        CreateParticleAtMouse(dt);
         mouse->SetLeftClick(false);
     }
 
@@ -199,12 +199,23 @@ void System::CheckForParticleCollisions() {
 
 
 // Create a particle with mouse click at mouse position
-void System::CreateParticleAtMouse() {
-    
+void System::CreateParticleAtMouse(float dt) {
+   
+    float mass;
+    float radius;
+
+    if (particleCount == 0) {
+        mass = 200.0f;
+        radius = 20.0f;
+    } else {
+        mass = 5.0f;
+        radius = 5.0f;
+    }
+
     if (mouse->GetLeftClick() == true) {
 
         Vec2 mousePos = mouse->GetPosition();
-        particles.push_back(new Particle2D(mousePos.x, mousePos.y, 20.0f, 20.0f));
+        particles.push_back(new Particle2D(mousePos.x, mousePos.y, mass, radius));
         
         // Add to the count of particles
         particleCount++;

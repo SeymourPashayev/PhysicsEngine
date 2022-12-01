@@ -29,7 +29,8 @@ void Application::Setup() {
     mouse = new Mouse();
 
     //system = new ParticleSystem2D(mouse);
-    system = new SpringForceLattice(mouse);
+    //system = new SpringForceLattice(mouse);
+    system = new FluidDynamics2D(mouse);
 
 }
 
@@ -143,7 +144,6 @@ void Application::Update() {
 // ----------------------------------- //
 void Application::Render() {
    
-    //particleSystem->Draw();
     system->Draw();
 
     Graphics::RenderFrame();

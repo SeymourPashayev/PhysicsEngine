@@ -83,14 +83,14 @@ struct System {
     void CheckForParticleCollisions();
 
     // Interactions
-    void CreateParticleAtMouse();
+    virtual void CreateParticleAtMouse(float dt);
     void ApplyForceToParticleOnClick(); // not implemented
 
     // Helper Functions
     void AttractionForceCalculatorHelper(Particle2D& particle);
     void SpringForceCalculatorHelper();
 
-    // Switch Toggles
+    // Simulation Switch Toggles
     void ToggleIntegration();
     void ToggleGravity();
     void ToggleAttraction(); 

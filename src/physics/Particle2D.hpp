@@ -35,9 +35,6 @@ struct Particle2D {
     //float damping;
     float coefficientOfRestitution = 0.75f;
 
-    // ---- Switches ----
-    bool isAnchored = false;
-
     // 1) in between 0 to 1, then the colliding bodies are partially elastic.
     // 2) equal to zero, then the colliding bodies are perfectly inelastic.
     // 3) is equal to one, then the colliding bodies are perfectly elastic.

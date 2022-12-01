@@ -11,12 +11,14 @@
 
 // Project Includes
 #include "./Graphics/Graphics.hpp"
-#include "./Physics/Particle2D.hpp"
 #include "./Inputs/Mouse.hpp"
 #include "./Scenes/ParticleSystem2D.hpp"
 #include "./Scenes/SpringForceLattice.hpp"
+#include "./Scenes/FluidDynamics2D.hpp"
 #include "./Physics/Force.hpp"
 #include "./Physics/Constants.hpp"
+#include "./Physics/Particle2D.hpp"
+
 
 // System Includes
 #include <vector>

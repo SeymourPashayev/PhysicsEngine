@@ -72,11 +72,6 @@ SpringForceLattice::SpringForceLattice(Mouse* mouse) : System { mouse } {
         }
     }
 
-    // Anchor the particles from the top row to their location to create a lattice
-    for (int i = 0; i < width; i++) {
-        particles[i]->isAnchored = true;
-    }
-
     std::cout << "Spring Force Lattice System Initiated" << std::endl;
     
 }
