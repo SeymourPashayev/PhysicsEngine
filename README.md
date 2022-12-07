@@ -1,6 +1,15 @@
 # PhysicsEngine
 A Physics Engine I am writing for art projects
 
+# Currently Implemented Features
+- Particles represent point masses and could have a mass, radius, colour.
+- Force Calculations for Point Masses: Gravity (Between Particles) Gravity ("Downward Facding, simulating gravity on Earth"), Friction, Drag & some more.
+- Euler and Verlet Integration (Interchangeable, but Verlet is preferred so far).
+- Point Mass Collision Detection & Resolution existis (+ Fixed Clipping Issue when a point mass is spawned inside a point mass).
+- Simulation Flags to toggle certain forces/interactions are present, but not all of them are mapped to a keyboard
+- Creates a single particle at a mouse position with left click.
+- Graphics are implemented through SDL, but that is not a final decision as of now.
+
 
 # DISCLAIMER
 - I am not responsible if you OR I break your computer.
