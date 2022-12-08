@@ -16,9 +16,18 @@ A Physics Engine I am writing for art projects
 - I might be underqualified to explain anything that I am doing.
 - Proceed at your own risk, you have been warned.
 
+
 # How to run
 1. You need SDL2. You need a c++ compiler.
 2. Copy into the folder, run the make file with $make
 3. run the generated ./engine file
-VOILA.
+VOILA. You are ready to run.
+
+# Future Features
+- I am working on implementing an SPH (Smoothed Praticle Hydrodynamics) using PIC/FLIP method.
+- I am also trying to implement Adaptive Grid Size for the SPH simulation.
+
+# References 
+- Adaptive resolution for multiphase smoothed particle hydrodynamics by Xiufeng Yang, Song-Charng Kong [Research DOI](https://doi.org/10.1016/j.cpc.2019.01.002)
+
 
