@@ -1,4 +1,4 @@
-// ParticleSystem2D.cpp
+// SPH.cpp
 // Created: Tue 15 Nov 2022
 // ------------------------
 // Seymour Pashayev
@@ -7,30 +7,29 @@
 // This is a simple 2D particle system scene.
 
 // Project Includes
-#include "FluidDynamics2D.hpp"
+#include "SPH.hpp"
 
 
-FluidDynamics2D::FluidDynamics2D(Mouse* mouse):System { mouse } {
+SPH::SPH(Mouse* mouse):System { mouse } {
 
     std::cout << "Dynamic System Initiated" << std::endl;
 
 }
 
-FluidDynamics2D::~FluidDynamics2D() {
+SPH::~SPH() {
 
     std::cout << "Dynamic System Destroyed" << std::endl;
 
 }
 
-void FluidDynamics2D::Update(float dt, Vec2 pushForce) {
+void SPH::Update(float dt, Vec2 pushForce) {
     
     System::Update(dt, pushForce);
 
     // Find a way to create an inlfow of liquid at the mous eposition  
 }
 
-// Create a particle with mouse click at mouse position
-void FluidDynamics2D::CreateParticleAtMouse(float dt) {
+void SPH::CreateParticleAtMouse(float dt) {
   
     float mass = 5.0f;
     float radius = 10.0f;

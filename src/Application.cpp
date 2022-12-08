@@ -30,7 +30,7 @@ void Application::Setup() {
 
     //system = new ParticleSystem2D(mouse);
     //system = new SpringForceLattice(mouse);
-    system = new FluidDynamics2D(mouse);
+    system = new SPH(mouse);
 
 }
 

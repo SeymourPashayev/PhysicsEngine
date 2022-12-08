@@ -1,12 +1,12 @@
-// FluidDynamics2D.hpp
+// SPH.hpp
 // Created: Wed 23 Nov 2022
 // ------------------------
 // Seymour Pashayev
 // gitHub:@SeymourPashayev
 // ------------------------
 
-#ifndef FLUIDDYNAMICS2D_HPP
-#define FLUIDDYNAMICS2D_HPP
+#ifndef SPH_HPP
+#define SPH_HPP
 
 // Own Classes
 #include "../Physics/Vec2.hpp"
@@ -22,17 +22,17 @@
 #include <iostream>
 
 
-struct FluidDynamics2D: public System {
+struct SPH: public System {
 
     std::vector <Vec2> VelocityField;
 
     // ------------------------
 
     // create a constructor that initalizes system
-    FluidDynamics2D(Mouse* mouse);
+    SPH(Mouse* mouse);
     
     // create a destructor that deletes system
-    ~FluidDynamics2D();
+    ~SPH();
 
 
     void Update(float dt, Vec2 pushForce);
@@ -44,6 +44,13 @@ struct FluidDynamics2D: public System {
 
     // Partcile Creation Methods
     void CreateParticleAtMouse(float dt) ;
+
+    // Proposed SPH Method (2003 Paper)
+    // void InitSPH(void)
+    // void Integrate(void)
+    // void ComputeDensityPressure(void)
+    // void ComputeForces(void)
+    // void Update(void)
 };
 
 #endif
