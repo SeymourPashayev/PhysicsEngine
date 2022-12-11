@@ -33,6 +33,7 @@ VOILA. You are ready to run.
 - I am also trying to implement Adaptive Grid Size for the SPH simulation.
 
 # References 
-- Adaptive resolution for multiphase smoothed particle hydrodynamics by Xiufeng Yang, Song-Charng Kong [Research DOI](https://doi.org/10.1016/j.cpc.2019.01.002)
+- Adaptive resolution for multiphase smoothed particle hydrodynamics by Xiufeng Yang, Song-Charng Kong [DOI](https://doi.org/10.1016/j.cpc.2019.01.002)
+- Real-time fluid simulation with Adaptive SPH by By He Yan, Zhangye Wang*, Jian He, Xi Chen, Changbo Wang and Qunsheng Peng [DOI](https://doi.org/10.1002/cav.300)
 
 
