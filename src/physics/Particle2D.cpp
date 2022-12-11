@@ -6,12 +6,12 @@
 // ------------------------
 // Particle2D.cpp - A 2D particle struct for the engine
 
+// Project Includes
 #include "Particle2D.hpp"
 
 
 // Particle2D Constructor that takes x & y coordinates
-Particle2D::Particle2D(float x, float y, float mass, float radius) {
-    
+Particle2D::Particle2D(float x, float y, float mass, float radius) {  
     this->position = Vec2(x, y);
     
     this->mass = mass;
@@ -22,11 +22,9 @@ Particle2D::Particle2D(float x, float y, float mass, float radius) {
     this->radius = radius;
 
     // std::cout << "2D Particle created with mass: " << mass << std::endl;
-
 }
 
 Particle2D::Particle2D(Vec2 position, float mass, float radius) {
-    
     this->position = position;
     
     this->mass = mass;
@@ -37,15 +35,13 @@ Particle2D::Particle2D(Vec2 position, float mass, float radius) {
     this->radius = radius;
 
     // std::cout << "2D Particle created with mass: " << mass << std::endl;
-
 }
 
 Particle2D::~Particle2D() {
-
     // std::cout << "2D Particle destructor called." << std::endl;
-
 }
 
+// Simple Euler Integration 
 void Particle2D::EulerIntegrate(float dt) {
 
     // Save the previous position
@@ -65,6 +61,7 @@ void Particle2D::EulerIntegrate(float dt) {
 }
 
 // Solve for the position of the particle at the next time step in place
+// Verlet Integration is a better method than Euler Integration
 void Particle2D::VerletIntegrate(float dt) {
    
     // Save the current position for the previous position
@@ -82,7 +79,9 @@ void Particle2D::VerletIntegrate(float dt) {
     ClearForces();
 
 }
-// y' = f(x, y) step function helper for RK4Integrate
+
+// Runge-Kutta 4th Order "Step" helper function. It basically performs the Euler Integration with more 
+// Freedom for inputs. This is used to calculate the approximation coefficients for the RK4Integrate function.
 Particle2D Particle2D::RK4Step(float dt, Vec2 InPosition, Vec2 InVelocity) {
    
     Particle2D tempParticle = Particle2D(InPosition, this->mass, this->radius);
@@ -124,22 +123,32 @@ void Particle2D::RK4Integrate(float dt) {
 
 }
 
+// ----------------------------
+// ---- Force Calculations ----
+// ----------------------------
+
+
+// Adds a force to the sumForces vector.
 void Particle2D::AddForce(const Vec2& force) {
     
     this->sumForces += force;
 
 }
 
-// Overload AddForce with + operator
-void Particle2D::operator+(const Vec2& force) {
-    AddForce(force);
-}
-
+// Clear the sumForces vector
 void Particle2D::ClearForces() {
     this->sumForces = Vec2(0.0f, 0.0f);
 }
 
-// ---- Collision Detection ----
+
+// Distance Field Calculation
+float Particle2D::ComputeDistanceField(){
+    
+    return Vec2(0.0f, 0.0f);
+}
+
+
+// Collision Detection
 bool Particle2D::CheckCollision(Particle2D& other) {
 
     float distance = (this->position - other.position).Magnitude();
@@ -149,6 +158,7 @@ bool Particle2D::CheckCollision(Particle2D& other) {
 
 }
 
+// Collision Resolution
 void Particle2D::ResolveCollision(Particle2D& other){
 
     // Change the particle color if they collide
@@ -196,4 +206,12 @@ void Particle2D::ResolveCollision(Particle2D& other){
     other.velocity = tangent * dpTan2 + normal * m2;
 }
 
+// ------------------------------
+// ---- Operator Overloading ----
+// ------------------------------
+
+// Overload AddForce with + operator
+void Particle2D::operator+(const Vec2& force) {
+    AddForce(force);
+}
 

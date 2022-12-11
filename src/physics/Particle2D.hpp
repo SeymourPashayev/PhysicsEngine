@@ -40,25 +40,38 @@ struct Particle2D {
     // 2) equal to zero, then the colliding bodies are perfectly inelastic.
     // 3) is equal to one, then the colliding bodies are perfectly elastic.
     
+    // ------------------------------
     // ---- Decorative Variables ----
+    // ------------------------------
     Uint32 color = 0xFFFFFFFF;
+
 
     // --------------------------
     
     Particle2D(float x, float y, float mass = 20.0f, float radius = 20.0f);
     Particle2D(Vec2 position, float mass = 20.0f, float radius = 20.0f);
     ~Particle2D();
-
-    // Integration Methods
+    
+    // -----------------------------
+    // ---- Integration Methods ----
+    // -----------------------------
     void EulerIntegrate(float dt);
     void VerletIntegrate(float dt);
-
+    
+    // Runge-Kutta Integration
     Particle2D RK4Step(float dt, Vec2 InPosition, Vec2 InVelocity);
     void RK4Integrate(float dt);
 
-    // Force Calculations
+    // -----------------------------
+    // ---- Force Calculations ----
+    // -----------------------------
+
+    // Force Utilities
     void AddForce(const Vec2& force);
     void ClearForces();
+
+    // SPH Forces
+    float ComputeDistanceField();
 
     // Collision Detection
     bool CheckCollision(Particle2D& other);
