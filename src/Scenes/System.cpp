@@ -120,7 +120,8 @@ void System::Update(float dt, Vec2 pushForce) {
     // Integrate all the particles
     if (INTEGRATION_ENABLED){
         for (auto particle : particles) {
-            particle->VerletIntegrate(dt);
+            particle->RK4Integrate(dt);
+            //particle->VerletIntegrate(dt);
             // Alternative Integration: Euler Integration, use one at a time
             //particle->EulerIntegrate(dt);
         }

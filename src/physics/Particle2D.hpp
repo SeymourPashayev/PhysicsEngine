@@ -1,4 +1,5 @@
 // Particle2D.hpp
+//
 // Created: Thu 3 Nov 2022
 // ------------------------
 // Seymour Pashayev
@@ -51,6 +52,9 @@ struct Particle2D {
     // Integration Methods
     void EulerIntegrate(float dt);
     void VerletIntegrate(float dt);
+
+    Particle2D RK4Step(float dt, Vec2 InPosition, Vec2 InVelocity);
+    void RK4Integrate(float dt);
 
     // Force Calculations
     void AddForce(const Vec2& force);

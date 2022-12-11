@@ -13,13 +13,16 @@ SpringForceLattice::SpringForceLattice(Mouse* mouse) : System { mouse } {
     
     // Disable Particle Attraction
     this->ATTRACTION_ENABLED = false;
-    this->PARTICLE_COLLISION_ENABLED = true;
+    this->PARTICLE_COLLISION_ENABLED = false;
     this->SCREEN_COLLISION_ENABLED = true;
 
+    // Particle Variables
+    float mass = 3.0f;
+    float radius = 10.0f;
 
     // Set the Spring Force Lattice size
-    width = 5;
-    height = 5;
+    width = 2;
+    height = 4;
 
     // Distance between particles
     float distanceX = 50; // TODO Translate to PIXELS_PER_METER
@@ -36,7 +39,7 @@ SpringForceLattice::SpringForceLattice(Mouse* mouse) : System { mouse } {
             Vec2 pos = Vec2 { (i * distanceX ) + offsetX, (j * distanceY ) + offsetY };
 
             // Create the particle
-            Particle2D* particle = new Particle2D { pos, 1.0f, 10.0f };
+            Particle2D* particle = new Particle2D { pos, mass, radius };
 
             // Add the particle to the system
             particles.push_back(particle);

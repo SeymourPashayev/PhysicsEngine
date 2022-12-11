@@ -21,7 +21,7 @@ Particle2D::Particle2D(float x, float y, float mass, float radius) {
     
     this->radius = radius;
 
-    std::cout << "2D Particle created with mass: " << mass << std::endl;
+    // std::cout << "2D Particle created with mass: " << mass << std::endl;
 
 }
 
@@ -36,13 +36,13 @@ Particle2D::Particle2D(Vec2 position, float mass, float radius) {
     
     this->radius = radius;
 
-    std::cout << "2D Particle created with mass: " << mass << std::endl;
+    // std::cout << "2D Particle created with mass: " << mass << std::endl;
 
 }
 
 Particle2D::~Particle2D() {
 
-    std::cout << "2D Particle destructor called." << std::endl;
+    // std::cout << "2D Particle destructor called." << std::endl;
 
 }
 
@@ -77,6 +77,47 @@ void Particle2D::VerletIntegrate(float dt) {
     this->position = newPosition;
     this->velocity = newVelocity;
     this->acceleration = newAcceleration;
+
+    // Clear the forces
+    ClearForces();
+
+}
+// y' = f(x, y) step function helper for RK4Integrate
+Particle2D Particle2D::RK4Step(float dt, Vec2 InPosition, Vec2 InVelocity) {
+   
+    Particle2D tempParticle = Particle2D(InPosition, this->mass, this->radius);
+    tempParticle.velocity = InVelocity;
+
+    // Find the acceleration of the forces being applied
+    tempParticle.acceleration = sumForces * invMass;
+    
+    // Find the velocity of the particle
+    tempParticle.velocity = acceleration * dt;
+
+    // Find the position of the particle
+    tempParticle.position = velocity * dt;
+
+    // Clear the forces
+    ClearForces();
+    
+    return tempParticle;
+}
+
+// Runge-Kutta 4th order integration
+void Particle2D::RK4Integrate(float dt) {
+   
+    // Save the current position to the previous position
+    this->prevPosition = this->position;
+    
+    this->acceleration = sumForces * invMass;
+
+    Particle2D k1 = this->RK4Step(dt, this->position, this->velocity);
+    Particle2D k2 = this->RK4Step(0.5f * dt, this->position + k1.position * 0.5f * dt, this->velocity + k1.velocity * 0.5f * dt);
+    Particle2D k3 = this->RK4Step(0.5f * dt, this->position + k2.position * 0.5f * dt, this->velocity + k2.velocity * 0.5f * dt);
+    Particle2D k4 = this->RK4Step(dt, this->position + k3.position*dt, this->velocity + k3.velocity*dt);
+    
+    this->position += (k1.position + k2.position * 2.0f + k3.position * 2.0f + k4.position) * (1.0f / 6.0f);
+    this->velocity += (k1.velocity + k2.velocity * 2.0f + k3.velocity * 2.0f + k4.velocity) * (1.0f / 6.0f);
 
     // Clear the forces
     ClearForces();
