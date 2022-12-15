@@ -144,7 +144,7 @@ void Particle2D::ClearForces() {
 // Distance Field Calculation
 float Particle2D::ComputeDistanceField(){
     
-    return Vec2(0.0f, 0.0f);
+    return 0.0f;
 }
 
 
