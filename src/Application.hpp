@@ -12,9 +12,7 @@
 // Project Includes
 #include "./Graphics/Graphics.hpp"
 #include "./Inputs/Mouse.hpp"
-#include "./Scenes/ParticleSystem2D.hpp"
 #include "./Scenes/SpringForceLattice.hpp"
-#include "./Scenes/SPH.hpp"
 #include "./Physics/Force.hpp"
 #include "./Physics/Constants.hpp"
 #include "./Physics/Particle2D.hpp"
@@ -34,7 +32,7 @@ class Application {
         Vec2 pushForce = Vec2(0.0f, 0.0f);
 
         // The system/set in use.
-        System* system;
+        System* scene;
         
     public:
         

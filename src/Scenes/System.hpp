@@ -55,6 +55,7 @@ struct System {
     
     // ---- Simulation Switches ----
     bool INTEGRATION_ENABLED = true;
+    bool FLUID_DYNAMICS_ENABLED = true;
     bool GRAVITY_ENABLED = false;
     bool ATTRACTION_ENABLED = true;
     bool FRICTION_ENABLED = true;
@@ -82,16 +83,19 @@ struct System {
     void CheckForScreenCollisions();
     void CheckForParticleCollisions();
 
-    // Interactions
-    virtual void CreateParticleAtMouse(float dt);
-    void ApplyForceToParticleOnClick(); // not implemented
-
     // Helper Functions
     void AttractionForceCalculatorHelper(Particle2D& particle);
     void SpringForceCalculatorHelper();
 
+    // ----------------------
+    // ---- Interactions ----
+    // ----------------------
+
+    void CreateParticleAtMouse();
+
     // Simulation Switch Toggles
     void ToggleIntegration();
+    void ToggleFluidDynamics();
     void ToggleGravity();
     void ToggleAttraction(); 
     void ToggleFriction();

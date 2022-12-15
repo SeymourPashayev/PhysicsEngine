@@ -112,7 +112,7 @@ void System::Update(float dt, Vec2 pushForce) {
 
     // Create a new particle if the mouse is clicked
     if (mouse->GetLeftClick() == true && MOUSE_ENABLED) {
-        CreateParticleAtMouse(dt);
+        CreateParticleAtMouse();
         mouse->SetLeftClick(false);
     }
 
@@ -200,7 +200,7 @@ void System::CheckForParticleCollisions() {
 
 
 // Create a particle with mouse click at mouse position
-void System::CreateParticleAtMouse(float dt) {
+void System::CreateParticleAtMouse() {
    
     float mass;
     float radius;
@@ -223,10 +223,6 @@ void System::CreateParticleAtMouse(float dt) {
 
     }
 
-}
-
-void System::ApplyForceToParticleOnClick(){
-   // TODO: Implement this
 }
 
 // ---- HELPER FUNCTIONS ----
@@ -260,6 +256,10 @@ void System::SpringForceCalculatorHelper() {
 
 void System::ToggleIntegration() {
     INTEGRATION_ENABLED = !INTEGRATION_ENABLED;
+}
+
+void System::ToggleFluidDynamics() {
+    FLUID_DYNAMICS_ENABLED = !FLUID_DYNAMICS_ENABLED;
 }
 
 void System::ToggleGravity() {

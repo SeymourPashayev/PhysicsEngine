@@ -28,9 +28,7 @@ void Application::Setup() {
     // Setup Mouse and Particle System
     mouse = new Mouse();
 
-    //system = new ParticleSystem2D(mouse);
-    //system = new SpringForceLattice(mouse);
-    system = new SPH(mouse);
+    scene = new System(mouse);
 
 }
 
@@ -60,10 +58,10 @@ void Application::Input() {
                     pushForce.x = -10 * PIXELS_PER_METER;
                  // If pressed spacebar, toggle integration
                 if (event.key.keysym.sym == SDLK_SPACE)
-                    system->ToggleIntegration();
+                    scene->ToggleIntegration();
                  // if the key pressed is g, toggle gravity
                 if (event.key.keysym.sym == SDLK_g)
-                    system->ToggleGravity();
+                    scene->ToggleGravity();
 
                 break;
             case SDL_KEYUP:
@@ -134,7 +132,7 @@ void Application::Update() {
     timePreviousFrame = SDL_GetTicks();
     
     // Update the Objects in the Scene
-    system->Update(deltaTime, pushForce);
+    scene->Update(deltaTime, pushForce);
 
 }
 
@@ -144,7 +142,7 @@ void Application::Update() {
 // ----------------------------------- //
 void Application::Render() {
    
-    system->Draw();
+    scene->Draw();
 
     Graphics::RenderFrame();
 
@@ -161,7 +159,7 @@ void Application::Destroy() {
 
     // Delete the particle system
     //delete particleSystem;
-    delete system;
+    delete scene;
 
     // Close the window
     Graphics::CloseWindow();
