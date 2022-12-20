@@ -32,8 +32,8 @@ struct Force {
     // ---- SPH Forces ----
     // --------------------
     
-
-
+    static Vec2 Advect(const Particle2D& particle, const Vec2& velocity, float dt);
+    
 
 };
 

@@ -57,9 +57,6 @@ struct Particle2D {
     // -----------------------------
     void EulerIntegrate(float dt);
     void VerletIntegrate(float dt);
-    
-    // Runge-Kutta Integration
-    Particle2D RK4Step(float dt, Vec2 InPosition, Vec2 InVelocity);
     void RK4Integrate(float dt);
 
     // -----------------------------

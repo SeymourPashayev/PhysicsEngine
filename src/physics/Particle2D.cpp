@@ -80,47 +80,30 @@ void Particle2D::VerletIntegrate(float dt) {
 
 }
 
-// Runge-Kutta 4th Order "Step" helper function. It basically performs the Euler Integration with more 
-// Freedom for inputs. This is used to calculate the approximation coefficients for the RK4Integrate function.
-Particle2D Particle2D::RK4Step(float dt, Vec2 InPosition, Vec2 InVelocity) {
-   
-    Particle2D tempParticle = Particle2D(InPosition, this->mass, this->radius);
-    tempParticle.velocity = InVelocity;
-
-    // Find the acceleration of the forces being applied
-    tempParticle.acceleration = sumForces * invMass;
-    
-    // Find the velocity of the particle
-    tempParticle.velocity = acceleration * dt;
-
-    // Find the position of the particle
-    tempParticle.position = velocity * dt;
-
-    // Clear the forces
-    ClearForces();
-    
-    return tempParticle;
-}
-
 // Runge-Kutta 4th order integration
 void Particle2D::RK4Integrate(float dt) {
-   
-    // Save the current position to the previous position
-    this->prevPosition = this->position;
-    
-    this->acceleration = sumForces * invMass;
+    // Save the current state of the particle
+  Vec2 pos = this->position;
+  Vec2 vel = this->velocity;
+  Vec2 acc = this->acceleration;
 
-    Particle2D k1 = this->RK4Step(dt, this->position, this->velocity);
-    Particle2D k2 = this->RK4Step(0.5f * dt, this->position + k1.position * 0.5f * dt, this->velocity + k1.velocity * 0.5f * dt);
-    Particle2D k3 = this->RK4Step(0.5f * dt, this->position + k2.position * 0.5f * dt, this->velocity + k2.velocity * 0.5f * dt);
-    Particle2D k4 = this->RK4Step(dt, this->position + k3.position*dt, this->velocity + k3.velocity*dt);
-    
-    this->position += (k1.position + k2.position * 2.0f + k3.position * 2.0f + k4.position) * (1.0f / 6.0f);
-    this->velocity += (k1.velocity + k2.velocity * 2.0f + k3.velocity * 2.0f + k4.velocity) * (1.0f / 6.0f);
+  // Compute the intermediate values for the Runge-Kutta method
+  Vec2 k1_pos = vel;
+  Vec2 k1_vel = acc;
+  Vec2 k2_pos = vel + k1_vel * (dt / 2);
+  Vec2 k2_vel = acc + k1_vel * (dt / 2);
+  Vec2 k3_pos = vel + k2_vel * (dt / 2);
+  Vec2 k3_vel = acc + k2_vel * (dt / 2);
+  Vec2 k4_pos = vel + k3_vel * dt;
+  Vec2 k4_vel = acc + k3_vel * dt;
 
-    // Clear the forces
-    ClearForces();
+  // Update the position, velocity, and acceleration of the particle
+  this->position = (pos + (k1_pos + k2_pos * 2.00 + k3_pos * 2.00 + k4_pos) * (dt / 6));
+  this->velocity = (vel + (k1_vel + k2_vel* 2.00 + k3_vel * 2.00 + k4_vel) * (dt / 6));
+  
+  this->acceleration = sumForces * invMass;
 
+  ClearForces();
 }
 
 // ----------------------------

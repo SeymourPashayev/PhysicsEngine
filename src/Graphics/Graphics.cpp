@@ -48,12 +48,6 @@ bool Graphics::OpenWindow() {
         return false;
     }
 
-    // Initialize the thing that is responsible for drawing text.
-    if (TTF_Init()==-1) {
-        printf("Failed to TTF: %s \n", SDL_GetError());
-        return false;
-    }
-
     return true;
 
 }
