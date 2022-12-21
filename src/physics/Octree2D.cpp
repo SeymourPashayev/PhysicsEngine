@@ -10,7 +10,7 @@
 #include "Octree2D.hpp"
 
 // Constructor
-Octree::Octree() {
+Octree2D::Octree2D() {
     // Initialize the data members
     particles.clear();
 
@@ -25,7 +25,7 @@ Octree::Octree() {
 }
 
 // Another Constructor
-Octree::Octree(std::vector<Particle2D*>& particles, const Vec2& min, const Vec2& max, int depth) {
+Octree2D::Octree2D(std::vector<Particle2D*>& particles, const Vec2& min, const Vec2& max, int depth) {
     // Initialize the data members
     this->particles = particles;
     
@@ -42,7 +42,7 @@ Octree::Octree(std::vector<Particle2D*>& particles, const Vec2& min, const Vec2&
 }
 
 // Destructor
-Octree::~Octree() {
+Octree2D::~Octree2D() {
     // Recursively delete the children
     for (int i = 0; i < 4; i++) {
         if (children[i] != NULL) {  
@@ -52,7 +52,7 @@ Octree::~Octree() {
     }
 }
 
-void Octree::buildOctree(std::vector<Particle2D*>& particles, int depth) {
+void Octree2D::buildOctree(std::vector<Particle2D*>& particles, int depth) {
 
     // Calculate the center and half-width of the octant
     Vec2 center = (min + max) * 0.5;
@@ -85,23 +85,23 @@ void Octree::buildOctree(std::vector<Particle2D*>& particles, int depth) {
 
         Vec2 minLowerLeft(min.x, min.y);
         Vec2 maxLowerLeft(center.x, center.y);
-        children[0] = new Octree(lowerLeft, minLowerLeft, maxLowerLeft, depth + 1);
+        children[0] = new Octree2D(lowerLeft, minLowerLeft, maxLowerLeft, depth + 1);
 
         Vec2 minLowerRight(center.x, min.y);
         Vec2 maxLowerRight(max.x, center.y);
-        children[1] = new Octree(lowerRight, minLowerRight, maxLowerRight, depth + 1);
+        children[1] = new Octree2D(lowerRight, minLowerRight, maxLowerRight, depth + 1);
 
         Vec2 minUpperLeft(min.x, center.y);
         Vec2 maxUpperLeft(center.x, max.y);
-        children[2] = new Octree(upperLeft, minUpperLeft, maxUpperLeft, depth + 1);
+        children[2] = new Octree2D(upperLeft, minUpperLeft, maxUpperLeft, depth + 1);
 
         Vec2 minUpperRight(center.x, center.y);
         Vec2 maxUpperRight(max.x, max.y);
-        children[3] = new Octree(upperRight, minUpperRight, maxUpperRight, depth + 1);
+        children[3] = new Octree2D(upperRight, minUpperRight, maxUpperRight, depth + 1);
     }
 }
 
-void Octree::insert(Particle2D* particle) {
+void Octree2D::insert(Particle2D* particle) {
     // Check if the particle is within the bounds of the octant
     if (particle->position.x >= min.x && particle->position.x < max.x &&
         particle->position.y >= min.y && particle->position.y < max.y) {
@@ -120,7 +120,7 @@ void Octree::insert(Particle2D* particle) {
 }
 
 // This function will give the particle list of the octant that contains the given particle
-void Octree::findNeighbors(std::vector<Particle2D*>& neighbors, Particle2D* particle, double searchRadius) {
+void Octree2D::findNeighbors(std::vector<Particle2D*>& neighbors, Particle2D* particle, double searchRadius) {
     
     // Check if the octant is within the search radius
     if (particle->position.x + searchRadius < min.x || particle->position.x - searchRadius >= max.x ||
@@ -152,7 +152,7 @@ void Octree::findNeighbors(std::vector<Particle2D*>& neighbors, Particle2D* part
 }
 
 // This version of findNeighbors is will give a particle to work on
-void Octree::findNeighbors(std::function<void(Particle2D*)> callback, Particle2D* particle, double searchRadius) {
+void Octree2D::findNeighbors(std::function<void(Particle2D*)> callback, Particle2D* particle, double searchRadius) {
     // Check if the octant is within the search radius
     if (particle->position.x + searchRadius < min.x || particle->position.x - searchRadius >= max.x ||
         particle->position.y + searchRadius < min.y || particle->position.y - searchRadius >= max.y) {
@@ -177,7 +177,7 @@ void Octree::findNeighbors(std::function<void(Particle2D*)> callback, Particle2D
     }
 }
 
-void Octree::findNeighbors(std::vector<Particle2D*>& neighbors, Particle2D* particle, double searchRadius, Vec2 min, Vec2 max) {
+void Octree2D::findNeighbors(std::vector<Particle2D*>& neighbors, Particle2D* particle, double searchRadius, Vec2 min, Vec2 max) {
     // Check if the octant is within the search radius and the specified region
     if (particle->position.x + searchRadius < min.x || particle->position.x - searchRadius >= max.x ||
         particle->position.y + searchRadius < min.y || particle->position.y - searchRadius >= max.y ||
@@ -204,13 +204,13 @@ void Octree::findNeighbors(std::vector<Particle2D*>& neighbors, Particle2D* part
 }
 
 
-std::vector<Particle2D*> Octree::getParticles() {
+std::vector<Particle2D*> Octree2D::getParticles() {
     std::vector<Particle2D*> particles;
     getParticles(particles);
     return particles;
 }
 
-void Octree::getParticles(std::vector<Particle2D*>& particles) {
+void Octree2D::getParticles(std::vector<Particle2D*>& particles) {
     particles.insert(particles.end(), this->particles.begin(), this->particles.end());
     for (int i = 0; i < 4; i++) {
         if (children[i] != nullptr) {
@@ -219,7 +219,7 @@ void Octree::getParticles(std::vector<Particle2D*>& particles) {
     }
 }
 
-void Octree::Clear() {
+void Octree2D::Clear() {
     particles.clear();
     for (int i = 0; i < 4; i++) {
         if (children[i] != nullptr) {

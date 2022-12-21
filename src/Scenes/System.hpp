@@ -15,6 +15,7 @@
 #include "../Physics/Spring.hpp"
 #include "../Physics/Force.hpp"
 #include "../Physics/Constants.hpp"
+#include "../Physics/Octree2D.hpp"
 #include "../Graphics/Graphics.hpp"
 #include "../Inputs/Mouse.hpp"
 
@@ -36,6 +37,9 @@ struct System {
     // Spring Variables
     std::vector<Spring*> Springs;
     int springCount = 0;
+    
+    // Octree
+    Octree2D* octree = nullptr;
 
     // Mouse object
     Mouse* mouse;
@@ -85,6 +89,10 @@ struct System {
     // Helper Functions
     void AttractionForceCalculatorHelper(Particle2D& particle);
     void SpringForceCalculatorHelper();
+    
+    // SPH Functions
+    float Kernel(Vec2 r, float h);
+    
 
     // ----------------------
     // ---- Interactions ----

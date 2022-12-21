@@ -82,28 +82,29 @@ void Particle2D::VerletIntegrate(float dt) {
 
 // Runge-Kutta 4th order integration
 void Particle2D::RK4Integrate(float dt) {
+    
     // Save the current state of the particle
-  Vec2 pos = this->position;
-  Vec2 vel = this->velocity;
-  Vec2 acc = this->acceleration;
+    Vec2 pos = this->position;
+    Vec2 vel = this->velocity;
+    Vec2 acc = this->acceleration;
 
-  // Compute the intermediate values for the Runge-Kutta method
-  Vec2 k1_pos = vel;
-  Vec2 k1_vel = acc;
-  Vec2 k2_pos = vel + k1_vel * (dt / 2);
-  Vec2 k2_vel = acc + k1_vel * (dt / 2);
-  Vec2 k3_pos = vel + k2_vel * (dt / 2);
-  Vec2 k3_vel = acc + k2_vel * (dt / 2);
-  Vec2 k4_pos = vel + k3_vel * dt;
-  Vec2 k4_vel = acc + k3_vel * dt;
+    // Compute the intermediate values for the Runge-Kutta method
+    Vec2 k1_pos = vel;
+    Vec2 k1_vel = acc;
+    Vec2 k2_pos = vel + k1_vel * (dt / 2);
+    Vec2 k2_vel = acc + k1_vel * (dt / 2);
+    Vec2 k3_pos = vel + k2_vel * (dt / 2);
+    Vec2 k3_vel = acc + k2_vel * (dt / 2);
+    Vec2 k4_pos = vel + k3_vel * dt;
+    Vec2 k4_vel = acc + k3_vel * dt;
 
-  // Update the position, velocity, and acceleration of the particle
-  this->position = (pos + (k1_pos + k2_pos * 2.00 + k3_pos * 2.00 + k4_pos) * (dt / 6));
-  this->velocity = (vel + (k1_vel + k2_vel* 2.00 + k3_vel * 2.00 + k4_vel) * (dt / 6));
+    // Update the position, velocity, and acceleration of the particle
+    this->position = (pos + (k1_pos + k2_pos * 2.00 + k3_pos * 2.00 + k4_pos) * (dt / 6));
+    this->velocity = (vel + (k1_vel + k2_vel* 2.00 + k3_vel * 2.00 + k4_vel) * (dt / 6));
   
-  this->acceleration = sumForces * invMass;
+    this->acceleration = sumForces * invMass;
 
-  ClearForces();
+    ClearForces();
 }
 
 // ----------------------------

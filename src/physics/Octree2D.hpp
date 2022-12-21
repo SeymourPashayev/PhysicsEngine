@@ -12,15 +12,15 @@
 // Project Includes
 #include "Particle2D.hpp"
 
-class Octree {
+class Octree2D {
 
 public:
     // Constructor
-    Octree();
-    Octree(std::vector<Particle2D*>& particles, const Vec2& min, const Vec2& max, int depth);
+    Octree2D();
+    Octree2D(std::vector<Particle2D*>& particles, const Vec2& min, const Vec2& max, int depth);
 
     // Destructor
-    ~Octree();
+    ~Octree2D();
 
     // Insert a particle into the octree
     void insert(Particle2D* particle);
@@ -50,7 +50,7 @@ private:
     // Data members for the octree
     std::vector<Particle2D*> particles;
 
-    Octree* children[4];
+    Octree2D* children[4];
   
     Vec2 min;
     Vec2 max;
