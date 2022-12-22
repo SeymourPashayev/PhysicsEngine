@@ -28,7 +28,7 @@ Octree2D::Octree2D() {
 Octree2D::Octree2D(std::vector<Particle2D*>& particles, const Vec2& min, const Vec2& max, int depth) {
     // Initialize the data members
     this->particles = particles;
-    
+   
     for (int i = 0; i < 4; i++) {
         children[i] = NULL;
     }

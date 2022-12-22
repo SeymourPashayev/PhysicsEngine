@@ -15,8 +15,10 @@ System::System(Mouse* mouse) {
     // Set up the mouse object
     this->mouse = mouse;
 
-    // Set up the Octree
-    this->octree = new Octree2D(particles, Vec2(0, 0), Vec2(Graphics::windowWidth, Graphics::windowHeight), 4);
+    // Set up the Octree screen size
+    Vec2 min(0, 0);
+    Vec2 max(Graphics::windowWidth, Graphics::windowHeight);
+    octree = new Octree2D(particles, min, max, 4); 
 
     // Set up the renderer
     //this->renderer = renderer;
@@ -42,6 +44,9 @@ System::~System() {
         }
     }
 
+    // Delete the Octree
+    delete octree;
+
     // Delete ass spring references
     for (auto &spring : Springs) {
         if (spring != nullptr) {
@@ -62,9 +67,20 @@ System::~System() {
 
 void System::Update(float dt, Vec2 pushForce) {
     
-    // Update Developer Menu Text
-    if (DEV_MENU_ENABLED) {
-        //devMenu->Update();
+    // Check for collisions
+    if (SCREEN_COLLISION_ENABLED){
+        CheckForScreenCollisions();
+    }
+
+    // Check for Particle Collisions
+    if (PARTICLE_COLLISION_ENABLED){
+        CheckForParticleCollisions();
+    }
+
+    // Create a new particle if the mouse is clicked
+    if (mouse->GetLeftClick() == true && MOUSE_ENABLED) {
+        CreateParticleAtMouse();
+        mouse->SetLeftClick(false);
     }
 
     // Generate and Add Forces to all the particles
@@ -98,36 +114,13 @@ void System::Update(float dt, Vec2 pushForce) {
 
         // Apply sping forces between particles
         if (SPRINGFORCE_ENABLED){
-            SpringForceCalculatorHelper();
+            //SpringForceCalculatorHelper();
         }
 
-    }
-
-    // Check for collisions
-    if (SCREEN_COLLISION_ENABLED){
-        CheckForScreenCollisions();
-    }
-
-    // Check for Particle Collisions
-    if (PARTICLE_COLLISION_ENABLED){
-        CheckForParticleCollisions();
-    }
-
-    // Create a new particle if the mouse is clicked
-    if (mouse->GetLeftClick() == true && MOUSE_ENABLED) {
-        CreateParticleAtMouse();
-        mouse->SetLeftClick(false);
-    }
-
-    
-    // Integrate all the particles
-    if (INTEGRATION_ENABLED){
-        for (auto particle : particles) {
+        if (INTEGRATION_ENABLED){
             particle->RK4Integrate(dt);
-            //particle->VerletIntegrate(dt);
-            // Alternative Integration: Euler Integration, use one at a time
-            //particle->EulerIntegrate(dt);
         }
+
     }
 
 }
@@ -219,7 +212,9 @@ void System::CreateParticleAtMouse() {
     if (mouse->GetLeftClick() == true) {
 
         Vec2 mousePos = mouse->GetPosition();
-        particles.push_back(new Particle2D(mousePos.x, mousePos.y, mass, radius));
+        Particle2D* newParticle = new Particle2D(mousePos.x, mousePos.y, mass, radius);
+        particles.push_back(newParticle);
+        octree->insert(newParticle);
         
         // Add to the count of particles
         particleCount++;
@@ -230,29 +225,22 @@ void System::CreateParticleAtMouse() {
 
 // ---- HELPER FUNCTIONS ----
 
-// A helper function to calculate the attraction force between particles
 void System::AttractionForceCalculatorHelper(Particle2D& particle) {
- 
-        for (auto otherParticle: particles) {
-            if (otherParticle != &particle && otherParticle != nullptr) {
-                Vec2 attraction = Force::GenerateGravitationalForce(particle, *otherParticle, GRAVITY, particle.radius + otherParticle->radius, 1000.0f);
-                particle.AddForce(attraction);
-                otherParticle->AddForce(-attraction);
-            }
-        }
+    // Find the neighbors of the particle using the octree
+    double searchRadius = particle.radius + MAX_SEARCH_RADIUS;
+    std::vector<Particle2D*> neighbors;
+    octree->findNeighbors(neighbors,&particle, searchRadius);
     
-}
-
-// A helper function to calculate the spring force between particles, if it exists
-void System::SpringForceCalculatorHelper() {
-    
-    for (auto spring: Springs) {
-        if (spring != nullptr) {
-            spring->Update();
-        }
+    // Compute the gravitational forces between the particle and its neighbors
+    for (int i = 0; i < (int) neighbors.size(); i++) {
+        Particle2D* otherParticle = neighbors[i];
+        Vec2 attraction = Force::GenerateGravitationalForce(particle, *otherParticle, GRAVITY, particle.radius + otherParticle->radius, 1000.0f);
+        particle.AddForce(attraction);
+        otherParticle->AddForce(-attraction);
     }
-
 }
+
+// SPH Functions
 
 float System::Kernel(Vec2 r, float h) {
     float q = r.Magnitude() / h;

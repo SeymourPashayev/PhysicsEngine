@@ -49,8 +49,8 @@ struct System {
     Uint32 screenColour = 0x0022000;
     //SDL_Renderer *renderer;
 
-    // Developer Menu 
-    //SceneDevMenu* devMenu;
+    // Hard coded variables
+    float MAX_SEARCH_RADIUS = 0.23f * PIXELS_PER_METER;
 
     // ------------------------------
     // System Switches
@@ -82,14 +82,13 @@ struct System {
     void Update(float dt, Vec2 pushForce);
     void Draw();
 
-    // Helper Functions
+    // Boundary/Interaction Functions
     void CheckForScreenCollisions();
     void CheckForParticleCollisions();
 
-    // Helper Functions
+    // Force Application
     void AttractionForceCalculatorHelper(Particle2D& particle);
-    void SpringForceCalculatorHelper();
-    
+
     // SPH Functions
     float Kernel(Vec2 r, float h);
     
