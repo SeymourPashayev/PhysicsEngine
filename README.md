@@ -5,6 +5,7 @@ A Physics Engine I am writing for art projects
 - Particles represent point masses and could have a mass, radius, colour.
 - Force Calculations for Point Masses: Gravity (Between Particles) Gravity ("Downward Facing, simulating gravity on Earth"), Friction, Drag & some more.
 - Runge-Kutta 4th Order, Euler and Verlet Integration Methods (Interchangeable, but RK4 is preferred).
+- Octree Data Structure to decrease the computational overhead of finding neighbouring particles.
 - Point Mass Collision Detection & Resolution existis (+ Fixed Clipping Issue when a point mass is spawned inside a point mass).
 - Simulation Flags to toggle certain forces/interactions are present, but not all of them are mapped to a keyboard
 - Creates a single particle at a mouse position with left click.
