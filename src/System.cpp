@@ -131,20 +131,6 @@ void System::Draw() {
     // Clear Screen
     Graphics::ClearScreen(screenColour);
 
-     // Draw Developer Menu
-    if (DEV_MENU_ENABLED) {
-        //devMenu->Draw();
-    }
-
-    // Draw the spring forces
-    if (SPRINGFORCE_ENABLED){
-        for (auto *spring : Springs) {
-            if (spring != nullptr) {
-                Graphics::DrawLine(spring->p1->position.x, spring->p1->position.y, spring->p2->position.x, spring->p2->position.y, 0x303F3F);
-            }
-        }
-    }
-
     for (auto particle: particles){
         if (particle != nullptr) {
             Graphics::DrawFillCircle(particle->position.x, particle->position.y, particle->radius, particle->color);
@@ -250,6 +236,7 @@ void System::AddParticle(Particle2D* particle) {
 
 // SPH Functions
 
+// Kernel Function: The function that determines the influence of a particle on another particle FIXME I did not design this and idk if it works well
 float System::Kernel(Vec2 r, float h) {
     float q = r.Magnitude() / h;
      if (q > 2) {

@@ -15,7 +15,7 @@ WaterDam::WaterDam(Mouse* mouse) : System {mouse} {
     
     // Disable Particle Attraction
     this->ATTRACTION_ENABLED = true;
-    this->PARTICLE_COLLISION_ENABLED = false;
+    this->PARTICLE_COLLISION_ENABLED = true;
     this->SCREEN_COLLISION_ENABLED = false;
     this->MAX_SEARCH_RADIUS = 20.0f;
 
@@ -24,8 +24,8 @@ WaterDam::WaterDam(Mouse* mouse) : System {mouse} {
     float radius = 5.0f;
 
     // Set the Spring Force Lattice size
-    width = 50;
-    height = 50;
+    width = 10;
+    height = 10;
 
     // Distance between particles
     float distanceX = 20; // TODO Translate to PIXELS_PER_METER
