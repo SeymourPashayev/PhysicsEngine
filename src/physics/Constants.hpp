@@ -19,4 +19,8 @@ const float GRAVITY = 9.81f;
 
 const float GRAVITATIONAL_CONSTANT = 6.675;
 
+const float REST_DENSITY = 1000.0f;
+const float STIFFNESS = 100.0f;
+const float VISCOSITY = 0.5f;
+
 #endif

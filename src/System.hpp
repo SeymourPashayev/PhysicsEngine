@@ -10,14 +10,14 @@
 #define SYSTEM_HPP
 
 // Own Classes
-#include "../Physics/Vec2.hpp"
-#include "../Physics/Particle2D.hpp"
-#include "../Physics/Spring.hpp"
-#include "../Physics/Force.hpp"
-#include "../Physics/Constants.hpp"
-#include "../Physics/Octree2D.hpp"
-#include "../Graphics/Graphics.hpp"
-#include "../Inputs/Mouse.hpp"
+#include "Physics/Vec2.hpp"
+#include "Physics/Particle2D.hpp"
+#include "Physics/Spring.hpp"
+#include "Physics/Force.hpp"
+#include "Physics/Constants.hpp"
+#include "Physics/Octree2D.hpp"
+#include "Graphics/Graphics.hpp"
+#include "Inputs/Mouse.hpp"
 
 // System Imports
 #include <vector>
@@ -79,7 +79,8 @@ struct System {
     System(Mouse* mouse);
     ~System();
     
-    void Update(float dt, Vec2 pushForce);
+    void Advect(float dt, Vec2 pushForce);
+    void Project(float dt);
     void Draw();
 
     // Boundary/Interaction Functions
@@ -98,6 +99,7 @@ struct System {
     // ----------------------
 
     void CreateParticleAtMouse();
+    void AddParticle(Particle2D* particle);
 
     // Simulation Switch Toggles
     void ToggleIntegration();

@@ -16,7 +16,7 @@
 #include "../Physics/Spring.hpp"
 #include "../Physics/Constants.hpp"
 #include "../Inputs/Mouse.hpp"
-#include "System.hpp"
+#include "../System.hpp"
 
 // System Includes
 #include <vector>
@@ -33,7 +33,7 @@ struct SpringForceLattice : public System {
     SpringForceLattice(Mouse* mouse);
     ~SpringForceLattice();
 
-    void Update(float dt, Vec2 pushForce);
+    void Advect(float dt, Vec2 pushForce);
 
 };
 

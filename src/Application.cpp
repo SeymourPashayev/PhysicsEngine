@@ -28,7 +28,7 @@ void Application::Setup() {
     // Setup Mouse and Particle System
     mouse = new Mouse();
 
-    scene = new System(mouse);
+    scene = new WaterDam(mouse);
 
 }
 
@@ -132,7 +132,7 @@ void Application::Update() {
     timePreviousFrame = SDL_GetTicks();
     
     // Update the Objects in the Scene
-    scene->Update(deltaTime, pushForce);
+    scene->Advect(deltaTime, pushForce);
 
 }
 

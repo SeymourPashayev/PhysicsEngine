@@ -13,6 +13,7 @@
 #include "./Graphics/Graphics.hpp"
 #include "./Inputs/Mouse.hpp"
 #include "./Scenes/SpringForceLattice.hpp"
+#include "./Scenes/WaterDam.hpp"
 #include "./Physics/Force.hpp"
 #include "./Physics/Constants.hpp"
 #include "./Physics/Particle2D.hpp"

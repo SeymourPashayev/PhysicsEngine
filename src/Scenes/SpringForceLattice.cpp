@@ -40,13 +40,8 @@ SpringForceLattice::SpringForceLattice(Mouse* mouse) : System { mouse } {
 
             // Create the particle
             Particle2D* particle = new Particle2D { pos, mass, radius };
-
-            // Add the particle to the system
-            particles.push_back(particle);
-
-            particleCount++;
-
-            // TODO: Create an AddParticle method that handles particleCount and more for you
+            
+            AddParticle(particle);
         }
     }
 
@@ -88,9 +83,9 @@ SpringForceLattice::~SpringForceLattice() {
 }
 
 // Update the system
-void SpringForceLattice::Update(float dt, Vec2 pushForce) {
+void SpringForceLattice::Advect(float dt, Vec2 pushForce) {
     
-    System::Update(dt, pushForce);
+    System::Advect(dt, pushForce);
     
 }
 

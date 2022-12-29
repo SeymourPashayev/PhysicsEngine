@@ -65,7 +65,7 @@ System::~System() {
 }
 
 
-void System::Update(float dt, Vec2 pushForce) {
+void System::Advect(float dt, Vec2 pushForce) {
     
     // Check for collisions
     if (SCREEN_COLLISION_ENABLED){
@@ -213,12 +213,8 @@ void System::CreateParticleAtMouse() {
 
         Vec2 mousePos = mouse->GetPosition();
         Particle2D* newParticle = new Particle2D(mousePos.x, mousePos.y, mass, radius);
-        particles.push_back(newParticle);
-        octree->insert(newParticle);
         
-        // Add to the count of particles
-        particleCount++;
-
+        AddParticle(newParticle);
     }
 
 }
@@ -238,6 +234,18 @@ void System::AttractionForceCalculatorHelper(Particle2D& particle) {
         particle.AddForce(attraction);
         otherParticle->AddForce(-attraction);
     }
+}
+
+void System::AddParticle(Particle2D* particle) {
+    
+    // Add a particle to the particle list
+    particles.push_back(particle);
+
+    // Add the particle to the octree data structure
+    octree->insert(particle);
+
+    // Add to the count of particles
+    particleCount++;
 }
 
 // SPH Functions
