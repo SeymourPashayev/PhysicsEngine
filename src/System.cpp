@@ -28,7 +28,7 @@ System::System(Mouse* mouse) {
     //devMenu = new SceneDevMenu(Graphics::renderer);
     
     std::cout << "System Initiated" << std::endl;
-    
+    // update    
 }
 
 
