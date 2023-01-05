@@ -57,9 +57,6 @@ System::~System() {
         }
     }
 
-    // Delete the dev menu
-    //delete devMenu;
-
     std::cout << "System Destroyed" << std::endl;
 
 }

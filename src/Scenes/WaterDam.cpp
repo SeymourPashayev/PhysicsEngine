@@ -16,7 +16,7 @@ WaterDam::WaterDam(Mouse* mouse) : System {mouse} {
     // Disable Particle Attraction
     this->ATTRACTION_ENABLED = true;
     this->PARTICLE_COLLISION_ENABLED = true;
-    this->SCREEN_COLLISION_ENABLED = false;
+    this->SCREEN_COLLISION_ENABLED = true;
     this->MAX_SEARCH_RADIUS = 20.0f;
 
     // Particle Variables
