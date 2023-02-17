@@ -119,6 +119,11 @@ void Octree2D::insert(Particle2D* particle) {
     }
 }
 
+// Update the octree
+//void Octree2D::Update() {
+//}
+
+
 // This function will give the particle list of the octant that contains the given particle
 void Octree2D::findNeighbors(std::vector<Particle2D*>& neighbors, Particle2D* particle, double searchRadius) {
     

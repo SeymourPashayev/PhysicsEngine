@@ -55,7 +55,13 @@ System::~System() {
 
 
 void System::Advect(float dt, Vec2 pushForce) {
-    
+   
+    // Update the Octree
+    //octree->Update();
+
+    // Calculate smoothing length for all particles
+    CalculateSmoothingLength();
+
     // Check for collisions
     if (SCREEN_COLLISION_ENABLED){
         CheckForScreenCollisions();
@@ -195,6 +201,7 @@ void System::CreateParticleAtMouse() {
 
 }
 
+
 // ---- HELPER FUNCTIONS ----
 
 void System::AttractionForceCalculatorHelper(Particle2D& particle) {
@@ -224,6 +231,28 @@ void System::AddParticle(Particle2D* particle) {
     particleCount++;
 }
 
+// SPH Functions
+
+// Calculates smoothing lengths for all particles using the Octree
+void System::CalculateSmoothingLength(){
+
+    for (int i = 0; i < particleCount; i++) {
+        std::vector<Particle2D*> neighbors;
+        octree->findNeighbors(neighbors, particles[i], MAX_SEARCH_RADIUS);
+
+        double maxDistance = 0.0;
+        for (Particle2D* neighbor : neighbors) {
+            double distance = particles[i]->Distance(neighbor);
+            if (distance > maxDistance) {
+                maxDistance = distance;
+            }
+        }
+
+        particles[i]->smoothingLength = maxDistance;
+
+    }
+
+};
 
 // ---- SWITCH TOGGLES ----
 

@@ -18,6 +18,7 @@
 #include <SDL2/SDL_stdinc.h>
 #include <SDL2/SDL_timer.h>
 #include <iostream>
+#include <cmath>
 
 
 struct Particle2D {
@@ -32,10 +33,12 @@ struct Particle2D {
     float mass;
     float invMass;
     
+    float smoothingLength;
+
     float radius;
+
     //float damping;
     float coefficientOfRestitution = 0.75f;
-
     // 1) in between 0 to 1, then the colliding bodies are partially elastic.
     // 2) equal to zero, then the colliding bodies are perfectly inelastic.
     // 3) is equal to one, then the colliding bodies are perfectly elastic.
@@ -64,6 +67,7 @@ struct Particle2D {
     // -----------------------------
 
     // Force Utilities
+    double Distance(Particle2D* other) const;
     void AddForce(const Vec2& force);
     void ClearForces();
 

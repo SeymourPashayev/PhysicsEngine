@@ -83,6 +83,10 @@ struct System {
     void Project(float dt);
     void Draw();
 
+    // SPH Functions
+    void CalculateSmoothingLength();
+
+
     // Boundary/Interaction Functions
     void CheckForScreenCollisions();
     void CheckForParticleCollisions();

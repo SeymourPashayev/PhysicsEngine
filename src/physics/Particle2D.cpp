@@ -107,6 +107,14 @@ void Particle2D::RK4Integrate(float dt) {
     ClearForces();
 }
 
+
+// Returns the distance between the particle and a passed particle
+double Particle2D::Distance(Particle2D* other) const {
+        double dx = other->position.x - this->position.x;
+        double dy = other->position.y - this->position.y;
+        return std::sqrt(dx * dx + dy * dy);
+}
+
 // ----------------------------
 // ---- Force Calculations ----
 // ----------------------------
