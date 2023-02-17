@@ -20,15 +20,7 @@ System::System(Mouse* mouse) {
     Vec2 max(Graphics::windowWidth, Graphics::windowHeight);
     octree = new Octree2D(particles, min, max, 4); 
 
-    // Set up the renderer
-    //this->renderer = renderer;
-
-    // Create a new dev menu
-    // Update: The text box I am using is too resource heavy, need to re-write the Text.cpp class
-    //devMenu = new SceneDevMenu(Graphics::renderer);
-    
     std::cout << "System Initiated" << std::endl;
-    // update    
 }
 
 
@@ -138,7 +130,8 @@ void System::Draw() {
 
 
 void System::CheckForScreenCollisions(){
-
+    
+    // Too bad it's hardcoded, FIXME
     for (auto particle: particles) {
         if (particle->position.y > Graphics::Height() - particle->radius) {
             particle->position.y = Graphics::Height() - particle->radius;
