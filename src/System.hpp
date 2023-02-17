@@ -90,9 +90,6 @@ struct System {
     // Force Application
     void AttractionForceCalculatorHelper(Particle2D& particle);
 
-    // SPH Functions
-    float Kernel(Vec2 r, float h);
-    
 
     // ----------------------
     // ---- Interactions ----

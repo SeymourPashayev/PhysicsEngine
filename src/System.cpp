@@ -224,20 +224,6 @@ void System::AddParticle(Particle2D* particle) {
     particleCount++;
 }
 
-// SPH Functions
-
-// Kernel Function: The function that determines the influence of a particle on another particle FIXME I did not design this and idk if it works well
-float System::Kernel(Vec2 r, float h) {
-    float q = r.Magnitude() / h;
-     if (q > 2) {
-        return 0;
-    } else if (q > 1) {
-        return 3.0f/4.0f - q*q + 0.5f*q*q*q;
-    } else {
-        return 1 - q*q*(1.5f - 0.5f*q);
-    }
-}
-
 
 // ---- SWITCH TOGGLES ----
 
