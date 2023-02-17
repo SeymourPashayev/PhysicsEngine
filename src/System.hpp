@@ -86,7 +86,6 @@ struct System {
     // SPH Functions
     void CalculateSmoothingLength();
 
-
     // Boundary/Interaction Functions
     void CheckForScreenCollisions();
     void CheckForParticleCollisions();
