@@ -28,8 +28,8 @@ WaterDam::WaterDam(Mouse* mouse) : System {mouse} {
     height = 10;
 
     // Distance between particles
-    float distanceX = 20; // TODO Translate to PIXELS_PER_METER
-    float distanceY = 20;
+    float distanceX = 80; // TODO Translate to PIXELS_PER_METER
+    float distanceY = 80;
 
     // Offsets for Particle Spawn Position
     float offsetX = Graphics::windowWidth/2.0f - (width * distanceX/2.0f);

@@ -40,6 +40,7 @@ System::~System() {
     delete octree;
 
     // Delete ass spring references
+    // Why ass??
     for (auto &spring : Springs) {
         if (spring != nullptr) {
             delete spring;
@@ -206,7 +207,7 @@ void System::CreateParticleAtMouse() {
 
 void System::AttractionForceCalculatorHelper(Particle2D& particle) {
     // Find the neighbors of the particle using the octree
-    double searchRadius = particle.radius + MAX_SEARCH_RADIUS;
+    double searchRadius = particle.radius + MAX_SEARCH_RADIUS * 100;
     std::vector<Particle2D*> neighbors;
     octree->findNeighbors(neighbors,&particle, searchRadius);
     

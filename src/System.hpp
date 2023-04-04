@@ -50,7 +50,7 @@ struct System {
     //SDL_Renderer *renderer;
 
     // Hard coded variables
-    float MAX_SEARCH_RADIUS = 0.23f * PIXELS_PER_METER;
+    float MAX_SEARCH_RADIUS = 10.0f * PIXELS_PER_METER;
 
     // ------------------------------
     // System Switches
