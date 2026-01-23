@@ -10,27 +10,28 @@ See: .planning/PROJECT.md (updated 2026-01-23)
 ## Current Position
 
 Phase: 2 of 4 (Boundaries & Dam Break)
-Plan: 0 of TBD in current phase
-Status: Ready for planning
-Last activity: 2026-01-23 — Completed Phase 1 (Core SPH Mechanics)
+Plan: 1 of TBD in current phase
+Status: In progress
+Last activity: 2026-01-23 — Completed 02-01-PLAN.md
 
-Progress: [███░░░░░░░] 25%
+Progress: [███░░░░░░░] 30%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 2
-- Average duration: 2.73 minutes
-- Total execution time: 0.09 hours
+- Total plans completed: 3
+- Average duration: 2.68 minutes
+- Total execution time: 0.13 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-core-sph-mechanics | 2 | 5.47m | 2.73m |
+| 02-boundaries-dam-break | 1 | 2.57m | 2.57m |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (2.75m), 01-02 (2.72m)
+- Last 5 plans: 01-01 (2.75m), 01-02 (2.72m), 02-01 (2.57m)
 - Trend: Consistent pace (~2.7 min/plan)
 
 *Updated after each plan completion*
@@ -54,6 +55,9 @@ Recent decisions affecting current work:
 | Symplectic Euler for SPH integration | 01-02 | 2026-01-23 | More stable than RK4 for incompressible flow |
 | Symmetric pressure formulation | 01-02 | 2026-01-23 | Ensures momentum conservation between pairs |
 | Viscosity coefficient 0.5 | 01-02 | 2026-01-23 | From Constants.hpp, provides fluid cohesion |
+| Boundary particles participate in SPH but skip integration | 02-01 | 2026-01-23 | DBC approach: boundaries generate pressure without moving |
+| 3-layer boundary design | 02-01 | 2026-01-23 | Prevents particle penetration at high velocities |
+| Open top boundary for dam break | 02-01 | 2026-01-23 | Allows fluid to splash/overflow realistically |
 
 ### Pending Todos
 
@@ -65,7 +69,7 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-01-23 21:45 UTC
-Stopped at: Completed Phase 1 (Core SPH Mechanics)
+Last session: 2026-01-23 22:11 UTC
+Stopped at: Completed 02-01-PLAN.md
 Resume file: None
-Next: Plan Phase 2 (Boundaries & Dam Break)
+Next: Continue Phase 2 (Boundaries & Dam Break)
