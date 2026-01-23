@@ -44,11 +44,11 @@ Plans:
   2. User can run dam break scene with tall fluid column on left side
   3. Dam collapse shows realistic wave propagation and splashing against walls
   4. Boundary particles prevent fluid penetration at corners and edges
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 02-01: TBD
-- [ ] 02-02: TBD
+- [ ] 02-01-PLAN.md — Boundary particle infrastructure (DBC)
+- [ ] 02-02-PLAN.md — Dam break scene with container and fluid column
 
 ### Phase 3: Stability & Performance
 **Goal**: Eliminate pressure oscillations and achieve 60fps with thousands of particles
@@ -90,6 +90,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Core SPH Mechanics | 2/2 | Complete | 2026-01-23 |
-| 2. Boundaries & Dam Break | 0/TBD | Not started | - |
+| 2. Boundaries & Dam Break | 0/2 | Not started | - |
 | 3. Stability & Performance | 0/TBD | Not started | - |
 | 4. Visual Polish & Interactivity | 0/TBD | Not started | - |
