@@ -82,7 +82,7 @@ void Particle2D::VerletIntegrate(float dt) {
 
 // Runge-Kutta 4th order integration
 void Particle2D::RK4Integrate(float dt) {
-    
+
     // Save the current state of the particle
     Vec2 pos = this->position;
     Vec2 vel = this->velocity;
@@ -101,9 +101,27 @@ void Particle2D::RK4Integrate(float dt) {
     // Update the position, velocity, and acceleration of the particle
     this->position = (pos + (k1_pos + k2_pos * 2.00 + k3_pos * 2.00 + k4_pos) * (dt / 6));
     this->velocity = (vel + (k1_vel + k2_vel* 2.00 + k3_vel * 2.00 + k4_vel) * (dt / 6));
-  
+
     this->acceleration = sumForces * invMass;
 
+    ClearForces();
+}
+
+// Symplectic Euler Integration - more stable for SPH than RK4
+void Particle2D::SymplecticEulerIntegrate(float dt) {
+    // Save previous position for collision handling
+    prevPosition = position;
+
+    // Compute acceleration from accumulated forces
+    acceleration = sumForces * invMass;
+
+    // Update velocity first (symplectic: v_new = v + a*dt)
+    velocity += acceleration * dt;
+
+    // Then update position using new velocity (symplectic: x_new = x + v_new*dt)
+    position += velocity * dt;
+
+    // Clear forces for next frame
     ClearForces();
 }
 

@@ -92,8 +92,8 @@ void System::Advect(float dt, Vec2 pushForce) {
 
     // Generate and Add Forces to all the particles
     for (auto particle: particles) {
-        
-        
+
+
         // Arrow Key Push Force
         if (KEYBOARD_ENABLED) {
             particle->AddForce(pushForce);
@@ -124,8 +124,19 @@ void System::Advect(float dt, Vec2 pushForce) {
             //SpringForceCalculatorHelper();
         }
 
+        // Add SPH forces (pressure and viscosity)
+        if (FLUID_DYNAMICS_ENABLED) {
+            particle->AddForce(particle->pressureForce);
+            particle->AddForce(particle->viscosityForce);
+        }
+
+        // Integration
         if (INTEGRATION_ENABLED){
-            particle->RK4Integrate(dt);
+            if (FLUID_DYNAMICS_ENABLED) {
+                particle->SymplecticEulerIntegrate(dt);
+            } else {
+                particle->RK4Integrate(dt);
+            }
         }
 
     }
@@ -252,6 +263,9 @@ void System::ComputeSPH() {
 
     // Compute density and pressure for all particles
     sphSolver->ComputeDensityPressure(particles, octree);
+
+    // Compute pressure and viscosity forces
+    sphSolver->ComputeForces(particles, octree);
 }
 
 // Calculates smoothing lengths for all particles using the Octree

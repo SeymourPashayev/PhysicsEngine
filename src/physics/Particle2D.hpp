@@ -19,6 +19,7 @@
 #include <SDL2/SDL_timer.h>
 #include <iostream>
 #include <cmath>
+#include <vector>
 
 
 struct Particle2D {
@@ -36,6 +37,12 @@ struct Particle2D {
     float smoothingLength;
 
     float radius;
+
+    // SPH Properties
+    float density;
+    float pressure;
+    Vec2 pressureForce;
+    Vec2 viscosityForce;
 
     //float damping;
     float coefficientOfRestitution = 0.75f;
@@ -61,6 +68,7 @@ struct Particle2D {
     void EulerIntegrate(float dt);
     void VerletIntegrate(float dt);
     void RK4Integrate(float dt);
+    void SymplecticEulerIntegrate(float dt);
 
     // -----------------------------
     // ---- Force Calculations ----
@@ -73,6 +81,10 @@ struct Particle2D {
 
     // SPH Forces
     float ComputeDistanceField();
+    void ComputeDensity(const std::vector<Particle2D*>& neighbors);
+    void ComputePressure();
+    void ComputePressureForce(const std::vector<Particle2D*>& neighbors);
+    void ComputeViscosityForce(const std::vector<Particle2D*>& neighbors);
 
     // Collision Detection
     bool CheckCollision(Particle2D& other);
