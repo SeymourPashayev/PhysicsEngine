@@ -11,6 +11,7 @@ SPHSolver::SPHSolver()
     , restDensity(REST_DENSITY)
     , stiffness(1000.0f)
     , gamma(7.0f)
+    , viscosity(VISCOSITY)
 {
 }
 
@@ -54,6 +55,34 @@ void SPHSolver::ComputeDensityPressure(std::vector<Particle2D*>& particles, Octr
 }
 
 void SPHSolver::ComputeForces(std::vector<Particle2D*>& particles, Octree2D* octree) {
-    // Placeholder for Plan 02
-    // Will implement pressure and viscosity force computation
+    for (auto* particle : particles) {
+        // Reset SPH forces
+        particle->pressureForce = Vec2(0.0f, 0.0f);
+        particle->viscosityForce = Vec2(0.0f, 0.0f);
+
+        // Get neighbors
+        std::vector<Particle2D*> neighbors;
+        octree->findNeighbors(neighbors, particle, smoothingLength);
+
+        for (auto* neighbor : neighbors) {
+            if (neighbor == particle) continue;  // Skip self
+
+            Vec2 r = particle->position - neighbor->position;
+            float distance = r.Magnitude();
+
+            if (distance < 0.0001f) continue;  // Skip nearly coincident particles
+
+            // Pressure force (symmetric formulation)
+            // F_pressure = -sum(m_j * (p_i + p_j) / (2 * rho_j) * grad_W)
+            float pressureTerm = (particle->pressure + neighbor->pressure) / (2.0f * neighbor->density);
+            Vec2 pressureGrad = SPHKernel::SpikyGradient(r);
+            particle->pressureForce -= pressureGrad * (neighbor->mass * pressureTerm);
+
+            // Viscosity force
+            // F_viscosity = mu * sum(m_j * (v_j - v_i) / rho_j * laplacian_W)
+            Vec2 velocityDiff = neighbor->velocity - particle->velocity;
+            float viscosityLaplacian = SPHKernel::ViscosityLaplacian(distance);
+            particle->viscosityForce += velocityDiff * (viscosity * neighbor->mass / neighbor->density * viscosityLaplacian);
+        }
+    }
 }

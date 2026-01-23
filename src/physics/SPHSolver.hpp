@@ -33,6 +33,7 @@ private:
     float restDensity;      // Rest density (ρ₀)
     float stiffness;        // Gas constant B for Tait equation
     float gamma;            // Tait exponent (typically 7 for water)
+    float viscosity;        // Viscosity coefficient (μ)
 };
 
 #endif
