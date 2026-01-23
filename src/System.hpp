@@ -16,6 +16,7 @@
 #include "Physics/Force.hpp"
 #include "Physics/Constants.hpp"
 #include "Physics/Octree2D.hpp"
+#include "Physics/SPHSolver.hpp"
 #include "Graphics/Graphics.hpp"
 #include "Inputs/Mouse.hpp"
 
@@ -40,6 +41,9 @@ struct System {
     
     // Octree
     Octree2D* octree = nullptr;
+
+    // SPH Solver
+    SPHSolver* sphSolver = nullptr;
 
     // Mouse object
     Mouse* mouse;
@@ -84,6 +88,7 @@ struct System {
     void Draw();
 
     // SPH Functions
+    void ComputeSPH();
     void CalculateSmoothingLength();
 
     // Boundary/Interaction Functions

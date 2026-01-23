@@ -18,7 +18,11 @@ System::System(Mouse* mouse) {
     // Set up the Octree screen size
     Vec2 min(0, 0);
     Vec2 max(Graphics::windowWidth, Graphics::windowHeight);
-    octree = new Octree2D(particles, min, max, 4); 
+    octree = new Octree2D(particles, min, max, 4);
+
+    // Set up the SPH Solver
+    sphSolver = new SPHSolver();
+    sphSolver->Initialize(16.0f);
 
     std::cout << "System Initiated" << std::endl;
 }
@@ -39,7 +43,10 @@ System::~System() {
     // Delete the Octree
     delete octree;
 
-    // Delete ass spring references
+    // Delete the SPH Solver
+    delete sphSolver;
+
+    // Delete all spring references
     for (auto &spring : Springs) {
         if (spring != nullptr) {
             delete spring;
@@ -55,12 +62,17 @@ System::~System() {
 
 
 void System::Advect(float dt, Vec2 pushForce) {
-   
+
     // Update the Octree
     //octree->Update();
 
     // Calculate smoothing length for all particles
     CalculateSmoothingLength();
+
+    // Compute SPH density and pressure
+    if (FLUID_DYNAMICS_ENABLED) {
+        ComputeSPH();
+    }
 
     // Check for collisions
     if (SCREEN_COLLISION_ENABLED){
@@ -232,6 +244,15 @@ void System::AddParticle(Particle2D* particle) {
 }
 
 // SPH Functions
+
+// Compute SPH density and pressure using SPHSolver
+void System::ComputeSPH() {
+    // Rebuild octree for current frame
+    octree->rebuild(particles);
+
+    // Compute density and pressure for all particles
+    sphSolver->ComputeDensityPressure(particles, octree);
+}
 
 // Calculates smoothing lengths for all particles using the Octree
 void System::CalculateSmoothingLength(){
