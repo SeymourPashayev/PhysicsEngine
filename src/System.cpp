@@ -93,45 +93,47 @@ void System::Advect(float dt, Vec2 pushForce) {
     // Generate and Add Forces to all the particles
     for (auto particle: particles) {
 
+        // Skip non-SPH forces and integration for boundary particles
+        if (!particle->isBoundary) {
+            // Arrow Key Push Force
+            if (KEYBOARD_ENABLED) {
+                particle->AddForce(pushForce);
+            }
 
-        // Arrow Key Push Force
-        if (KEYBOARD_ENABLED) {
-            particle->AddForce(pushForce);
+            // Gravity
+            if (GRAVITY_ENABLED){
+                particle->AddForce(Force::GenerateWeightForce(*particle));
+            }
+
+            // Friction Force
+            if (FRICTION_ENABLED){
+                particle->AddForce(Force::GenerateFrictionForce(*particle, 0.05f));
+            }
+
+            // Attraction Force
+            if (ATTRACTION_ENABLED){
+               AttractionForceCalculatorHelper(*particle);
+            }
+
+            // Drag Force
+            if (DRAG_ENABLED){
+                particle->AddForce(Force::GenerateDragForce(*particle, 0.09f));
+            }
+
+            // Apply sping forces between particles
+            if (SPRINGFORCE_ENABLED){
+                //SpringForceCalculatorHelper();
+            }
         }
 
-        // Gravity
-        if (GRAVITY_ENABLED){
-            particle->AddForce(Force::GenerateWeightForce(*particle));
-        }
-
-        // Friction Force
-        if (FRICTION_ENABLED){
-            particle->AddForce(Force::GenerateFrictionForce(*particle, 0.05f));
-        }
-
-        // Attraction Force
-        if (ATTRACTION_ENABLED){
-           AttractionForceCalculatorHelper(*particle);
-        }
-
-        // Drag Force
-        if (DRAG_ENABLED){
-            particle->AddForce(Force::GenerateDragForce(*particle, 0.09f));
-        }
-
-        // Apply sping forces between particles
-        if (SPRINGFORCE_ENABLED){
-            //SpringForceCalculatorHelper();
-        }
-
-        // Add SPH forces (pressure and viscosity)
+        // Add SPH forces (pressure and viscosity) - applies to ALL particles including boundaries
         if (FLUID_DYNAMICS_ENABLED) {
             particle->AddForce(particle->pressureForce);
             particle->AddForce(particle->viscosityForce);
         }
 
-        // Integration
-        if (INTEGRATION_ENABLED){
+        // Integration - skip for boundary particles
+        if (INTEGRATION_ENABLED && !particle->isBoundary){
             if (FLUID_DYNAMICS_ENABLED) {
                 particle->SymplecticEulerIntegrate(dt);
             } else {

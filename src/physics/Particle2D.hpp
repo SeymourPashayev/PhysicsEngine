@@ -43,6 +43,7 @@ struct Particle2D {
     float pressure;
     Vec2 pressureForce;
     Vec2 viscosityForce;
+    bool isBoundary = false;
 
     //float damping;
     float coefficientOfRestitution = 0.75f;
