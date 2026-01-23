@@ -9,7 +9,7 @@
 SPHSolver::SPHSolver()
     : smoothingLength(0.0f)
     , restDensity(REST_DENSITY)
-    , stiffness(1000.0f)
+    , stiffness(50000.0f)  // High stiffness for boundary containment
     , gamma(7.0f)
     , viscosity(VISCOSITY)
 {
@@ -21,6 +21,7 @@ void SPHSolver::Initialize(float smoothingLength) {
 }
 
 void SPHSolver::ComputeDensityPressure(std::vector<Particle2D*>& particles, Octree2D* octree) {
+
     // Compute density and pressure for each particle
     for (auto& particle : particles) {
         // Find neighbors within smoothing length
@@ -40,9 +41,13 @@ void SPHSolver::ComputeDensityPressure(std::vector<Particle2D*>& particles, Octr
         particle->density = density;
 
         // Compute pressure using Tait equation of state
-        // P = B * ((ρ/ρ₀)^γ - 1)
+        // P = B * ((ρ/ρ₀)^γ - 1) where γ=7
+        // Use multiplication instead of pow() for speed: x^7 = x * x^2 * x^4
         float densityRatio = density / restDensity;
-        float pressure = stiffness * (std::pow(densityRatio, gamma) - 1.0f);
+        float dr2 = densityRatio * densityRatio;
+        float dr4 = dr2 * dr2;
+        float dr7 = densityRatio * dr2 * dr4;
+        float pressure = stiffness * (dr7 - 1.0f);
 
         // Clamp pressure to non-negative values (no tension)
         if (pressure < 0.0f) {

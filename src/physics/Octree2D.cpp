@@ -9,13 +9,16 @@
 // Project Includes
 #include "Octree2D.hpp"
 
+// System Includes
+#include <iostream>
+
 // Constructor
 Octree2D::Octree2D() {
     // Initialize the data members
     particles.clear();
 
     for (int i = 0; i < 4; i++) {
-        children[i] = NULL;
+        children[i] = nullptr;
     }
 
     min = Vec2();
@@ -30,7 +33,7 @@ Octree2D::Octree2D(std::vector<Particle2D*>& particles, const Vec2& min, const V
     this->particles = particles;
    
     for (int i = 0; i < 4; i++) {
-        children[i] = NULL;
+        children[i] = nullptr;
     }
 
     this->min = min;
@@ -45,9 +48,9 @@ Octree2D::Octree2D(std::vector<Particle2D*>& particles, const Vec2& min, const V
 Octree2D::~Octree2D() {
     // Recursively delete the children
     for (int i = 0; i < 4; i++) {
-        if (children[i] != NULL) {  
+        if (children[i] != nullptr) {
             delete children[i];
-            children[i] = NULL;
+            children[i] = nullptr;
         }
     }
 }
@@ -105,15 +108,16 @@ void Octree2D::insert(Particle2D* particle) {
     // Check if the particle is within the bounds of the octant
     if (particle->position.x >= min.x && particle->position.x < max.x &&
         particle->position.y >= min.y && particle->position.y < max.y) {
-    
+
         // If the octant is a leaf node, insert the particle into the particles vector
         if (depth == maxDepth) {
             particles.push_back(particle);
         }
         // Otherwise, insert the particle into the appropriate child octant
         else {
-            for (int i = 0; i < 4; i++) {
-                children[i]->insert(particle);
+            int quadrant = getQuadrant(particle->position);
+            if (quadrant >= 0 && quadrant < 4 && children[quadrant] != nullptr) {
+                children[quadrant]->insert(particle);
             }
         }
     }
@@ -233,6 +237,56 @@ void Octree2D::Clear() {
             children[i] = nullptr;
         }
     }
+}
+
+// New helper methods for optimization
+bool Octree2D::contains(const Vec2& point) const {
+    return (point.x >= min.x && point.x < max.x &&
+            point.y >= min.y && point.y < max.y);
+}
+
+bool Octree2D::intersects(const Vec2& center, float radius) const {
+    return !(center.x + radius < min.x || center.x - radius >= max.x ||
+             center.y + radius < min.y || center.y - radius >= max.y);
+}
+
+int Octree2D::getQuadrant(const Vec2& point) const {
+    Vec2 center = (min + max) * 0.5f;
+
+    if (point.x < center.x) {
+        if (point.y < center.y) {
+            return 0; // Lower left
+        } else {
+            return 2; // Upper left
+        }
+    } else {
+        if (point.y < center.y) {
+            return 1; // Lower right
+        } else {
+            return 3; // Upper right
+        }
+    }
+}
+
+void Octree2D::rebuild(std::vector<Particle2D*>& newParticles) {
+    Clear();
+    buildOctree(newParticles, depth);
+}
+
+int Octree2D::getParticleCount() const {
+    int count = particles.size();
+    for (int i = 0; i < 4; i++) {
+        if (children[i] != nullptr) {
+            count += children[i]->getParticleCount();
+        }
+    }
+    return count;
+}
+
+void Octree2D::printStats() const {
+    std::cout << "Octree Stats - Depth: " << depth
+              << ", Particles: " << particles.size()
+              << ", Total in subtree: " << getParticleCount() << std::endl;
 }
 
 

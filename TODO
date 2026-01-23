@@ -1,0 +1,4 @@
+1. Figure out how and where to write a (Gaussian) Kernel function, maybe create a class for Kernels or not, who knows.
+    - Figure out what inputs the function would take - particles or values computed before particles? If the values, then maybe definitely create a separate class so you can use helper functions.
+
+2. After writing the Kernel function, figure out how you use that to compute the pressure and density or whatever it is you need to compute as the next stage.

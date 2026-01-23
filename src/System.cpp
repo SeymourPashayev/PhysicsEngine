@@ -22,7 +22,7 @@ System::System(Mouse* mouse) {
 
     // Set up the SPH Solver
     sphSolver = new SPHSolver();
-    sphSolver->Initialize(16.0f);
+    sphSolver->Initialize(32.0f);  // 2x particle spacing for proper neighbor interaction
 
     std::cout << "System Initiated" << std::endl;
 }
@@ -66,8 +66,10 @@ void System::Advect(float dt, Vec2 pushForce) {
     // Update the Octree
     //octree->Update();
 
-    // Calculate smoothing length for all particles
-    CalculateSmoothingLength();
+    // Calculate smoothing length for all particles (skip for SPH - uses fixed h)
+    if (!FLUID_DYNAMICS_ENABLED) {
+        CalculateSmoothingLength();
+    }
 
     // Compute SPH density and pressure
     if (FLUID_DYNAMICS_ENABLED) {
@@ -102,7 +104,11 @@ void System::Advect(float dt, Vec2 pushForce) {
 
             // Gravity
             if (GRAVITY_ENABLED){
-                particle->AddForce(Force::GenerateWeightForce(*particle));
+                if (FLUID_DYNAMICS_ENABLED) {
+                    particle->AddForce(Force::GenerateSPHGravityForce(*particle));
+                } else {
+                    particle->AddForce(Force::GenerateWeightForce(*particle));
+                }
             }
 
             // Friction Force
@@ -130,6 +136,29 @@ void System::Advect(float dt, Vec2 pushForce) {
         if (FLUID_DYNAMICS_ENABLED) {
             particle->AddForce(particle->pressureForce);
             particle->AddForce(particle->viscosityForce);
+
+            // Safety boundary check - prevent particles from escaping
+            // This is a fallback for when SPH forces aren't strong enough
+            if (!particle->isBoundary) {
+                float margin = 64.0f;  // Where boundary particles end
+                float bounce = 0.3f;
+
+                // Bottom boundary (most critical)
+                if (particle->position.y > Graphics::Height() - margin) {
+                    particle->position.y = Graphics::Height() - margin;
+                    particle->velocity.y *= -bounce;
+                }
+                // Left boundary
+                if (particle->position.x < margin) {
+                    particle->position.x = margin;
+                    particle->velocity.x *= -bounce;
+                }
+                // Right boundary
+                if (particle->position.x > Graphics::Width() - margin) {
+                    particle->position.x = Graphics::Width() - margin;
+                    particle->velocity.x *= -bounce;
+                }
+            }
         }
 
         // Integration - skip for boundary particles

@@ -55,6 +55,14 @@ Vec2 Force::GenerateWeightForce(const Particle2D& particle) {
     return Vec2(0.0f, particle.mass * GRAVITY * PIXELS_PER_METER);
 }
 
+Vec2 Force::GenerateSPHGravityForce(const Particle2D& particle) {
+    // SPH gravity without PIXELS_PER_METER scaling to match SPH force units
+    // Tuned for pixel-space SPH to give reasonable fall speed while allowing
+    // boundary particles to provide containment
+    const float SPH_GRAVITY = 5000.0f;
+    return Vec2(0.0f, particle.mass * SPH_GRAVITY);
+}
+
 /**
  * @brief Generates a friction force on a particle
  * 
