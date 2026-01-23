@@ -9,6 +9,7 @@
 
 // Application Includes
 #include "Application.hpp"
+#include "Scenes/DamBreak.hpp"
 
 
 // Function to check if the application is running
@@ -28,7 +29,7 @@ void Application::Setup() {
     // Setup Mouse and Particle System
     mouse = new Mouse();
 
-    scene = new WaterDam(mouse);
+    scene = new DamBreak(mouse);
 
 }
 
