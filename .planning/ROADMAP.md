@@ -29,12 +29,11 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Particles fall under gravity and deform into blob shape when hitting ground
   4. Neighbor search finds all particles within smoothing radius in under 5ms per frame
   5. Symplectic Euler integration maintains stable motion without explosions
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 01-01: TBD
-- [ ] 01-02: TBD
-- [ ] 01-03: TBD
+- [ ] 01-01-PLAN.md — SPH Solver setup + density/pressure calculation
+- [ ] 01-02-PLAN.md — SPH forces + Symplectic Euler integration
 
 ### Phase 2: Boundaries & Dam Break
 **Goal**: Contain fluid within solid walls and demonstrate realistic dam break scenario
@@ -90,7 +89,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Core SPH Mechanics | 0/TBD | Not started | - |
+| 1. Core SPH Mechanics | 0/2 | Planned | - |
 | 2. Boundaries & Dam Break | 0/TBD | Not started | - |
 | 3. Stability & Performance | 0/TBD | Not started | - |
 | 4. Visual Polish & Interactivity | 0/TBD | Not started | - |
