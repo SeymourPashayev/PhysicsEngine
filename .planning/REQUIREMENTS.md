@@ -9,18 +9,18 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Core SPH
 
-- [ ] **SPH-01**: Particles have density calculated from neighbors using Poly6 kernel
-- [ ] **SPH-02**: Particles have pressure calculated from density using Tait equation of state
-- [ ] **SPH-03**: Pressure forces push particles apart using Spiky kernel gradient
-- [ ] **SPH-04**: Viscosity forces smooth velocity differences between neighbors
-- [ ] **SPH-05**: Neighbor search finds all particles within smoothing radius efficiently
+- [x] **SPH-01**: Particles have density calculated from neighbors using Poly6 kernel
+- [x] **SPH-02**: Particles have pressure calculated from density using Tait equation of state
+- [x] **SPH-03**: Pressure forces push particles apart using Spiky kernel gradient
+- [x] **SPH-04**: Viscosity forces smooth velocity differences between neighbors
+- [x] **SPH-05**: Neighbor search finds all particles within smoothing radius efficiently
 
 ### Stability
 
 - [ ] **STAB-01**: Density diffusion (delta-SPH) eliminates pressure oscillations
 - [ ] **STAB-02**: CFL condition enforces adaptive timestep for stability
 - [ ] **STAB-03**: Boundary particles prevent fluid from escaping container
-- [ ] **STAB-04**: Symplectic Euler integration preserves energy over time
+- [x] **STAB-04**: Symplectic Euler integration preserves energy over time
 
 ### Rendering
 
@@ -50,9 +50,9 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Architecture
 
-- [ ] **ARCH-01**: SPH solver separated from particle data structure
-- [ ] **ARCH-02**: Kernel functions work with any vector type (2D/3D ready)
-- [ ] **ARCH-03**: Neighbor search interface abstracts spatial data structure
+- [x] **ARCH-01**: SPH solver separated from particle data structure
+- [x] **ARCH-02**: Kernel functions work with any vector type (2D/3D ready)
+- [x] **ARCH-03**: Neighbor search interface abstracts spatial data structure
 
 ## v2 Requirements
 
@@ -95,15 +95,15 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| SPH-01 | Phase 1 | Pending |
-| SPH-02 | Phase 1 | Pending |
-| SPH-03 | Phase 1 | Pending |
-| SPH-04 | Phase 1 | Pending |
-| SPH-05 | Phase 1 | Pending |
+| SPH-01 | Phase 1 | Complete |
+| SPH-02 | Phase 1 | Complete |
+| SPH-03 | Phase 1 | Complete |
+| SPH-04 | Phase 1 | Complete |
+| SPH-05 | Phase 1 | Complete |
 | STAB-01 | Phase 3 | Pending |
 | STAB-02 | Phase 3 | Pending |
 | STAB-03 | Phase 2 | Pending |
-| STAB-04 | Phase 1 | Pending |
+| STAB-04 | Phase 1 | Complete |
 | REND-01 | Phase 4 | Pending |
 | REND-02 | Phase 4 | Pending |
 | REND-03 | Phase 4 | Pending |
@@ -118,9 +118,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DEMO-01 | Phase 2 | Pending |
 | DEMO-02 | Phase 2 | Pending |
 | DEMO-03 | Phase 2 | Pending |
-| ARCH-01 | Phase 1 | Pending |
-| ARCH-02 | Phase 1 | Pending |
-| ARCH-03 | Phase 1 | Pending |
+| ARCH-01 | Phase 1 | Complete |
+| ARCH-02 | Phase 1 | Complete |
+| ARCH-03 | Phase 1 | Complete |
 
 **Coverage:**
 - v1 requirements: 26 total

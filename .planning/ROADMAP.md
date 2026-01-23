@@ -12,7 +12,7 @@ This roadmap transforms the existing particle physics engine into a WCSPH fluid 
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Core SPH Mechanics** - SPH kernels, neighbor search, pressure forces, and integration
+- [x] **Phase 1: Core SPH Mechanics** - SPH kernels, neighbor search, pressure forces, and integration
 - [ ] **Phase 2: Boundaries & Dam Break** - Boundary handling, containment, and dam break scene
 - [ ] **Phase 3: Stability & Performance** - Delta-SPH diffusion, optimization, 60fps at 5000 particles
 - [ ] **Phase 4: Visual Polish & Interactivity** - Metaball rendering, parameter tuning, color visualization
@@ -32,8 +32,8 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 2 plans
 
 Plans:
-- [ ] 01-01-PLAN.md — SPH Solver setup + density/pressure calculation
-- [ ] 01-02-PLAN.md — SPH forces + Symplectic Euler integration
+- [x] 01-01-PLAN.md — SPH Solver setup + density/pressure calculation
+- [x] 01-02-PLAN.md — SPH forces + Symplectic Euler integration
 
 ### Phase 2: Boundaries & Dam Break
 **Goal**: Contain fluid within solid walls and demonstrate realistic dam break scenario
@@ -89,7 +89,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Core SPH Mechanics | 0/2 | Planned | - |
+| 1. Core SPH Mechanics | 2/2 | Complete | 2026-01-23 |
 | 2. Boundaries & Dam Break | 0/TBD | Not started | - |
 | 3. Stability & Performance | 0/TBD | Not started | - |
 | 4. Visual Polish & Interactivity | 0/TBD | Not started | - |

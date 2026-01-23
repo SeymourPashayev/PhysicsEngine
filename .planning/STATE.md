@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-01-23)
 
 **Core value:** Fluid that looks and behaves convincingly at interactive frame rates
-**Current focus:** Phase 1: Core SPH Mechanics
+**Current focus:** Phase 2: Boundaries & Dam Break
 
 ## Current Position
 
-Phase: 1 of 4 (Core SPH Mechanics)
-Plan: 2 of 3 in current phase
-Status: In progress
-Last activity: 2026-01-23 — Completed 01-02-PLAN.md
+Phase: 2 of 4 (Boundaries & Dam Break)
+Plan: 0 of TBD in current phase
+Status: Ready for planning
+Last activity: 2026-01-23 — Completed Phase 1 (Core SPH Mechanics)
 
-Progress: [██░░░░░░░░] 20%
+Progress: [███░░░░░░░] 25%
 
 ## Performance Metrics
 
@@ -65,7 +65,7 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-01-23 21:43 UTC
-Stopped at: Completed 01-02-PLAN.md (SPH Force Computation)
+Last session: 2026-01-23 21:45 UTC
+Stopped at: Completed Phase 1 (Core SPH Mechanics)
 Resume file: None
-Next: Execute 01-03-PLAN.md (if exists, or next phase planning)
+Next: Plan Phase 2 (Boundaries & Dam Break)
